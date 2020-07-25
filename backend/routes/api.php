@@ -14,14 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/hello', function(Request $request){
-    return response()->json('abc', 200);
-});
-
-Route::get('/users', function(){
-    return DB::table('users')->get();
-});
+Route::post('/signup', 'UserController@signup');
+Route::get('/users', 'UserController@getAll');
+Route::post('/update', 'UserController@update');

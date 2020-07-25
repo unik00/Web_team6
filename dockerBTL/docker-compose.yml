@@ -16,7 +16,7 @@ services:
         expose: 
             - 9000
         restart: unless-stopped
-        #command: php artisan serve
+        # command: php artisan serve
     frontend:
         build: ../frontend
         restart: unless-stopped

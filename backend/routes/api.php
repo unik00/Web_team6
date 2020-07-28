@@ -18,6 +18,18 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/signup', 'UserController@signup');
-Route::get('/users', 'UserController@getAll');
-Route::post('/update', 'UserController@update');
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'UserController@login');
+    Route::post('signup', 'UserController@signup');
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'UserController@logout');
+        Route::get('user', 'UserController@user');
+    });
+});
+
+

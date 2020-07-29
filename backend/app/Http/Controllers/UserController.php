@@ -47,22 +47,36 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
+
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
+       
         $credentials = request(['username', 'password']);
-        if(!Auth::attempt($credentials))
+
+        try{
+            if(!Auth::attempt($credentials)){
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
+            }
+        } catch (Exception $e){
+            
+            dd($e);
+
+        }
+        
+        
+
         $user = $request->User();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
+        
         return response()->json([
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',

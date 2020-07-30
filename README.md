@@ -13,7 +13,7 @@ docker-compose down # Đóng docker-compose
 ```
 ## Backend
 ```bash
-php artisan passport:install # tạo lại key tránh lỗi 500 khi login
+docker-compose exec backend php artisan passport:install # tạo lại key tránh lỗi 500 khi login
 ```
 ### API
 |    Url         |     Header                                     |   Request                       | 

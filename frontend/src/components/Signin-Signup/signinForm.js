@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import  { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import * as API from '../../api'
 import * as actions from '../../redux/action/account'
 
@@ -11,14 +11,14 @@ class SigninForm extends React.Component {
             username: '',
             password: '',
             remember_me: false,
-            error:  ''
+            error: ''
         }
     }
 
     inputOnchange = (e) => {
         let { remember_me } = this.state;
         let target = e.target;
-        if(target.name == 'remember_me'){
+        if (target.name == 'remember_me') {
             return this.setState({
                 remember_me: !remember_me
             })
@@ -30,31 +30,37 @@ class SigninForm extends React.Component {
 
     onSignin = (e) => {
         e.preventDefault();
-        let {username, password, remember_me} = this.state
+        let { username, password, remember_me } = this.state
         API.Signin({
             username,
             password,
             remember_me
         })
-        .then(res=>{
-            if(res.status == 200) {
-                this.props.signin(res.data);
-                this.setState({
-                    error: ''
-                })
-                //redirect to home page
-            }
-        })
-        .catch(err=>{
-            console.log(err);
-            this.setState({
-                error: 'Username or Password is wrong!'
+            .then(res => {
+                if (res.status == 200) {
+                    this.props.signin(res.data);
+                    this.setState({
+                        error: ''
+                    })
+                    //redirect to home page
+                }
             })
-        })
+            .catch((err) => {
+                console.log(err);
+                let errors = [];
+                let message = '';
+                if (err.response && err.response.data) {
+                    message = err.response.data['message'];
+                    errors = err.response.data.errors ? Object.values(err.response.data.errors)[0] : []
+                }
+                this.setState({
+                    error: errors[0] ? errors[0] : (message ? message : 'username or password is incorrect')
+                })
+            })
     }
 
     render() {
-        let {remember_me ,error} = this.state;
+        let { remember_me, error } = this.state;
         return (
             <div className="sign_in_sec current" id="tab-1">
                 <h3>Sign in</h3>
@@ -75,7 +81,7 @@ class SigninForm extends React.Component {
                         <div className="col-lg-12 no-pdd">
                             <div className="checky-sec">
                                 <div className="fgt-sec">
-                                    <input type="checkbox" name="remember_me" id="c1" checked={remember_me}  onChange={this.inputOnchange}/>
+                                    <input type="checkbox" name="remember_me" id="c1" checked={remember_me} onChange={this.inputOnchange} />
                                     <label htmlFor="c1">
                                         <span></span>
                                     </label>
@@ -83,7 +89,7 @@ class SigninForm extends React.Component {
                                 </div>
                                 <a href="#" title="">Forgot Password?</a>
                             </div>
-                            <div style={{color: 'red'}}>{error}</div>
+                            <div style={{ color: 'red' }}>{error}</div>
                         </div>
                         <div className="col-lg-12 no-pdd">
                             <button onClick={this.onSignin}>Sign in</button>
@@ -110,4 +116,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect('',mapDispatchToProps)(SigninForm);
+export default connect('', mapDispatchToProps)(SigninForm);

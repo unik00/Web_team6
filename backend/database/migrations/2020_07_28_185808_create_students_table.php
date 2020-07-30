@@ -28,7 +28,7 @@ class CreateStudentsTable extends Migration
             $table->string('class')->nullable();
             $table->dateTime('birthday')->nullable();
             $table->string('address')->nullable();
-            $table->string('gender')->nullable();
+            $table->string('gender')->default('Nam');
             $table->string('phone')->nullable();
             $table->text('status')->nullable();
             $table->string('linkCV')->nullable();

@@ -32,4 +32,12 @@ Route::group([
     });
 });
 
+Route::group(['prefix' => 'profile'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::put('edit', 'UserController@edit');
+        Route::get('{id}', 'UserController@view');
+        Route::get('', 'UserController@index');
+    });
+});
+
 

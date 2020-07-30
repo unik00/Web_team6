@@ -1,2 +1,2 @@
-docker-compose exec php artisan migrate:refresh
-docker-compose exec php artisan passport:install
+docker-compose exec backend php artisan migrate:refresh 
+docker-compose exec backend php artisan passport:install --force

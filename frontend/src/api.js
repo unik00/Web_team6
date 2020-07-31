@@ -1,16 +1,22 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: `https://f2e131fe486b.ngrok.io`,
+  baseURL: `http://localhost/api`,
   headers:{
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
   }
 });
 
 export const Signin = (account) => {
-  return api.post(`/api/auth/login`,JSON.stringify(account));
+  return api.post(`/auth/login`,JSON.stringify(account));
 } 
 
 export const Signup = (account) => {
-  return api.post(`/api/auth/signup`,JSON.stringify(account));
+  return api.post(`/auth/signup`,JSON.stringify(account));
 } 
+
+export const ViewMyProfile = () => {
+
+  return api.get(`profile`)
+}

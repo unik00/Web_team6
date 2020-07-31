@@ -21,7 +21,15 @@ class UserController extends Controller
         $id = $request->User()->id;
 
         $user = Student::where('user_id', $id)->first();
-        if($user) $user->type = 'Student';
+        if($user) {
+            $user->type = 'Student';
+
+            $school = null;
+            if($user->school_id)
+                $school = School::where('id', $user->school_id)->first();
+
+            $user->name_school = $school ? $school->name : null;
+        }
         if(!$user) {
             $user = School::where('user_id', $id)->first();
             if($user) $user->type = 'School';
@@ -47,7 +55,15 @@ class UserController extends Controller
     public function view(Request $request, $id)
     {
         $user = Student::where('user_id', $id)->first();
-        if($user) $user->type = 'Student';
+        if($user) {
+            $user->type = 'Student';
+
+            $school = null;
+            if($user->school_id)
+                $school = School::where('id', $user->school_id)->first();
+
+            $user->name_school = $school ? $school->name : null;
+        }
         if(!$user) {
             $user = School::where('user_id', $id)->first();
             if($user) $user->type = 'School';
@@ -89,7 +105,7 @@ class UserController extends Controller
             'linkGit' => 'url|nullable',
             'description' => 'string|nullable'
         ]);
-        
+
         $id = $request->User()->id;
         $user = Student::where('user_id', $id)->first();
         if(!$user) $user = School::where('user_id', $id)->first();

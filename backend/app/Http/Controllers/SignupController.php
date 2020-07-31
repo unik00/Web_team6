@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Student;
@@ -66,9 +69,33 @@ class SignupController extends Controller
             }
 
             DB::commit(); // database query successfull
+
+            // login new user
+            $credentials = request(['username', 'password']);
+            if (!Auth::attempt($credentials))
+                return response()->json([
+                    'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
+                ], 401);
+            $user = $request->User();
+            if(!$user->is_active){
+                return response()->json([
+                    'message' => 'Tài khoản chưa được kích hoạt.',
+                    'is_active' => false
+                ]);
+            }
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            if ($request->remember_me)
+                $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->save();
             return response()->json([
-                'message' => 'Tạo tài khoản thành công !'
-            ], 201);
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => ($request->remember_me) ? Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString() : null
+            ]);
+
         } catch (\Exception $e) {
             DB::rollback(); // database query error
             return response()->json([

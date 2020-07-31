@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CoverImage from './coverImage';
 import MainLeftSidebar from './Main-Left-Sidebar/index';
@@ -7,6 +8,7 @@ import MainRightSidebar from './Main-Right-Sidebar/index';
 
 class UserProfile extends Component {
     render() {
+        console.log(this.props.account);
         return (
             <div>
                 <CoverImage/>
@@ -29,4 +31,10 @@ class UserProfile extends Component {
     }
 }
 
-export default UserProfile
+const mapStateToProps = (state) => {
+    return{
+        account: state.account
+    }
+} 
+
+export default connect(mapStateToProps,'')(UserProfile)

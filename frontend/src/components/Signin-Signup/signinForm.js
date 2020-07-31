@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import * as API from '../../api'
 import * as actions from '../../redux/action/account'
 
@@ -31,6 +31,7 @@ class SigninForm extends React.Component {
     onSignin = (e) => {
         e.preventDefault();
         let { username, password, remember_me } = this.state;
+        let {history} = this.props;
         API.Signin({
             username,
             password,
@@ -42,8 +43,9 @@ class SigninForm extends React.Component {
                     this.setState({
                         error: ''
                     })
-                    //redirect to home page
+                    return history.push('/user-profile')
                 }
+                return alert(`login with status ${res.status}`)
             })
             .catch((err) => {
                 console.log(err);
@@ -118,4 +120,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect('', mapDispatchToProps)(SigninForm);
+export default withRouter(connect('', mapDispatchToProps)(SigninForm));

@@ -17,5 +17,3 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php && \
 WORKDIR /var/www/html/backend
 COPY . ./
 RUN composer install
-
-RUN php artisan passport:install

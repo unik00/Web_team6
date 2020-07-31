@@ -23,7 +23,7 @@ Route::group([
 ], function () {
     Route::post('login', 'LoginController@login');
     Route::post('signup', 'SignupController@signup');
-  
+
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -32,4 +32,10 @@ Route::group([
     });
 });
 
-
+Route::group(['prefix' => 'profile'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::put('edit', 'UserController@edit');
+        Route::get('{id}', 'UserController@view');
+        Route::get('', 'UserController@index');
+    });
+});

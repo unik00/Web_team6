@@ -61,6 +61,9 @@ class SigninForm extends React.Component {
 
     render() {
         let { remember_me, error } = this.state;
+        let {account} = this.props;
+        console.log(account);
+        
         return (
             <div className="sign_in_sec current" id="tab-1">
                 <h3>Sign in</h3>
@@ -108,6 +111,12 @@ class SigninForm extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return{
+        account: state.account
+    }
+} 
+
 const mapDispatchToProps = (dispatch, props) => {
     return {
         signin: (account) => {
@@ -116,4 +125,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect('', mapDispatchToProps)(SigninForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SigninForm);

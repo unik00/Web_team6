@@ -31,6 +31,12 @@ class LoginController extends Controller
                 'message' => 'Tài khoản hoặc mật khẩu không chính xác!'
             ], 401);
         $user = $request->User();
+        if(!$user->is_active){
+            return response()->json([
+                'message' => 'Tài khoản chưa được kích hoạt.',
+                'is_active' => false
+            ]);
+        }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
@@ -39,9 +45,9 @@ class LoginController extends Controller
         return response()->json([
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
+            'expires_at' => ($request->remember_me) ? Carbon::parse(
                 $tokenResult->token->expires_at
-            )->toDateTimeString()
+            )->toDateTimeString() : null
         ]);
     }
 

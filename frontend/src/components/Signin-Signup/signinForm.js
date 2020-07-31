@@ -30,7 +30,7 @@ class SigninForm extends React.Component {
 
     onSignin = (e) => {
         e.preventDefault();
-        let { username, password, remember_me } = this.state
+        let { username, password, remember_me } = this.state;
         API.Signin({
             username,
             password,
@@ -61,8 +61,6 @@ class SigninForm extends React.Component {
 
     render() {
         let { remember_me, error } = this.state;
-        let {account} = this.props;
-        console.log(account);
         
         return (
             <div className="sign_in_sec current" id="tab-1">
@@ -111,11 +109,6 @@ class SigninForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return{
-        account: state.account
-    }
-} 
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
@@ -125,4 +118,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SigninForm);
+export default connect('', mapDispatchToProps)(SigninForm);

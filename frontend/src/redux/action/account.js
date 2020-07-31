@@ -7,12 +7,10 @@ export const signin = (account=null) =>{
             account.access_token = CookieService.get('access_token');
             account.token_type = CookieService.get('token_type');
         }else{
-            const options = account.expires_at ? {path:'/', expires:account.expires_at.getTime()} : {path:'/'} 
+            const options = account.expires_at ? {path:'/', expires:(new Date(account.expires_at))} : {path:'/'} 
             CookieService.set('access_token', account.access_token, options);
             CookieService.set('token_type', account.token_type, options);
         }
-        console.log((new Date(account.expires_at)));
-        console.log((new Date()));
         dispatch({
             type: "SIGNIN",
             account: account

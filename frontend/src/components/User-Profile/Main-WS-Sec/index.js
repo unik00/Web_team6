@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import UserTabSec from './userTabSec';
-import PostBar from './postBar';
+import PostBar from '../../PostBar/index';
 import UserInfo from './userInfo';
 import Image from './images';
 

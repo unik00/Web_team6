@@ -20,13 +20,13 @@ class UserTabSec extends Component {
                     <ul>
                         <li data-tab="feed-dd" className="active">
                             <a href="#" title="">
-                                <img src="images/ic1.png" alt="" />
+                                <img src={require('../../../assets/images/ic1.png')} alt="" />
                                 <span>Feed</span>
                             </a>
                         </li>
                         <li data-tab="info-dd">
                             <a href="#" title="">
-                                <img src="images/ic2.png" alt="" />
+                                <img src={require('../../../assets/images/ic2.png')} alt="" />
                                 <span>Info</span>
                             </a>
                         </li>
@@ -44,7 +44,7 @@ class UserTabSec extends Component {
                         </li> */}
                         <li data-tab="portfolio-dd">
                             <a href="#" title="">
-                                <img src="images/ic3.png" alt="" />
+                                <img src={require('../../../assets/images/ic3.png')} alt="" />
                                 <span>Portfolio</span>
                             </a>
                         </li>

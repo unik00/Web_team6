@@ -16,7 +16,14 @@ export const Signup = (account) => {
   return api.post(`/auth/signup`,JSON.stringify(account));
 } 
 
-export const ViewMyProfile = () => {
+export const Logout = (account) => {
+  return api.get(`auth/logout`,  {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
 
-  return api.get(`profile`)
+export const ViewMyProfile = (account) => {
+  return api.get(`profile`, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
 }

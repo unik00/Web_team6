@@ -17,6 +17,13 @@ const myReducer = (state=initialState,action) => {
                 token_type: '',
                 is_login: false
             }
+        case 'LOGOUT':
+            return {
+                ...state,
+                access_token:'',
+                token_type: '',
+                is_login: false
+            }
         default:
             return state;
     }

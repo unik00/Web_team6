@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 
 import UserTabSec from './userTabSec';
 import PostBar from '../../PostBar/index';
-import UserInfo from './userInfo';
+import UserInfo from './User-Information/index';
 import Image from './images';
 
 class MainWsSec extends Component {
     render() {
+        let {userInformation} = this.props;
         return (
             <div className="col-lg-6">
                 <div className="main-ws-sec">
@@ -23,7 +24,7 @@ class MainWsSec extends Component {
                             </div>
                         </div>
                     </div>
-                    <UserInfo/>
+                    <UserInfo userInformation={userInformation}/>
                     <Image/>
                 </div>
             </div>

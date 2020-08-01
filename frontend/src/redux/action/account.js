@@ -17,3 +17,13 @@ export const signin = (account=null) =>{
         })
     }
 }
+
+export const logout = () => {
+    return dispatch =>{
+        CookieService.remove('access_token');
+        CookieService.remove('token_type');
+        dispatch({
+            type: 'LOGOUT'
+        })
+    }
+}

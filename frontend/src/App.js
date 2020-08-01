@@ -3,10 +3,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header/index'
 import Footer from './components/Footer/index'
 
-import routes from './routes'
+import routes from './routes';
+import {connect} from 'react-redux';
+import * as actions from './redux/action/account'
 
 class App extends Component {
-
+  componentDidMount = () => {
+    this.props.signin()
+  }
   setRoutes = (routes) => {
     let result = null;
     if (routes.length > 0) {
@@ -35,4 +39,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch, props) => {
+  return{
+    signin:() => {
+      dispatch(actions.signin())
+    }
+  }
+}
+
+export default connect('', mapDispatchToProps)(App);

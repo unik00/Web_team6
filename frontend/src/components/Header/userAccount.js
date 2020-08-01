@@ -1,6 +1,29 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as actions from '../../redux/action/account'
+import * as API from '../../api'
 
 class UserAccount extends Component {
+    onLogout = () => {
+        let {account, history, logout} = this.props;
+        if(!account){
+            return alert('You must login first');
+        }
+
+        return API.Logout(account)
+        .then(res=>{
+            if(res.status == 200){
+                logout();
+                return history.push('/signin')
+            }
+            return alert(`logout return status ${res.status}`)
+        })
+        .catch(err=>{
+            console.log(err);
+            return alert(`Something went wrong`)
+        })
+    }
     render() {
         return (
             <div className="user-account">
@@ -45,11 +68,27 @@ class UserAccount extends Component {
                         <li><a href="#" title="">Faqs</a></li>
                         <li><a href="#" title="">Terms & Conditions</a></li>
                     </ul>
-                    <h3 className="tc"><a href="sign-in.html" title="">Logout</a></h3>
+                    <h3 className="tc">
+                        <button onClick={this.onLogout} style={{border:'none', cursor: 'pointer'}} title="">Logout</button>
+                    </h3>
                 </div>
             </div>
         )
     }
 }
 
-export default UserAccount
+const mapStateToProps = state => {
+    return{
+        account: state.account
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return{
+        logout: () => {
+            dispatch(actions.logout());
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserAccount))

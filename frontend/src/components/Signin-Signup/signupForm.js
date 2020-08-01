@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import * as API from '../../api';
+import * as actions from '../../redux/action/account';
+import { connect } from 'react-redux';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -7,6 +9,7 @@ class SignupForm extends Component {
         this.state = {
             username: '',
             email: '',
+            name: '',
             type: 'Student',
             password: '',
             password_confirmation: '',
@@ -36,26 +39,38 @@ class SignupForm extends Component {
 
     onSignup = (e) => {
         e.preventDefault();
-        console.log(this.state);
-        let { username, email, password, password_confirmation, type, agreeConditions } = this.state;
+        let { username, email, name, password, password_confirmation, type, agreeConditions } = this.state;
 
         if (agreeConditions) {
             return API.Signup({
                 username,
                 email,
+                name,
                 type,
                 password,
                 password_confirmation
             })
                 .then(res => {
-                    console.log(res);
-                    this.setState({
-                        error: ''
-                    })
-                    //if success redirect to profile with type
+                    if (res.status == 200) {
+                        this.props.signin(res.data);
+                        alert('Signup an account successfully');
+                        this.setState({
+                            error: ''
+                        })
+                        //if success redirect to profile with type
+                    }
                 })
                 .catch(err => {
                     console.log(err);
+                    let errors = [];
+                    let message = '';
+                    if (err.response && err.response.data) {
+                        message = err.response.data['message'];
+                        errors = err.response.data.errors ? Object.values(err.response.data.errors)[0] : []
+                    }
+                    this.setState({
+                        error: errors[0] ? errors[0] : (message ? message : 'Something went wrong')
+                    })
                 })
         }
         else {
@@ -85,6 +100,13 @@ class SignupForm extends Component {
                                 <div className="sn-field">
                                     <input type="text" name="email" placeholder="Email" onChange={this.inputOnchange} />
                                     <i className="la la-envelope"></i>
+                                </div>
+                            </div>
+
+                            <div className="col-lg-12 no-pdd">
+                                <div className="sn-field">
+                                    <input type="text" name="name" placeholder="Fullname" onChange={this.inputOnchange} />
+                                    <i className="la la-user"></i>
                                 </div>
                             </div>
 
@@ -134,4 +156,12 @@ class SignupForm extends Component {
     }
 }
 
-export default SignupForm
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        signin: (account) => {
+            dispatch(actions.signin(account));
+        }
+    }
+}
+
+export default connect('', mapDispatchToProps)(SignupForm)

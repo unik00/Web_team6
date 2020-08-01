@@ -51,13 +51,17 @@ class SignupForm extends Component {
                 password_confirmation
             })
                 .then(res => {
+                    console.log(res);
                     if (res.status == 200) {
-                        this.props.signin(res.data);
-                        alert('Signup an account successfully');
                         this.setState({
                             error: ''
                         })
-                        //if success redirect to profile with type
+                        if(!res.data.is_active){
+                            return alert('Account is not active by admin')
+                        }
+                        this.props.signin(res.data);
+                        alert('Signup an account successfully');
+                        return history.push('/user-profile')
                     }
                 })
                 .catch(err => {

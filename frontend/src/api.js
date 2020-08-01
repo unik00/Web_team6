@@ -27,3 +27,9 @@ export const ViewMyProfile = (account) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+
+export const UpdateProfile = (account, userDataUpdate) => {
+  return api.put(`profile/edit`,userDataUpdate, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}

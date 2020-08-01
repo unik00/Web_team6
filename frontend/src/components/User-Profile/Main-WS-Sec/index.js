@@ -7,11 +7,11 @@ import Image from './images';
 
 class MainWsSec extends Component {
     render() {
-        let {userInformation} = this.props;
+        let {userInformation, regetData} = this.props;
         return (
             <div className="col-lg-6">
                 <div className="main-ws-sec">
-                    <UserTabSec />
+                    <UserTabSec name={userInformation.name}/>
                     <div className="product-feed-tab current" id="feed-dd">
                         <div className="posts-section">
                             <PostBar />
@@ -24,7 +24,7 @@ class MainWsSec extends Component {
                             </div>
                         </div>
                     </div>
-                    <UserInfo userInformation={userInformation}/>
+                    <UserInfo userInformation={userInformation} regetData={regetData}/>
                     <Image/>
                 </div>
             </div>

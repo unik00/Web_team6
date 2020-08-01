@@ -2,19 +2,18 @@ import React, { Component } from 'react'
 
 class UserTabSec extends Component {
     render() {
+        let {name} = this.props
         return (
             <div className="user-tab-sec">
-                <h3>John Doe</h3>
+                <h3>{name}</h3>
                 <div className="star-descp">
-                    <span>Graphic Designer at Self Employed</span>
-                    <ul>
+                    {/* <ul>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star-half-o"></i></li>
-                    </ul>
-                    <a href="#" title="">Status</a>
+                    </ul> */}
                 </div>
                 <div className="tab-feed st2">
                     <ul>

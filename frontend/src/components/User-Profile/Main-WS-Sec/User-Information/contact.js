@@ -16,13 +16,13 @@ class Contact extends Component {
         })
     }
     render() {
-        let { userInformation } = this.props
+        let { userInformation, regetData } = this.props
         let {openEditForm} = this.state
         return (
             <div className="user-profile-ov st2">
                 <h3>
-                    <div style={{ display: 'inline-block' }} onClick={this.toggleEditForm}>Contact </div>
-                    <div style={{ display: 'inline-block' }} onClick={this.toggleEditForm}><i className="fa fa-pencil"></i></div>
+                    <div style={{ display: 'inline-block',cursor: 'pointer' }} onClick={this.toggleEditForm}>Contact </div>
+                    <div style={{ display: 'inline-block',cursor: 'pointer' }} onClick={this.toggleEditForm}><i className="fa fa-pencil"></i></div>
                 </h3>
                 <div>
                     <h4>Address:</h4>
@@ -36,7 +36,10 @@ class Contact extends Component {
                     <h4>Phone:</h4>
                     <p>{userInformation.phone ? userInformation.phone : <i style={{ fontStyle: 'italic' }}>-  Add your phone</i>}</p>
                 </div>
-                {openEditForm?<FormUpdateContact toggleEditForm={this.toggleEditForm}/>:''}
+                {openEditForm?<FormUpdateContact toggleEditForm={this.toggleEditForm}
+                                                regetData={regetData}
+                                                address={userInformation.address}
+                                                phone={userInformation.phone}/>:''}
             </div>
         )
     }

@@ -1,3 +1,7 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import FormUpdateBasicInformation from '../../../Form-Update/formUpdateBasicInformation'
+
 {/* 
     - render basic information of student
     - MSSV
@@ -7,9 +11,6 @@
     - Class
 */}
 
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import FormUpdateBasicInformation from '../../../Form-Update/formUpdateBasicInformation'
 
 class BasicInformation extends Component {
     constructor(props) {

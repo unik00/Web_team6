@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as API from '../../api';
 import * as actions from '../../redux/action/account';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router'; 
 
 class SignupForm extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class SignupForm extends Component {
     onSignup = (e) => {
         e.preventDefault();
         let { username, email, name, password, password_confirmation, type, agreeConditions } = this.state;
-
+        let {history} = this.props;
         if (agreeConditions) {
             return API.Signup({
                 username,
@@ -168,4 +169,4 @@ const mapDispatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect('', mapDispatchToProps)(SignupForm)
+export default withRouter(connect('', mapDispatchToProps)(SignupForm));

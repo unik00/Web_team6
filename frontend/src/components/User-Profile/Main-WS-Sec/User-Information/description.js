@@ -16,16 +16,18 @@ class Description extends Component {
         })
     }
     render() {
-        let { description } = this.props
+        let { description, regetData } = this.props
         let {openEditForm} = this.state
         return (
             <div className="user-profile-ov st2">
                 <h3>
-                    <div style={{ display: 'inline-block' }} onClick={this.toggleEditForm}>Description </div>
-                    <div style={{ display: 'inline-block' }} onClick={this.toggleEditForm}><i className="fa fa-pencil"></i></div>
+                    <div style={{ display: 'inline-block', cursor: 'pointer'  }} onClick={this.toggleEditForm}>Description </div>
+                    <div style={{ display: 'inline-block', cursor: 'pointer'  }} onClick={this.toggleEditForm}><i className="fa fa-pencil"></i></div>
                 </h3>
                 <p>{description ? description : <i style={{ fontStyle: 'italic' }}>-  Add your description</i>}</p>
-                {openEditForm?<FormUpdateDescription toggleEditForm={this.toggleEditForm}/>:''}
+                {openEditForm?<FormUpdateDescription toggleEditForm={this.toggleEditForm}
+                                                    regetData={regetData}
+                                                    description={description}/>:''}
             </div>
         )
     }

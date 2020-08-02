@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as API from '../../api';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import CoverImage from './coverImage';
 import MainLeftSidebar from './Main-Left-Sidebar/index';
@@ -10,22 +10,12 @@ import MainRightSidebar from './Main-Right-Sidebar/index';
 
 class UserProfile extends Component {
     componentDidUpdate(prevProps) {
-        let {history, account} = this.props;
-        
-        if(!account.is_login) return history.push('/signin');
+        let { history, account } = this.props;
+
+        if (!account.is_login) return history.push('/signin');
 
         if (prevProps.account !== account) {
-            API.ViewMyProfile(account)
-                .then(res => {
-                    if(res.status == 200){
-                        this.setState({
-                            ...res.data
-                        })
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            this.getData(account);
         }
     }
     constructor(props) {
@@ -49,6 +39,20 @@ class UserProfile extends Component {
         }
     }
 
+    getData = (account) => {
+        API.ViewMyProfile(account)
+            .then(res => {
+                if (res.status == 200) {
+                    this.setState({
+                        ...res.data
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
         return (
             <div>
@@ -59,8 +63,8 @@ class UserProfile extends Component {
                             <div className="main-section-data">
                                 <div className="row">
                                     <MainLeftSidebar />
-                                    <MainWsSec userInformation={this.state}/>
-                                    <MainRightSidebar userInformation={this.state}/>
+                                    <MainWsSec userInformation={this.state} regetData={this.getData}/>
+                                    <MainRightSidebar userInformation={this.state} />
                                 </div>
                             </div>
                         </div>

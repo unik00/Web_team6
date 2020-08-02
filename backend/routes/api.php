@@ -39,3 +39,10 @@ Route::group(['prefix' => 'profile'], function () {
         Route::get('', 'UserController@index');
     });
 });
+
+Route::group(['prefix' => 'search'], function () {
+    Route::get('student', 'SearchController@student');
+    Route::get('school', 'SearchController@school');
+    Route::get('company', 'SearchController@company');
+});
+

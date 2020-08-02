@@ -41,6 +41,7 @@ class UserController extends Controller
 
         if($user){
             $user->my_profile = true;
+            $user->email = $request->User()->email;
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -74,6 +75,7 @@ class UserController extends Controller
         }
 
         if($user){
+            $user->email = User::find($id)->email;
             if($user->user_id == $request->User()->id) $user->my_profile = true;
             else $user->my_profile = false;
             return response()->json($user);

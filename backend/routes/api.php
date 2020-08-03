@@ -46,3 +46,10 @@ Route::group(['prefix' => 'search'], function () {
     Route::get('company', 'SearchController@company');
 });
 
+Route::group(['prefix' => 'message'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::put('send', 'MessageController@sendMessage');
+        Route::get('', 'MessageController@readConversation');
+        Route::get('read', 'MessageController@readMessage');
+    });
+});

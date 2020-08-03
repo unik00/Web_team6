@@ -18,6 +18,9 @@ class CreateMessageContentsTable extends Migration
             $table->integer('conversation_id')->unsigned();
             $table->foreign('conversation_id')->references('id')->on('message_users')->onUpdate('cascade');
 
+            $table->integer('sender_id')->unsigned();
+            $table->foreign('sender_id')->references('id')->on('users')->onUpdate('cascade');
+
             $table->text('content');
             $table->boolean('is_read')->default(false);
             $table->timestamps();

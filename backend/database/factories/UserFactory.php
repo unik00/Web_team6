@@ -3,6 +3,8 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
+use App\Message_user;
+use App\Message_content;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -19,10 +21,23 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'is_active' => true,
+        'username' => $faker->unique()->userName,
+        'password' => '$2y$10$VAoK8BLxtdmcgAHsIu1u6ODd7XwDSPkAWoB92lA/FMNmJc9s.m1E.', // admin
+    ];
+});
+$factory->define(Message_user::class, function (Faker $faker) {
+    return [
+        'sender_id' => rand(1, 100),
+        'recipient_id' => rand(1, 100)
+    ];
+});
+
+$factory->define(Message_content::class, function (Faker $faker) {
+    return [
+        'conversation_id' => rand(1,100),
+        'content' => $faker->text(),
+        'is_read' => false
     ];
 });

@@ -14,5 +14,6 @@ RUN docker-php-ext-install pdo_mysql zip
 RUN curl --silent --show-error https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
-EXPOSE 9000
-CMD ["php-fpm"]
+WORKDIR /var/www/html/backend
+COPY . ./
+RUN composer install

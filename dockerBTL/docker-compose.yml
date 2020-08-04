@@ -13,29 +13,33 @@ services:
         build: ../backend
         volumes: 
             - ../backend:/var/www/html/backend
-        expose: 
-            - 9000
+            - /var/www/html/backend/vendor
+        ports:
+            - 8000:8000
         restart: unless-stopped
-        #command: php artisan serve
+       # depends_on:
+       #     - "mysql"
+       # command: bash -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
     frontend:
         build: ../frontend
         restart: unless-stopped
         stdin_open: true
-        # ports:
-        #     - 3000:3000
+        ports:
+            - 3000:3000
         volumes: 
             - ../frontend:/usr/src/app
+            - /usr/src/app/node_modules
     mysql:
         image: mysql:5.7
         command: --default-authentication-plugin=mysql_native_password
-        volumes: 
-            - ../db/dbdata:/var/lib/mysql/
+        #volumes: 
+        #   - ../db/dbdata:/var/lib/mysql/
         environment: 
             MYSQL_ROOT_PASSWORD: "root"
             MYSQL_DATABASE: "BTL"
             MYSQL_USER: "root"
             MYSQL_PASSWORD: "root"
         ports: 
-            - 3306:3306
+            - 33061:3306
         restart: unless-stopped
     

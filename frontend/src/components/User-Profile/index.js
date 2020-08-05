@@ -64,7 +64,7 @@ class UserProfile extends Component {
                                 <div className="row">
                                     <MainLeftSidebar />
                                     <MainWsSec userInformation={this.state} regetData={this.getData}/>
-                                    <MainRightSidebar userInformation={this.state} />
+                                    <MainRightSidebar userInformation={this.state} regetData={this.getData} />
                                 </div>
                             </div>
                         </div>

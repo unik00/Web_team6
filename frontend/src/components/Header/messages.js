@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link } from 'react-router-dom'
 
 class Messages extends Component {
     render() {
@@ -22,7 +23,7 @@ class Messages extends Component {
                             </div>
                         </div>
                         <div className="view-all-nots">
-                            <a href="messages.html" title="">View All Messsages</a>
+                            <Link to={'/message'}>View All Messsages</Link>
                         </div>
                     </div>
                 </div>

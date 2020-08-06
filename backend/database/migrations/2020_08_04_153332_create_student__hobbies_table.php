@@ -15,11 +15,8 @@ class CreateStudentHobbiesTable extends Migration
     {
         Schema::create('student__hobbies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-
-            $table->integer('hobby_id')->unsigned();
-            $table->foreign('hobby_id')->references('id')->on('hobbies')->onUpdate('cascade');
+            $table->string('name');
+            $table->text('description');
             $table->timestamps();
         });
     }

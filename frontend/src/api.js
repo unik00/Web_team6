@@ -33,3 +33,21 @@ export const UpdateProfile = (account, userDataUpdate) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+
+export const SendMessage = (account, sendMessageData) => {
+  return api.put(`message/send`, sendMessageData,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const GetMessages = (account) => {
+  return api.get(`/message`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const ReadMessage = (account,idConversation) => {
+  return api.get(`/message/${idConversation}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}

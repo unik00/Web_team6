@@ -4,21 +4,14 @@ import SocialLink from './socialLink';
 
 class MainRightSidebar extends Component {
     render() {
-        let { userInformation } = this.props
+        let { userInformation, regetData } = this.props
         return (
-            <div className="col-lg-3">
-                <div className="right-sidebar" style={{position:'relative', zIndex:-1}}>
-                    <div className="message-btn">
+            <div className="col-lg-3" style={{position:'relative', zIndex:0}}>
+                <div className="right-sidebar">
+                    <div className="message-btn"  style={{position:'sticky', zIndex:0}}>
                         <a href="#" title=""><i className="fa fa-envelope"></i> Message</a>
                     </div>
-                    <div className="widget widget-portfolio">
-                        <div className="wd-heady">
-                            <h3>Social</h3>
-                            <div style={{display:'inline-block', float:'right'}} className="overview-open"><i className="fa fa-pencil"></i></div>
-                            <img src="images/photo-icon.png" alt="" />
-                        </div>
-                        <SocialLink userInformation={userInformation}/>
-                    </div>
+                    <SocialLink userInformation={userInformation} regetData={regetData}/>
                 </div>
             </div>
         )

@@ -50,6 +50,6 @@ Route::group(['prefix' => 'message'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::put('send', 'MessageController@sendMessage');
         Route::get('', 'MessageController@readConversation');
-        Route::get('read', 'MessageController@readMessage');
+        Route::get('{idConversation}', 'MessageController@readMessage');
     });
 });

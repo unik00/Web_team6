@@ -23,7 +23,7 @@ Route::group([
 ], function () {
     Route::post('login', 'LoginController@login');
     Route::post('signup', 'SignupController@signup');
-    Route::get('list', 'UserController@list');
+    Route::get('listguest', 'UserController@list');
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -69,23 +69,23 @@ Route::group(['prefix' => 'follow'], function () {
 });
 
 Route::group(['prefix' => 'student'], function () {
-    Route::get('list', 'StudentController@list');
+    Route::get('listguest', 'StudentController@list');
     Route::group(['middleware' => ['auth:api']], function () {
-        
+        Route::get('list', 'StudentController@list');
     });
 });
 
 Route::group(['prefix' => 'school'], function () {
-    Route::get('list', 'SchoolController@list');
+    Route::get('listguest', 'SchoolController@list');
     Route::group(['middleware' => ['auth:api']], function () {
-        
+        Route::get('list', 'SchoolController@list');
     });
 });
 
 Route::group(['prefix' => 'company'], function () {
-    Route::get('list', 'CompanyController@list');
+    Route::get('listguest', 'CompanyController@list');
     Route::group(['middleware' => ['auth:api']], function () {
-        
+        Route::get('list', 'CompanyController@list');
     });
 });
 

@@ -7,13 +7,17 @@ BTL_team6.
 cd dockerBTL 
 docker-compose up --build  # Nếu chưa build
 docker-compose up   # Khởi động docker-compose  
-docker-compose exec backend php artisan migrate:refresh  # Khởi tạo lại database
+docker-compose exec backend php artisan migrate:fresh --force  # Khởi tạo lại database
 docker-compose exec backend php artisan serve --host=0.0.0.0 --port=8000  # Khởi tạo server backend
 docker-compose down # Đóng docker-compose
 ```
 ## Backend
 ```bash
 docker-compose exec backend php artisan passport:install # tạo lại key tránh lỗi 500 khi login
+docker-compose exec backend php artisan model:filter (User) # tạo filter moder (User)
+docker-compose exec backend php artisan db:seed # tạo db tự động
+docker-compose exec backend php artisan make:model (User) -m # tạo model User
+docker-compose exec backend php artisan make:controller (UserController) # tạo UserController
 ```
 ### API
 |    Url         |     Header                                     |   Request                       | 

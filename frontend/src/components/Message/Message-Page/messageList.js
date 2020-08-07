@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 
 class MessageList extends Component {
+
+    componentDidUpdate(prevProps){
+        let {currentBox} = this.props;
+
+        if(prevProps.currentBox !== currentBox) {
+            this.setState({
+                currentBox: currentBox
+            })
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state={
@@ -9,7 +20,7 @@ class MessageList extends Component {
     }
     
     renderListMessage = () => {
-        let { listMessage, readMessage } = this.props;
+        let { listMessage } = this.props;
         let {currentBox} = this.state;
         return listMessage.map((message, index) => {
             return (

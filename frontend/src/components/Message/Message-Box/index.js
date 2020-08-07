@@ -5,10 +5,8 @@ import * as API from '../../../api';
 import { connect } from 'react-redux';
 
 class MessageBox extends Component {
-   componentDidUpdate(prevProps) {
-        let { account, history } = this.props;
-
-        if (!account.is_login) return history.push('/signin');
+    componentDidUpdate(prevProps) {
+        let { account } = this.props;
 
         if (prevProps.account !== account) {
             this.getMessages();
@@ -28,7 +26,6 @@ class MessageBox extends Component {
         API.GetMessages(account)
             .then(res => {
                 if (res.status == 200 && res.data.success) {
-                    console.log(res.data.data)
                     this.setState({
                         listMessage: res.data.data
                     })
@@ -46,7 +43,7 @@ class MessageBox extends Component {
             return (
                 <div className="notfication-details" key={index}>
                     <div className="notification-info">
-                        <h3><Link to={'/message'} onClick={() => { this.props.history.push('/message'); this.props.history.go() }}>
+                        <h3><Link to={`/message/${message.other_id}`} onClick={() => { this.props.history.push(`/messages?other_id=${message.other_id}`); this.props.history.go() }}>
                             {message.name}
                         </Link> </h3>
                     </div>
@@ -61,7 +58,7 @@ class MessageBox extends Component {
                 <div className="nott-list">
                     {this.renderMessageNotification()}
                     <div className="view-all-nots">
-                        <Link to={'/message'} onClick={() => { this.props.history.push('/message'); this.props.history.go() }}>View All Messsages</Link>
+                        <Link to={'/message'} onClick={() => { this.props.history.push('/messages'); this.props.history.go() }}>View All Messsages</Link>
                     </div>
                 </div>
             </div>

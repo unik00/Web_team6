@@ -51,3 +51,27 @@ export const ReadMessage = (account,idConversation) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }})
 }
+
+export const getListUser = (account,offset = 0, limit = 10, random = 0) => {
+  return api.get(`auth/list?offset=${offset}&limit=${limit}&random=${random}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const getListStudent = (account,offset = 0, limit = 10, random = 0) => {
+  return api.get(`student/list?offset=${offset}&limit=${limit}&random=${random}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const getListSchool = (account,offset = 0, limit = 10, random = 0) => {
+  return api.get(`school/list?offset=${offset}&limit=${limit}&random=${random}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const getListCompany = (account,offset = 0, limit = 10, random = 0) => {
+  return api.get(`company/list?offset=${offset}&limit=${limit}&random=${random}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}

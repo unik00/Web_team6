@@ -26,7 +26,9 @@ class MessagePage extends Component {
     }
 
     getMessages = () => {
-        let { account } = this.props;
+        let { account, match } = this.props;
+        let index = -1;
+        let other_id = (new URLSearchParams(this.props.location.search)).get('other_id');
         API.GetMessages(account)
             .then(res => {
                 if (res.status == 200 && res.data.success) {
@@ -34,6 +36,13 @@ class MessagePage extends Component {
                     this.setState({
                         listMessage: res.data.data
                     })
+                    if(other_id){
+                        index = res.data.data.map(e=>e.other_id).indexOf(parseInt(other_id))
+                        if(index >= 0){
+                            this.readMessage(res.data.data[index].id,index)
+                        }
+                    }
+                    else
                     this.readMessage(res.data.data[0].id,0)
                 }
             })
@@ -72,7 +81,7 @@ class MessagePage extends Component {
                                     <div className="msg-title">
                                         <h3>Messages</h3>
                                     </div>
-                                    <MessageList listMessage={listMessage} readMessage={this.readMessage} />
+                                    <MessageList listMessage={listMessage} readMessage={this.readMessage} currentBox={currentConversationIndex}/>
                                 </div>
                             </div>
                             <div className="col-lg-8 col-md-12 pd-right-none pd-left-none">

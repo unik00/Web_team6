@@ -15,7 +15,7 @@ const routes = [
         main: () => <UserProfile/>
     },
     {
-        path:"/message",
+        path:"/messages",
         exact: true,
         main: () => <Message/>
     }

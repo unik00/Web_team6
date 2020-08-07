@@ -131,4 +131,20 @@ class UserController extends Controller
             ], 503);
         }
     }
+
+    function list(Request $request){
+        $random = $request->random ?? 0;
+        $offset = $request->offset ?? 0;
+        $limit = $request->limit ?? 10;
+        if(!$random) $list = User::limit($limit)->offset($offset)->get();
+        else $list = User::all()->random($limit);
+        foreach($list as $ls){
+            $id = $ls->id;
+            $user = Student::where('user_id', $id)->first();
+            if(!$user) $user = School::where('user_id', $id)->first();
+            if(!$user) $user = Company::where('user_id', $id)->first();
+            $ls->name = $user->name;
+        }
+        return response()->json(['users' => $list]);
+    }
 }

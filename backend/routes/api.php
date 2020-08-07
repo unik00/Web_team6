@@ -45,6 +45,9 @@ Route::group(['prefix' => 'search'], function () {
     Route::get('school', 'SearchController@school');
     Route::get('company', 'SearchController@company');
     Route::get('hobby', 'SearchController@hobby');
+    Route::get('job', 'SearchController@job');
+    Route::get('language', 'SearchController@language');
+    
 });
 
 Route::group(['prefix' => 'message'], function () {
@@ -90,5 +93,21 @@ Route::group(['prefix' => 'hobby'], function () {
         Route::put('add', 'HobbyController@addOrUpdate');
         Route::get('remove', 'HobbyController@remove');
         Route::get('list', 'HobbyController@list');
+    });
+});
+
+Route::group(['prefix' => 'job'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::put('add', 'JobController@addOrUpdate');
+        Route::get('remove', 'JobController@remove');
+        Route::get('list', 'JobController@list');
+    });
+});
+
+Route::group(['prefix' => 'language'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::put('add', 'LanguageController@addOrUpdate');
+        Route::get('remove', 'LanguageController@remove');
+        Route::get('list', 'LanguageController@list');
     });
 });

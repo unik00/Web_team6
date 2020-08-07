@@ -9,6 +9,8 @@ use App\Student;
 use App\School;
 use App\Company;
 use App\Hobby;
+use App\Job;
+use App\Language;
 class SearchController extends Controller
 {
     public function student(Request $request)
@@ -30,4 +32,13 @@ class SearchController extends Controller
     {
         return Hobby::filter($request->all())->paginateFilter();
     }
+    public function job(Request $request)
+    {
+        return Job::filter($request->all())->paginateFilter();
+    }
+    public function language(Request $request)
+    {
+        return Language::filter($request->all())->paginateFilter();
+    }
+
 }

@@ -131,4 +131,13 @@ class UserController extends Controller
             ], 503);
         }
     }
+
+    function list(Request $request){
+        $random = $request->random ?? 0;
+        $offset = $request->offset ?? 0;
+        $limit = $request->limit ?? 10;
+        if(!$random) $list = User::limit($limit)->offset($offset)->get();
+        else $list = User::all()->random($limit);
+        return response()->json(['users' => $list]);
+    }
 }

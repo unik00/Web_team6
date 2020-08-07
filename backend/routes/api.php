@@ -62,3 +62,24 @@ Route::group(['prefix' => 'follow'], function () {
         Route::get('get', 'FollowController@getFollow');
     });
 });
+
+Route::group(['prefix' => 'student'], function () {
+    Route::get('list', 'StudentController@list');
+    Route::group(['middleware' => ['auth:api']], function () {
+        
+    });
+});
+
+Route::group(['prefix' => 'school'], function () {
+    Route::get('list', 'SchoolController@list');
+    Route::group(['middleware' => ['auth:api']], function () {
+        
+    });
+});
+
+Route::group(['prefix' => 'company'], function () {
+    Route::get('list', 'CompanyController@list');
+    Route::group(['middleware' => ['auth:api']], function () {
+        
+    });
+});

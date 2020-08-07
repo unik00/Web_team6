@@ -1,11 +1,11 @@
-Limport React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import * as API from '../../../api';
 import { connect } from 'react-redux';
 
 class MessageBox extends Component {
-    componentDidUpdate(prevProps) {
+   componentDidUpdate(prevProps) {
         let { account, history } = this.props;
 
         if (!account.is_login) return history.push('/signin');

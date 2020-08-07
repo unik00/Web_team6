@@ -11,10 +11,6 @@ use App\Company;
 use App\ModelFilters\StudentFilter;
 class CompanyController extends Controller
 {
-    public function search(Request $request)
-    {
-        return Company::filter($request->all())->get();
-    }
     function list(Request $request){
         $random = $request->random ?? 0;
         $offset = $request->offset ?? 0;

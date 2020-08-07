@@ -44,6 +44,7 @@ Route::group(['prefix' => 'search'], function () {
     Route::get('student', 'SearchController@student');
     Route::get('school', 'SearchController@school');
     Route::get('company', 'SearchController@company');
+    Route::get('hobby', 'SearchController@hobby');
 });
 
 Route::group(['prefix' => 'message'], function () {
@@ -81,5 +82,13 @@ Route::group(['prefix' => 'company'], function () {
     Route::get('list', 'CompanyController@list');
     Route::group(['middleware' => ['auth:api']], function () {
         
+    });
+});
+
+Route::group(['prefix' => 'hobby'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::put('add', 'HobbyController@addOrUpdate');
+        Route::get('remove', 'HobbyController@remove');
+        Route::get('list', 'HobbyController@list');
     });
 });

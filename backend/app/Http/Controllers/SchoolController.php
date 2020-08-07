@@ -11,10 +11,6 @@ use App\Company;
 use App\ModelFilters\SchoolFilter;
 class SchoolController extends Controller
 {
-    public function search(Request $request)
-    {
-        return School::filter($request->all())->get();
-    }
     function list(Request $request){
         $random = $request->random ?? 0;
         $offset = $request->offset ?? 0;

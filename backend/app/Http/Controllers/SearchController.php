@@ -8,7 +8,7 @@ use App\User;
 use App\Student;
 use App\School;
 use App\Company;
-
+use App\Hobby;
 class SearchController extends Controller
 {
     public function student(Request $request)
@@ -25,5 +25,9 @@ class SearchController extends Controller
     {
        // return $request->all();
         return Company::filter($request->all())->paginateFilter();
+    }
+    public function hobby(Request $request)
+    {
+        return Hobby::filter($request->all())->paginateFilter();
     }
 }

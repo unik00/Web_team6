@@ -48,7 +48,8 @@ class SigninForm extends React.Component {
                         return alert('Account is not active by admin')
                     }
                     this.props.signin(res.data);
-                    return history.push('/user-profile')
+                    history.push('/user-profile');
+                    return history.go();
                 }
                 return alert(`login with status ${res.status}`)
             })
@@ -104,13 +105,6 @@ class SigninForm extends React.Component {
                         </div>
                     </div>
                 </form>
-                <div className="login-resources">
-                    <h4>Login Via Social Account</h4>
-                    <ul>
-                        <li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Login Via Facebook</a></li>
-                        <li><a href="#" title="" className="tw"><i className="fa fa-twitter"></i>Login Via Twitter</a></li>
-                    </ul>
-                </div>
             </div>
         )
     }

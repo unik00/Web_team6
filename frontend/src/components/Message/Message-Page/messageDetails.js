@@ -22,9 +22,11 @@ class MessageDetails extends Component {
         return currentConversation.map((content, index) => {
             return (
                 <div className={content.is_sender ? "main-message-box st3" : "main-message-box ta-right"} key={index}>
-                    <div className="message-dt">
-                        <div className="message-inner-dt">
-                            <p>{content.content}</p>
+                    <div className={content.is_sender ? "message-dt st3":"message-dt"} style={{float:content.is_sender ? "left": "right"}}>
+                        <div className="message-inner-dt" 
+                            style={{overflow:'auto'}}
+                        >
+                                <p>{content.content}</p>
                         </div>
                         <span>{content.updated_at}</span>
                     </div>
@@ -71,7 +73,8 @@ class MessageDetails extends Component {
                     </div>
                     <a href="#" title=""><i className="fa fa-ellipsis-v"></i></a>
                 </div>
-                <div className="messages-line">
+                <div className="messages-line" style={{overflow:'scroll'}}>
+                    <br/><br/><br/><br/><br/><br/>
                     {this.renderCurrentConversation()}
                 </div>
                 <div className="message-send-area">

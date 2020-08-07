@@ -137,20 +137,26 @@ class UserController extends Controller
         $random = $request->random ?? 0;
         $offset = $request->offset ?? 0;
         $limit = $request->limit ?? 10;
-        $myid = $request->User()->id;
+        $myid = null;
+        if($request->User()) $myid = $request->User()->id;
+        $list = array();
         if(!$random) $list = User::limit($limit)->offset($offset)->get();
-        else $list = User::all()->random($limit);
+        else {
+            $list = User::all();
+            if($list->count() < $limit) $limit = $list->count();
+            $list->random($limit);
+        }
         foreach($list as $ls){
             $id = $ls->id;
             $user = Student::where('user_id', $id)->first();
             if(!$user) $user = School::where('user_id', $id)->first();
             if(!$user) $user = Company::where('user_id', $id)->first();
-            $ls->name = $user->name;
+            if($user) $ls->name = $user->name;
             if($myid){
                 $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();
                 $ls->is_follow = ($is_follow) ? true : false;
             }
         }
-        return response()->json(['users' => $list]);
+        return response()->json(['Users' => $list]);
     }
 }

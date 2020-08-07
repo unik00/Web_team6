@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,7 +23,7 @@ Route::group([
 ], function () {
     Route::post('login', 'LoginController@login');
     Route::post('signup', 'SignupController@signup');
-
+    Route::get('list', 'UserController@list');
     Route::group([
       'middleware' => 'auth:api'
     ], function() {

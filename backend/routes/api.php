@@ -53,3 +53,12 @@ Route::group(['prefix' => 'message'], function () {
         Route::get('{idConversation}', 'MessageController@readMessage');
     });
 });
+
+Route::group(['prefix' => 'follow'], function () {
+    Route::get('get', 'FollowController@getFollow');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('add', 'FollowController@addFollow');
+        Route::get('remove', 'FollowController@unFollow');
+        Route::get('get', 'FollowController@getFollow');
+    });
+});

@@ -43,6 +43,10 @@ class UserController extends Controller
         if($user){
             $user->my_profile = true;
             $user->email = $request->User()->email;
+            $user->last_online_at = $request->User()->last_online_at;
+            $user->following = Follower::where('user_id', $user->user_id)->count();
+            $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
+           
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -77,8 +81,12 @@ class UserController extends Controller
 
         if($user){
             $user->email = User::find($id)->email;
+            $user->last_online_at = User::find($id)->last_online_at;
             if($user->user_id == $request->User()->id) $user->my_profile = true;
             else $user->my_profile = false;
+            $user->following = Follower::where('user_id', $user->user_id)->count();
+            $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
+            
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);

@@ -112,3 +112,12 @@ Route::group(['prefix' => 'language'], function () {
         Route::get('list', 'LanguageController@list');
     });
 });
+
+Route::group(['prefix' => 'file'], function () {
+    Route::get('avatar', 'FileController@getAvatar');
+    Route::get('cover', 'FileController@getCover');
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('avatar', 'FileController@addAvatar');
+        Route::post('cover', 'FileController@addCover');
+    });
+});

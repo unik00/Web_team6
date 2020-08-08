@@ -41,15 +41,21 @@ class MessageDetails extends Component {
     sendMessage = (e) => {
         e.preventDefault();
         let {sendMessageContent} = this.state;
-        let { currentMessage,currentConversationIndex,readMessage,account } = this.props;
-
+        let { currentMessage,currentConversationIndex,readMessage,account, getMessages, newMessage } = this.props;
+        let recipient_id = currentMessage && currentMessage.other_id ? currentMessage.other_id : newMessage && newMessage.user_id ? newMessage.user_id : '';
         API.SendMessage(account,{
-            recipient_id: currentMessage.other_id,
+            recipient_id,
             message:sendMessageContent
         })
         .then(res=>{
-            console.log(res);
             if(res.status == 200 && res.data.success == true) {
+                if(currentConversationIndex == -1) {
+                    window.location.reload();
+                    return getMessages();
+                }
+                this.setState({
+                    sendMessageContent:''
+                })
                 return readMessage(currentMessage.id,currentConversationIndex);
             }
         })
@@ -58,7 +64,7 @@ class MessageDetails extends Component {
         })
     }
     render() {
-        let { currentMessage } = this.props;
+        let { currentMessage, newMessage } = this.props;
         return (
             <div className="main-conversation-box">
                 <div className="message-bar-head">
@@ -67,7 +73,7 @@ class MessageDetails extends Component {
                             <img src="http://via.placeholder.com/50x50" alt="" />
                         </div>
                         <div className="usr-mg-info">
-                            <h3>{currentMessage ? currentMessage.name : ''}</h3>
+                            <h3>{currentMessage ? currentMessage.name : newMessage ? newMessage.name : ''}</h3>
                             <p>Online</p>
                         </div>
                     </div>

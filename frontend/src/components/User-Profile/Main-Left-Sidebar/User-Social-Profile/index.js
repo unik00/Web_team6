@@ -5,10 +5,11 @@ import FollowStatus from './followStatus';
 
 class MainLeftSidebar extends Component{
     render(){
+        let {userInformation,  regetData} =this.props
         return(
             <div className="user_profile">
                 <Avatar/>
-                <FollowStatus/>
+               {<FollowStatus userInformation={userInformation} regetData={regetData}/>}
             </div>
         )
     }

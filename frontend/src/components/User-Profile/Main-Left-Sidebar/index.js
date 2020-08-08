@@ -5,10 +5,11 @@ import SuggesstionUser from './suggestionUser';
 
 class MainLeftSidebar extends Component {
     render() {
+        let {userInformation, regetData} =this.props
         return (
             <div className="col-lg-3">
                 <div className="main-left-sidebar">
-                    <UserSocialProfile/>
+                    <UserSocialProfile userInformation={userInformation} regetData={regetData}/>
                     <SuggesstionUser/>
                 </div>
             </div>

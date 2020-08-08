@@ -11,7 +11,7 @@ class UserInfo extends Component {
             <div className="product-feed-tab" id="info-dd">
                 {userInformation.type == 'Student' ? <BasicInformation userInformation={userInformation}  regetData={regetData}/> : ''}
                 <Contact userInformation={userInformation} regetData={regetData}/>
-                {userInformation.type != 'Student' ? <Description description={userInformation.description} regetData={regetData}/> : ''}
+                {userInformation.type != 'Student' ? <Description my_profile={userInformation.my_profile} description={userInformation.description} regetData={regetData}/> : ''}
                 {userInformation.type == 'Student' ? <Experiant/> : ''}
             </div>
         )

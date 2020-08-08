@@ -29,7 +29,7 @@ class UserProfile extends Component {
             linkFB: null,
             linkGit: null,
             mssv: null,
-            my_profile: true,
+            my_profile: false,
             name: "",
             name_school: null,
             phone: null,
@@ -40,7 +40,20 @@ class UserProfile extends Component {
     }
 
     getData = (account) => {
-        API.ViewMyProfile(account)
+        let other_id = (new URLSearchParams(this.props.location.search)).get('other_id');
+        if (other_id) {
+            return API.ViewOtherProfile(account, other_id)
+                .then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        this.setState({
+                            ...res.data
+                        })
+                    }
+                })
+                .catch(err => console.log(err))
+        }
+        return API.ViewMyProfile(account)
             .then(res => {
                 if (res.status == 200) {
                     this.setState({
@@ -62,8 +75,8 @@ class UserProfile extends Component {
                         <div className="container">
                             <div className="main-section-data">
                                 <div className="row">
-                                    <MainLeftSidebar />
-                                    <MainWsSec userInformation={this.state} regetData={this.getData}/>
+                                    <MainLeftSidebar userInformation={this.state} regetData={this.getData}/>
+                                    <MainWsSec userInformation={this.state} regetData={this.getData} />
                                     <MainRightSidebar userInformation={this.state} regetData={this.getData} />
                                 </div>
                             </div>

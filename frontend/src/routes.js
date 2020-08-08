@@ -3,6 +3,7 @@ import React from 'react';
 import Signin from './components/Signin-Signup/index';
 import UserProfile from './components/User-Profile/index';
 import Message from './components/Message/Message-Page/index';
+import AllUser from './components/All-User/index';
 const routes = [
     {
         path:'/signin',
@@ -18,6 +19,11 @@ const routes = [
         path:"/messages",
         exact: true,
         main: () => <Message/>
+    },
+    {
+        path:"/all-user",
+        exact: true,
+        main: () => <AllUser/>
     }
 ]
 

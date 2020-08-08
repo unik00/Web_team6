@@ -18,6 +18,7 @@ docker-compose exec backend php artisan model:filter (User) # tạo filter moder
 docker-compose exec backend php artisan db:seed # tạo db tự động
 docker-compose exec backend php artisan make:model (User) -m # tạo model User
 docker-compose exec backend php artisan make:controller (UserController) # tạo UserController
+docker-compose exec backend composer dump-autoload # generate new class map
 ```
 ### API
 |    Url         |     Header                                     |   Request                       | 

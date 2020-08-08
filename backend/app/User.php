@@ -9,5 +9,5 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use Filterable;
-    protected $fillable = ['username', 'password', 'email', 'name', 'school_id'];
+    protected $fillable = ['username', 'password', 'email'];
 }

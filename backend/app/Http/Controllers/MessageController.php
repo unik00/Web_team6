@@ -74,9 +74,9 @@ class MessageController extends Controller
         return response()->json(['success' => true, 'data' => $conversation]);
     }
 
-    function readMessage(Request $request){
+    function readMessage(Request $request, $idConversation){
         $sender_id = $request->User()->id;
-        $conversation_id = $request->conversation_id;
+        $conversation_id = $idConversation;
         $message_user = Message_user::find($conversation_id);
         if($message_user->sender_id != $sender_id && $message_user->recipient_id != $sender_id){
             return response()->json(['success' => false, 'message' => 'Bạn không thể xem cuộc trò chuyện này']);

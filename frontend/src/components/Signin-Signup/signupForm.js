@@ -57,12 +57,13 @@ class SignupForm extends Component {
                         this.setState({
                             error: ''
                         })
-                        if(!res.data.is_active){
+                        if(res.data.is_active == false){
                             return alert('Account is not active by admin')
                         }
                         this.props.signin(res.data);
                         alert('Signup an account successfully');
-                        return history.push('/user-profile')
+                        history.push('/user-profile');
+                        return history.go();
                     }
                 })
                 .catch(err => {

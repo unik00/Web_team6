@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('is_active')->default(false);
             $table->string('email')->unique();
+            $table->string('avatar')->nullable();
+            $table->string('cover')->nullable();
+            $table->timestamp("last_online_at")->useCurrent();
             $table->timestamps();
         });
     }

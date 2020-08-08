@@ -15,7 +15,8 @@ class UserAccount extends Component {
         .then(res=>{
             if(res.status == 200){
                 logout();
-                return history.push('/signin')
+                history.push('/signin');
+                return history.go();
             }
             return alert(`logout return status ${res.status}`)
         })

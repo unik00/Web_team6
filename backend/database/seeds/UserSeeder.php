@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         factory(User::class, 100)->create();
-        factory(Message_user::class, 100)->create();
-        factory(Message_content::class, 20)->create();
+      //  factory(Message_user::class, 100)->create();
+      //  factory(Message_content::class, 20)->create();
     }
 }

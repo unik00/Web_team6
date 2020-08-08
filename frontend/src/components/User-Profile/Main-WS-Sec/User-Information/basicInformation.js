@@ -34,10 +34,10 @@ class BasicInformation extends Component {
             <div className="user-profile-ov st2">
                 <h3>
                     <div style={{ display: 'inline-block', cursor: 'pointer' }} className="exp-bx-open">Basic Information</div>
-                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                    {userInformation.my_profile ? <div style={{ display: 'inline-block', cursor: 'pointer' }}
                          onClick={this.toggleEditForm}>
                              <i className="fa fa-pencil"></i>
-                    </div>
+                    </div> : ''}
                 </h3>
                 <div>
                     <h4>Name:</h4>

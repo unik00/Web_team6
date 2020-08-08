@@ -21,8 +21,10 @@ class Contact extends Component {
         return (
             <div className="user-profile-ov st2">
                 <h3>
-                    <div style={{ display: 'inline-block',cursor: 'pointer' }} onClick={this.toggleEditForm}>Contact </div>
-                    <div style={{ display: 'inline-block',cursor: 'pointer' }} onClick={this.toggleEditForm}><i className="fa fa-pencil"></i></div>
+                    <div style={{ display: 'inline-block',cursor: 'pointer' }}>Contact </div>
+                    {userInformation.my_profile ? <div style={{ display: 'inline-block',cursor: 'pointer' }} onClick={this.toggleEditForm}>
+                        <i className="fa fa-pencil"></i>
+                    </div> : ''}
                 </h3>
                 <div>
                     <h4>Address:</h4>

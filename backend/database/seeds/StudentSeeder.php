@@ -12,7 +12,7 @@ class StudentSeeder extends Seeder
      * @return void
      */
     public function run(){
-        DB::table('users')->insert([
+        DB::table('students')->insert([
             ["user_id"=>1,
             "name"=>"admin",
             "gender"=>"Nam",

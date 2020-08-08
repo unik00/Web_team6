@@ -12,7 +12,7 @@ class SchoolSeeder extends Seeder
      * @return void
      */
     public function run(){
-        DB::table('users')->insert([
+        DB::table('schools')->insert([
             ["user_id"=>2,
             "name"=>"UET",
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),

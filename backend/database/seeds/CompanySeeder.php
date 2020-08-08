@@ -12,7 +12,7 @@ class CompanySeeder extends Seeder
      * @return void
      */
     public function run(){
-        DB::table('users')->insert([
+        DB::table('companies')->insert([
             ["user_id"=>3,
             "name"=>"Giao hang tiet kiem",
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),

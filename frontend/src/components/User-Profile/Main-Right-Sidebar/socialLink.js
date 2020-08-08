@@ -25,10 +25,10 @@ class SocialLink extends Component {
             <div className="widget widget-portfolio">
                 <div className="wd-heady">
                     <h3 onClick={this.toggleEditForm}>Social</h3>
-                    <div onClick={this.toggleEditForm} 
+                    {userInformation.my_profile ? <div onClick={this.toggleEditForm} 
                         style={{ display: 'inline-block', float: 'right', cursor: 'pointer' }}>
                             <i className="fa fa-pencil"></i>
-                    </div>
+                    </div> : ''}
                 </div>
                 <ul className="social_links">
                     <li><Link to={'a'}><i className="la la-globe"></i> {userInformation.linkCV}</Link></li>

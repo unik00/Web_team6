@@ -9,15 +9,7 @@ class SuggesstionUser extends Component {
         let { account } = this.props;
 
         if (prevProps.account !== account) {
-            API.getListUser(account).then(res => {
-                console.log(res);
-                this.setState({
-                    listUser: res.data.users
-                })
-            })
-                .catch(err => {
-                    console.log(err);
-                })
+            this.getListUser();
         }
     }
     constructor(props) {
@@ -27,19 +19,66 @@ class SuggesstionUser extends Component {
         }
     }
 
+    getListUser = () => {
+        let { account } = this.props;
+        API.getListUser(account).then(res => {
+            this.setState({
+                listUser: res.data.Users
+            })
+        })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    onFollow = (other_id) => {
+        let {account} = this.props;
+        
+        return API.followUser(account,other_id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListUser();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('Something went wrong')
+        })
+    }
+
+    unFollow = (other_id) => {
+        let {account} = this.props;
+        
+        return API.unfollowUser(account,other_id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListUser();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('Something went wrong')
+        })
+    }
+
     renderSuggestionUser = () => {
         let { listUser } = this.state;
-        return listUser.map((user, index) => {
+        let {history} = this.props;
+        return listUser ? listUser.map((user, index) => {
             return (
-                <div className="suggestion-usd" key={index}>
-                    <img src="http://via.placeholder.com/35x35" alt="" />
-                    <div className="sgt-text">
-                        <h4>{user.name}</h4>
-                    </div>
-                    <span><i className="la la-plus"></i></span>
-                </div>
+                <Link to={`user-profile?other_id=${user.id}`} 
+                    onClick={()=>{history.push(`user-profile?other_id=${user.id}`);history.go()}} 
+                    className="suggestion-usd" key={index}>
+                        <img src="http://via.placeholder.com/35x35" alt="" />
+                        <div className="sgt-text">
+                            <br/>
+                            <h4>{user.name}</h4>
+                        </div>
+                        {!user.is_follow ?
+                            <span><i className="la la-plus" onClick={() => this.onFollow(user.id)}></i></span>
+                            :<span><i className="la la-minus" onClick={() => this.unFollow(user.id)}></i></span>
+                        }
+                </Link>
             )
-        })
+        }) : ''
     }
 
     render() {
@@ -51,17 +90,9 @@ class SuggesstionUser extends Component {
                     <i className="la la-ellipsis-v"></i>
                 </div>
                 <div className="suggestions-list">
-                    <div className="suggestion-usd">
-                        <img src="http://via.placeholder.com/35x35" alt="" />
-                        <div className="sgt-text">
-                            <h4>Jessica William</h4>
-                            <span>Graphic Designer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                    </div>
                     {this.renderSuggestionUser()}
                     <div className="view-more">
-                        <Link to={"/all-user"}  onClick={() => { this.props.history.push(`/all-user`); this.props.history.go() }}>View More</Link>
+                        <Link to={"/all-user"}  onClick={() => { history.push(`/all-user`); history.go() }}>View More</Link>
                     </div>
                 </div>
             </div>

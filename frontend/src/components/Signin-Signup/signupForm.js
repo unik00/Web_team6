@@ -62,7 +62,8 @@ class SignupForm extends Component {
                         }
                         this.props.signin(res.data);
                         alert('Signup an account successfully');
-                        return history.push('/user-profile')
+                        history.push('/user-profile');
+                        return history.go();
                     }
                 })
                 .catch(err => {

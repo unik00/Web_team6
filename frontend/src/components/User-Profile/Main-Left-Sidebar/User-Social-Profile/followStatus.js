@@ -7,7 +7,7 @@ class FollowStatus extends Component {
     onFollow = () => {
         let {account, userInformation, regetData} = this.props;
         
-        return API.followUser(account,userInformation.id)
+        return API.followUser(account,userInformation.user_id)
         .then(res=>{
             alert(res.data.message);
             regetData(account);
@@ -21,7 +21,7 @@ class FollowStatus extends Component {
     unFollow = () => {
         let {account, userInformation, regetData} = this.props;
         
-        return API.unfollowUser(account,userInformation.id)
+        return API.unfollowUser(account,userInformation.user_id)
         .then(res=>{
             alert(res.data.message);
             regetData(account);

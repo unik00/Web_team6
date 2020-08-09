@@ -46,7 +46,7 @@ class UserController extends Controller
             $user->last_online_at = $request->User()->last_online_at;
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
-           
+
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -86,7 +86,12 @@ class UserController extends Controller
             else $user->my_profile = false;
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
-            
+
+            $myid = $request->User()->id;
+            if($myid){
+                $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();
+                $user->is_follow = ($is_follow) ? true : false;
+            }
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);

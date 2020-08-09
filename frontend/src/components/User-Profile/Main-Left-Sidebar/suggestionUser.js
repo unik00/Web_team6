@@ -67,7 +67,9 @@ class SuggesstionUser extends Component {
                 <Link to={`user-profile?other_id=${user.id}`} 
                     onClick={()=>{history.push(`user-profile?other_id=${user.id}`);history.go()}} 
                     className="suggestion-usd" key={index}>
-                        <img src="http://via.placeholder.com/35x35" alt="" />
+                        <img src={user && user.avatar ? `http://localhost:8000/images/avatar/${user.avatar}` 
+                            :"http://via.placeholder.com/35x35"} alt="" 
+                            style={{width:35+'px', height: 35 + 'px'}}/>
                         <div className="sgt-text">
                             <br/>
                             <h4>{user.name}</h4>

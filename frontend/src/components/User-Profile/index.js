@@ -69,7 +69,7 @@ class UserProfile extends Component {
     render() {
         return (
             <div>
-                <CoverImage />
+                <CoverImage userInformation={this.state}/>
                 <main>
                     <div className="main-section">
                         <div className="container">

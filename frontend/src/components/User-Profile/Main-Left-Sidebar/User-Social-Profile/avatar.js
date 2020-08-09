@@ -21,6 +21,7 @@ class Avatar extends Component {
         formData.append('image',event.target.files[0])
         return API.uploadAvatar(account,formData)
         .then(res=>{
+            console.log(res);
             if(res.data.success == true){
                 this.getAvatar();
             }
@@ -32,7 +33,6 @@ class Avatar extends Component {
 
     getAvatar = () => {
         let {userInformation} = this.props;
-        console.log(userInformation);
         return API.getAvatar(userInformation.user_id)
         .then(res=>{
             if(res.data.success == true && res.data.path !== "http://backend_upstream/images/avatar"){
@@ -53,15 +53,18 @@ class Avatar extends Component {
     }
     render() {
         let {avatar} = this.state
+        let {userInformation} = this.props
         return (
             <div className="user-pro-img">
                 <img src={avatar ? `http://localhost:8000/${avatar.slice(24,avatar.length)}`
                      : "http://via.placeholder.com/170x170"} alt=""
                      style={{width:170+'px', height: 170 + 'px'}}/>
-                <a onChange={this.handleInputChange}>
-                    <label htmlFor="upload-photo"><i className="fa fa-camera"></i></label>
-                    <input type="file" id="upload-photo" style={{opacity:0, position:'absolute',zIndex:-1}}/>
-                </a>
+                {userInformation.my_profile ?
+                    <a onChange={this.handleInputChange}>
+                        <label htmlFor="upload-photo-avatar"><i className="fa fa-camera"></i></label>
+                        <input type="file" id="upload-photo-avatar" style={{opacity:0, position:'absolute',zIndex:-1}}/>
+                    </a>
+                :''}
             </div>
         )
     }

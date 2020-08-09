@@ -32,10 +32,10 @@ class CoverImage extends Component {
 
     getCover = () => {
         let {userInformation} = this.props;
-        console.log(userInformation);
         return API.getCover(userInformation.user_id)
         .then(res=>{
-            if(res.data.success == true && ré.data.success !== "http://backend_upstream/images/cover"){
+            console.log(res);
+            if(res.data.success == true && res.data.path !== "http://backend_upstream/images/cover"){
                 return this.setState({
                     cover:res.data.path
                 })
@@ -45,25 +45,27 @@ class CoverImage extends Component {
             })
         })
         .catch(err=>{
+            console.log(err);
             return this.setState({
                 cover:''
             })
-            console.log(err);
         })
     }
 
     render() {
         let {cover} = this.state
-        console.log(cover);
+        let {userInformation} = this.props
         return (
             <section className="cover-sec">
                 <img src={cover ? `http://localhost:8000/${cover.slice(24,cover.length)}` 
                     : "http://via.placeholder.com/1600x400"} alt=""
                     style={{width:1600+'px', height: 400 + 'px'}}/>
-                <a onChange={this.handleInputChange}>
-                    <label htmlFor="upload-photo"><i className="fa fa-camera"></i> Change Image</label>
-                    <input type="file" id="upload-photo" style={{opacity:0, position:'absolute',zIndex:-1}}/>
-                </a>
+                {userInformation.my_profile?
+                    <a onChange={this.handleInputChange}>
+                        <label htmlFor="upload-photo"><i className="fa fa-camera"></i> Change Image</label>
+                        <input type="file" id="upload-photo" style={{opacity:0, position:'absolute',zIndex:-1}}/>
+                    </a>
+                :''}
             </section>
         )
     }

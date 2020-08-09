@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import * as API from '../../../api';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 class MessageDetails extends Component {
     constructor(props) {
@@ -51,21 +53,23 @@ class MessageDetails extends Component {
             if(res.status == 200 && res.data.success == true) {
                 if(currentConversationIndex == -1) {
                     window.location.reload();
-                    return getMessages();
+                    getMessages();
                 }
-                this.setState({
-                    sendMessageContent:''
-                })
                 return readMessage(currentMessage.id,currentConversationIndex);
             }
+            this.setState({
+                sendMessageContent:''
+            })
         })
         .catch(err=>{
             console.log(err);
         })
     }
     render() {
-        let { currentMessage, newMessage } = this.props;
+        let { currentMessage, newMessage, history } = this.props;
+        let { sendMessageContent} = this.state;
         return (
+            currentMessage ?
             <div className="main-conversation-box">
                 <div className="message-bar-head">
                     <div className="usr-msg-details">
@@ -73,7 +77,13 @@ class MessageDetails extends Component {
                             <img src="http://via.placeholder.com/50x50" alt="" />
                         </div>
                         <div className="usr-mg-info">
-                            <h3>{currentMessage ? currentMessage.name : newMessage ? newMessage.name : ''}</h3>
+                            <Link to={`user-profile?id=${currentMessage.other_id}`}
+                                onClick={()=>{history.push(`user-profile?id=${currentMessage.other_id}`)
+                                history.go()}}>
+                                <h3>
+                                    {currentMessage ? currentMessage.name : newMessage ? newMessage.name : ''}
+                                </h3>
+                            </Link>
                             <p>Online</p>
                         </div>
                     </div>
@@ -86,7 +96,7 @@ class MessageDetails extends Component {
                 <div className="message-send-area">
                     <form>
                         <div className="mf-field">
-                            <input type="text" name="sendMessageContent" placeholder="Type a message here" onChange={this.inputOnchange}/>
+                            <input type="text" name="sendMessageContent" value={sendMessageContent} placeholder="Type a message here" onChange={this.inputOnchange}/>
                             <button onClick={this.sendMessage}>Send</button>
                         </div>
                         <ul>
@@ -97,7 +107,7 @@ class MessageDetails extends Component {
                     </form>
                 </div>
             </div>
-        )
+        :'')
     }
 }
 
@@ -107,4 +117,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,null)(MessageDetails)
+export default withRouter(connect(mapStateToProps,null)(MessageDetails))

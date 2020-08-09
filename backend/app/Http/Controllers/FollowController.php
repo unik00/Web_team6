@@ -15,11 +15,19 @@ class FollowController extends Controller
         ]);
         DB::beginTransaction();
         try {
-            $follow = new Follower;
-            $follow->user_id = $myid;
-            $follow->user_id_followed = $id_follow;
-
-            $follow->touch();
+            $follow = Follower::where('user_id',$myid)->where('user_id_followed',$id_follow)->first();
+            if($follow){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đã theo dõi tài khoản này trước đó.'
+                ]);
+            }
+            else{
+                $follow = new Follower;
+                $follow->user_id = $myid;
+                $follow->user_id_followed = $id_follow;
+                $follow->touch();
+            }
             DB::commit();
             return response()->json([
                 'success' => true,

@@ -8,7 +8,7 @@ class MainLeftSidebar extends Component{
         let {userInformation,  regetData} =this.props
         return(
             <div className="user_profile">
-                <Avatar/>
+                <Avatar userInformation={userInformation}/>
                {<FollowStatus userInformation={userInformation} regetData={regetData}/>}
             </div>
         )

@@ -102,3 +102,25 @@ export const unfollowUser = (account, other_id) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+
+export const uploadCover = (account,file) => {
+  return api.post('file/cover',file, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const getCover = (id) => {
+  return api.get(`file/cover?id=${id}`);
+}
+
+
+export const uploadAvatar = (account,file) => {
+  return api.post('file/avatar',file, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const getAvatar = (id) => {
+  return api.get(`file/avatar?id=${id}`);
+}
+

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             // password is admin
             "password"=>'$2y$10$Zs/QDI/RRC.zfpVNKCDObuPmGkXBoKsenYUe0DcX315HwdQowAl/y',
             "email"=>'admin@gmail.com',
+            "type"=>'Student',
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
             "updated_at" => Carbon::now()->format('Y-m-d H:i:s')],
             
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             // password is admin
             "password"=>'$2y$10$zReVI7gTWVLvCPQWrEN6P.jDjHEgD9/FDm/dEz8Z2BeBeMCge00KC',
             "email"=>'school@gmail.com',
+            "type"=>'School',
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
             "updated_at" => Carbon::now()->format('Y-m-d H:i:s')],
 
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
             // password is admin
             "password"=>'$2y$10$WVoUWbmeXH7gZJjf6vd5ie4RY13sxL6NA5.klRH8JPjtfN8Rn9Upi',
             "email"=>'company@gmail.com',
+            "type"=>'Company',
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
             "updated_at" => Carbon::now()->format('Y-m-d H:i:s')]
         ]);

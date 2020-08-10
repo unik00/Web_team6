@@ -31,6 +31,10 @@ class SchoolController extends Controller
                 $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();
                 $ls->is_follow = ($is_follow) ? true : false;
             }
+            $user = User::find($id);
+            $ls->avatar = $user->avatar;
+            $ls->cover = $user->cover;
+            $ls->last_online_at = $user->last_online_at;
         }
         return response()->json(['Schools' => $list]);
     }

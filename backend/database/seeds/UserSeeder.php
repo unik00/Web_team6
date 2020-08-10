@@ -5,7 +5,7 @@ use App\User;
 use App\Message_content;
 use App\Message_user;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 class UserSeeder extends Seeder
 {
     /**

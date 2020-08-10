@@ -9,6 +9,7 @@ use App\Student;
 use App\School;
 use App\Company;
 use App\Follower;
+use App\Http\Controllers\ViewController;
 class UserController extends Controller
 {
 
@@ -83,7 +84,11 @@ class UserController extends Controller
             $user->email = User::find($id)->email;
             $user->last_online_at = User::find($id)->last_online_at;
             if($user->user_id == $request->User()->id) $user->my_profile = true;
-            else $user->my_profile = false;
+            else {
+                $user->my_profile = false;
+                $viewCtl = new ViewController();
+                $viewCtl->addViewProfile($user->user_id, $request->User()->id);
+            }
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
 

@@ -8,6 +8,7 @@ use App\Message_content;
 use App\Student;
 use App\Company;
 use App\School;
+use App\User;
 class MessageController extends Controller
 {
     /** Send Message Create
@@ -70,6 +71,10 @@ class MessageController extends Controller
             $cvs->name = $user->name;
             $cvs->myid = $id;
             $cvs->other_id = $id_other;
+            $user = User::find($id_other);
+            $cvs->avatar = $user->avatar;
+            $cvs->last_online_at = $user->last_online_at;
+
         }
         return response()->json(['success' => true, 'data' => $conversation]);
     }
@@ -88,6 +93,10 @@ class MessageController extends Controller
             $ms->myid = $sender_id;
             $ms->other_id = ($message_user->sender_id == $sender_id) ? $message_user->recipient_id : $message_user->sender_id;
             $ms->is_sender = ($sender_id == $ms->sender_id) ? true : false;
+
+            $user = User::find($ms->other_id);
+            $ms->avatar = $user->avatar;
+            $ms->last_online_at = $user->last_online_at;
         }
 
         return response()->json(['success' => true, 'data' => $message]);

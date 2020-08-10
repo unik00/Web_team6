@@ -8,7 +8,6 @@ use App\User;
 use App\Student;
 use App\Follower;
 use App\Company;
-use App\ModelFilters\StudentFilter;
 class CompanyController extends Controller
 {
     function list(Request $request){
@@ -31,6 +30,10 @@ class CompanyController extends Controller
                 $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();
                 $ls->is_follow = ($is_follow) ? true : false;
             }
+            $user = User::find($id);
+            $ls->avatar = $user->avatar;
+            $ls->cover = $user->cover;
+            $ls->last_online_at = $user->last_online_at;
         }
         return response()->json(['Companies' => $list]);
     }

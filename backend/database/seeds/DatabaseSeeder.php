@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder{
         $this->call('HobbySeeder');
         $this->call('JobSeeder');
         $this->call('LanguageSeeder');
+        
     }
 }
 /*

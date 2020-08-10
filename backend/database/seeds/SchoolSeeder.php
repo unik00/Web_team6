@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SchoolSeeder extends Seeder
 {

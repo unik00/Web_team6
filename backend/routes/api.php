@@ -90,10 +90,13 @@ Route::group(['prefix' => 'company'], function () {
 });
 
 Route::group(['prefix' => 'hobby'], function () {
+    Route::get('list', 'HobbyController@list');
+    Route::get('user', 'HobbyController@getHobbyStudent');
     Route::group(['middleware' => ['auth:api']], function () { 
-        Route::put('add', 'HobbyController@addOrUpdate');
-        Route::get('remove', 'HobbyController@remove');
-        Route::get('list', 'HobbyController@list');
+       // Route::put('add', 'HobbyController@addOrUpdate');
+       // Route::get('remove', 'HobbyController@remove');
+        Route::post('add', 'HobbyController@addHobbyStudent');
+        Route::get('remove', 'HobbyController@removeHobbyStudent');
     });
 });
 

@@ -121,3 +121,9 @@ Route::group(['prefix' => 'file'], function () {
         Route::post('cover', 'FileController@addCover');
     });
 });
+Route::group(['prefix' => 'viewer'], function () {
+    Route::get('profile', 'ViewController@getTopViewProfile');
+    Route::group(['middleware' => ['auth:api']], function () { 
+       
+    });
+});

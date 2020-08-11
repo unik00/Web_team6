@@ -144,6 +144,7 @@ nav ul li a,
 .view-more > a,
 .tags-sec ul li a,
 .post-st ul li a,
+.post-st-khanh ul li button,
 .ed-opts > a,
 .bk-links li a,
 .like-com li a,
@@ -157,6 +158,7 @@ nav ul li a,
 .post-project-fields form ul li button,
 .post-project-fields form ul li a,
 .sign-control li a,
+.sign-control-khanh li a,
 .cover-sec > a,
 .star-descp > a,
 .message-btn a,
@@ -189,6 +191,7 @@ nav ul li:hover > ul,
 .search-bar form button,
 .search_form form input,
 .post-st ul li a,
+.post-st-khanh ul li button,
 .post-bar,
 .bk-links li i,
 .bid_now,
@@ -202,6 +205,7 @@ nav ul li:hover > ul,
 .post-project-fields form ul li a,
 .signin-pop,
 .sign-control,
+.sign-control-khanh,
 .sign_in_sec form input,
 .sign_in_sec form select,
 .sign_in_sec form button,
@@ -1005,6 +1009,33 @@ main {
 }
 .post-st ul li a:hover,
 .post-st ul li a.active {
+	background-color: #e44d3a;
+	color: #fff;
+}
+
+.post-st-khanh {
+	float: right;
+	margin-top: 5px;
+}
+.post-st-khanh ul li {
+	display: inline-block;
+	margin-right: 6px;
+}
+.post-st-khanh ul li:last-child {
+	margin-right: 0;
+}
+.post-st-khanh ul li button {
+	color: black;
+	font-size: 16px;
+	display: inline-block;
+	background-color: #e5e5e5;
+	height: 40px;
+	padding: 0 15px;
+	line-height: 40px;
+	font-weight: 500;
+}
+.post-st-khanh ul li button:hover,
+.post-st-khanh ul li button.active {
 	background-color: #e44d3a;
 	color: #fff;
 }
@@ -2124,6 +2155,43 @@ select {
 	border-radius: 0 4px 4px 0;
 }
 .sign-control li.current a {
+	background-color: #e44d3a;
+	color: #fff;
+}
+
+
+.sign-control-khanh {
+	float: left;
+	width: 100%;
+	text-align: right;
+	padding-right: 50px;
+	margin-bottom: 70px;
+}
+.sign-control-khanh li {
+	display: inline-block;
+	margin-right: -5px;
+}
+.sign-control-khanh li a {
+	color: #000000;
+	font-size: 14px;
+	font-weight: 600;
+	background-color: #e5e5e5;
+	padding: 7px 10px;
+	display: inline-block;
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	-ms-border-radius: 4px 0 0 4px;
+	-o-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.sign-control-khanh li:last-child a {
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	-ms-border-radius: 0 4px 4px 0;
+	-o-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.sign-control-khanh li.current a {
 	background-color: #e44d3a;
 	color: #fff;
 }

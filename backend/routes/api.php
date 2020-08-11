@@ -111,6 +111,7 @@ Route::group(['prefix' => 'job'], function () {
         Route::put('add', 'JobController@addOrUpdate');
         Route::get('remove', 'JobController@remove');
         Route::get('info', 'JobController@getJob');
+        Route::put('add-language', 'Program_LanguageController@addToJob');
     });
 });
 
@@ -143,4 +144,8 @@ Route::group(['prefix' => 'post'], function () {
     Route::group(['middleware' => ['auth:api']], function () { 
         Route::post('add', 'PostController@addPost');
     });
+});
+
+Route::group(['prefix' => 'program-language'], function () {
+    Route::get('list', 'Program_LanguageController@list');
 });

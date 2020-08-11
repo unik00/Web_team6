@@ -113,7 +113,6 @@ export const getCover = (id) => {
   return api.get(`file/cover?id=${id}`);
 }
 
-
 export const uploadAvatar = (account,file) => {
   return api.post('file/avatar',file, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
@@ -124,3 +123,22 @@ export const getAvatar = (id) => {
   return api.get(`file/avatar?id=${id}`);
 }
 
+/* hobby */
+export const getListHobby = (account,offset = 0, limit = 10, random = 0) => {
+  return api.get(account && account.is_login ? `hobby/list?offset=${offset}&limit=${limit}&random=${random}`
+                                  : `hobby/listguest?offset=${offset}&limit=${limit}&random=${random}`,
+                {headers:{
+                  'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+                }})
+}
+
+export const getStudentHobby = (id) => {
+  return api.get(`hobby/user?id=${id}`);
+}
+
+export const addStudentHobby = (account, hobby_id) => {
+  return api.post(`hobby/add`, hobby_id, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+/* end of hobby */

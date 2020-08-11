@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 class FormUpdateBasicInformation extends Component {
     constructor(props) {
         super(props);
-        let { name, birthday, gender, mssv, school_id, name_school } = this.props
+        let { account, name, birthday, gender, mssv, school_id, name_school } = this.props
+        
+        //console.log(API.getListHobby(account));
+
         this.state = {
             name: name ? name : '',
             birthday: birthday ? birthday : '',
@@ -15,9 +18,35 @@ class FormUpdateBasicInformation extends Component {
             listSchool: [{ id: 1, name: 'uet' }, { id: 2, name: 'ueb' }, { id: 3, name: 'uec' }],
             school_id: school_id ? school_id : '',
             name_school: name_school ? name_school : '',
+            listHobby: [],
             error:''
         }
     }
+
+    componentDidMount(){
+        console.log("component did mount is called.")
+        this.getListHobby();
+    }
+
+    getListHobby = () => {
+        console.log("CALEED");
+        let { account } = this.props;
+        API.getListHobby(account).then(
+            res => { if (res.status == 200){
+                    console.log("called getlisthobby");
+                    this.setState({
+                        listHobby : res.data.hobbies
+                    })
+                }
+                console.log("?????");
+                console.log(res);
+            }
+        ).catch(err => {
+            console.log("getlisthobby error");
+            console.log(err);
+        })
+    }
+
 
     renderSelectSchool = () => {
         let { listSchool } = this.state;
@@ -32,6 +61,22 @@ class FormUpdateBasicInformation extends Component {
         this.setState({
             name_school: listSchool[value].name,
             school_id: listSchool[value].id
+        })
+    }
+
+    renderSelectHobby = () => {
+        let { listHobby } = this.state;
+        return listHobby.map((hobby, index) => {
+            return <option key={hobby.id} value={index}>{hobby.name}</option>
+        });
+    }
+
+    onChangeHobby = (e) => {
+        let { listHobby } = this.state;
+        let value = e.target.value;
+        this.setState({
+            name_hobby: listHobby[value].name,
+            hobby_id: listHobby[value].id
         })
     }
 
@@ -52,6 +97,7 @@ class FormUpdateBasicInformation extends Component {
         e.preventDefault();
         let { name, birthday, gender, mssv, classes, school_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
+
         API.UpdateProfile(account,{
             name,
             birthday,
@@ -83,7 +129,8 @@ class FormUpdateBasicInformation extends Component {
 
     render() {
         let { toggleEditForm } = this.props
-        let { name, birthday, gender, mssv, classes, error } = this.state;
+        let { name, birthday, gender, mssv, classes, listHobby, error} = this.state;
+        console.log(listHobby);
         return (
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
@@ -112,6 +159,10 @@ class FormUpdateBasicInformation extends Component {
                             <h4>School:</h4>
                             <select onChange={this.onChangeSchool} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderSelectSchool()}
+                            </select>
+                            <h4>Hobby:</h4>
+                            <select onChange={this.onChangeHobby} style={{ paddingLeft: 15 + 'px' }}>
+                                {this.renderSelectHobby()}
                             </select>
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditBasicInformation} className="save">Save</button>

@@ -69,7 +69,6 @@ class MessageDetails extends Component {
         let { currentMessage, newMessage, history } = this.props;
         let { sendMessageContent} = this.state;
         return (
-            currentMessage ?
             <div className="main-conversation-box">
                 <div className="message-bar-head">
                     <div className="usr-msg-details">
@@ -77,8 +76,8 @@ class MessageDetails extends Component {
                             <img src="http://via.placeholder.com/50x50" alt="" />
                         </div>
                         <div className="usr-mg-info">
-                            <Link to={`user-profile?id=${currentMessage.other_id}`}
-                                onClick={()=>{history.push(`user-profile?id=${currentMessage.other_id}`)
+                            <Link to={`user-profile?id=${currentMessage ? currentMessage.other_id: ''}`}
+                                onClick={()=>{history.push(`user-profile?id=${currentMessage ? currentMessage.other_id:''}`)
                                 history.go()}}>
                                 <h3>
                                     {currentMessage ? currentMessage.name : newMessage ? newMessage.name : ''}
@@ -107,7 +106,7 @@ class MessageDetails extends Component {
                     </form>
                 </div>
             </div>
-        :'')
+        )
     }
 }
 

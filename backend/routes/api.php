@@ -99,12 +99,19 @@ Route::group(['prefix' => 'hobby'], function () {
         Route::get('remove', 'HobbyController@removeHobbyStudent');
     });
 });
-
+Route::get('country', 'CountryController@list');
 Route::group(['prefix' => 'job'], function () {
+
+    Route::get('list', 'JobController@list');
+    Route::get('get-type', 'JobController@getType');
+    Route::get('get-availabilty', 'JobController@getAvailabilty');
+    Route::get('get-experience', 'JobController@getExperience');
+
     Route::group(['middleware' => ['auth:api']], function () { 
         Route::put('add', 'JobController@addOrUpdate');
         Route::get('remove', 'JobController@remove');
-        Route::get('list', 'JobController@list');
+        Route::get('info', 'JobController@getJob');
+        Route::put('add-language', 'Program_LanguageController@addToJob');
     });
 });
 
@@ -128,5 +135,38 @@ Route::group(['prefix' => 'viewer'], function () {
     Route::get('profile', 'ViewController@getTopViewProfile');
     Route::group(['middleware' => ['auth:api']], function () { 
        
+    });
+});
+
+Route::group(['prefix' => 'post'], function () {
+    Route::get('normal', 'PostController@getNormalPost');
+    Route::get('job', 'PostController@getJobPost');
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'PostController@addPost');
+    });
+});
+
+Route::group(['prefix' => 'program-language'], function () {
+    Route::get('list', 'Program_LanguageController@list');
+});
+
+Route::group(['prefix' => 'like-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'LikeController@addLike');
+        Route::get('remove', 'LikeController@removeLike');
+        Route::get('get', 'LikeController@getLike');
+    });
+});
+
+Route::group(['prefix' => 'comment-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'CommentController@addComment');
+        Route::get('get', 'CommentController@getComment');
+    });
+});
+Route::group(['prefix' => 'notice'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::get('remove', 'NoticeController@removeNotice');
+        Route::get('get', 'NoticeController@getNotice');
     });
 });

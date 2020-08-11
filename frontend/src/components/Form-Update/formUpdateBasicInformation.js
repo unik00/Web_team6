@@ -3,6 +3,21 @@ import * as API from '../../api';
 import { connect } from 'react-redux';
 
 class FormUpdateBasicInformation extends Component {
+    componentDidMount(){
+        API.getListSchool()
+        .then(res=>{
+            this.setState({
+                listSchool: res.data.Schools,
+                school_id: res.data.Schools[0].id
+            })
+        })
+        .catch(err=>{
+            console.log(err);
+            return this.setState({
+                error: "server error"
+            })
+        })
+    }
     constructor(props) {
         super(props);
         let { account, name, birthday, gender, mssv, school_id, name_school } = this.props
@@ -15,7 +30,7 @@ class FormUpdateBasicInformation extends Component {
             gender: gender ? gender : '',
             mssv: mssv ? mssv : '',
             classes: this.props.class ? this.props.class : '',
-            listSchool: [{ id: 1, name: 'uet' }, { id: 2, name: 'ueb' }, { id: 3, name: 'uec' }],
+            listSchool: [],
             school_id: school_id ? school_id : '',
             name_school: name_school ? name_school : '',
             listHobby: [],
@@ -50,6 +65,7 @@ class FormUpdateBasicInformation extends Component {
 
     renderSelectSchool = () => {
         let { listSchool } = this.state;
+        console.log(listSchool);
         return listSchool.map((school, index) => {
             return <option key={school.id} value={index}>{school.name}</option>
         });
@@ -98,6 +114,7 @@ class FormUpdateBasicInformation extends Component {
         let { name, birthday, gender, mssv, classes, school_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
 
+        console.log(school_id);
         API.UpdateProfile(account,{
             name,
             birthday,

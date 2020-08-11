@@ -12,7 +12,10 @@ class UserProfile extends Component {
     componentDidUpdate(prevProps) {
         let { history, account } = this.props;
 
-        if (!account.is_login) return history.push('/signin');
+        if (!account.is_login){
+            history.push('/signin');
+            return history.go();
+        }
 
         if (prevProps.account !== account) {
             this.getData(account);

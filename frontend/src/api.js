@@ -124,3 +124,34 @@ export const getAvatar = (id) => {
   return api.get(`file/avatar?id=${id}`);
 }
 
+export const addJob = (account, data) => {
+  return api.put(`job/add`,data, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const addPost = (account, data) => {
+  return api.post(`post/add`,data, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const getCountry = () => {
+  return api.get('country');
+}
+
+export const getJobType = () => {
+  return api.get('job/get-type');
+}
+
+export const getAvailabilties = () => {
+  return api.get('job/get-availabilty');
+}
+
+export const getJobExperience = () => {
+  return api.get('job/get-experience');
+}
+
+export const getJobs = () => {
+  return api.get('job/list');
+}

@@ -42,7 +42,6 @@ class FollowStatus extends Component {
         }
 
         let {userInformation } = this.props
-        console.log(userInformation);
         return (
             <div className="user_pro_status">
                 {!userInformation.my_profile ?

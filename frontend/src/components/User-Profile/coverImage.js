@@ -34,7 +34,6 @@ class CoverImage extends Component {
         let {userInformation} = this.props;
         return API.getCover(userInformation.user_id)
         .then(res=>{
-            console.log(res);
             if(res.data.success == true && res.data.path !== "http://backend_upstream/images/cover"){
                 return this.setState({
                     cover:res.data.path

@@ -16,7 +16,7 @@ use App\School;
 class JobController extends Controller
 {
     // add and update
-    function addOrUpdateJob(Request $request){
+    function addOrUpdate(Request $request){
         $id = $request->User()->id;
         $type = $request->User()->type;
         $name = $request->name;
@@ -33,7 +33,7 @@ class JobController extends Controller
             $job = Job::find($job_id);
         } else {
             $job = Job::where('user_id', $id)->where('name', $name)->first();
-            if($job) return response()->json(['success' => false, 'message' => 'Bạn đã tạo job này rồi']);    
+            if($job) return response()->json(['success' => false, 'message' => 'Bạn đã tạo job này rồi']);
         }
         DB::beginTransaction();
         try{
@@ -112,7 +112,7 @@ class JobController extends Controller
         }
         return response()->json(['jobs' => $list]);
     }
-    
+
     function getType(){
         $list = Job_Type::all();
         return response()->json([

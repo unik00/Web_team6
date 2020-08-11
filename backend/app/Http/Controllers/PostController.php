@@ -17,7 +17,7 @@ class PostController extends Controller
 {
     function addPost(Request $request){
         $id = $request->User()->id;
-        $content = $request->request;
+        $content = $request->content;
         $type = $request->type;
         if($type == "Normal" || $type == "Job"){
             DB::beginTransaction();
@@ -25,7 +25,6 @@ class PostController extends Controller
                 $post = new Post;
                 $post->type = $type;
                 $post->save();
-                
                 if($type == "Job"){
                     $jobPost = new Job_Post;
                     $jobPost->job_id = $request->job_id;
@@ -36,7 +35,7 @@ class PostController extends Controller
                 }
                 else {
                     $normalPost = new Normal_Post;
-                    $normalPost->use_id = $id;
+                    $normalPost->user_id = $id;
                     $normalPost->post_id = $post->id;
                     $normalPost->content = $content;
                     $normalPost->save();

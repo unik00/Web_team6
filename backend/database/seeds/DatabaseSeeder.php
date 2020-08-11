@@ -17,7 +17,12 @@ class DatabaseSeeder extends Seeder{
         $this->call('HobbySeeder');
      //   $this->call('JobSeeder');
         $this->call('LanguageSeeder');
-        
+        $this->call('Country');
+        $this->call('Program_Language');
+        $this->call('Job_Type');
+        $this->call('Job_Experience');
+        $this->call('Job_availabilty');
+
     }
 }
 /*

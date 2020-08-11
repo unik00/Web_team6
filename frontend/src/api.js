@@ -155,3 +155,17 @@ export const getJobExperience = () => {
 export const getJobs = () => {
   return api.get('job/list');
 }
+
+export const getNormalPost = () => {
+  return api.get('post/normal');
+}
+
+export const getJobPost = () => {
+  return api.get('/post/job');
+}
+
+export const getJob = (account,job_id) => {
+  return api.get(`job/info?id=${job_id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}

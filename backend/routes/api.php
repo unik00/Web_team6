@@ -157,3 +157,10 @@ Route::group(['prefix' => 'like-post'], function () {
         Route::get('get', 'LikeController@getLike');
     });
 });
+
+Route::group(['prefix' => 'comment-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'CommentController@addComment');
+        Route::get('get', 'CommentController@getComment');
+    });
+});

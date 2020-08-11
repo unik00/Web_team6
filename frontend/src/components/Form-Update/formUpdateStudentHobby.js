@@ -9,6 +9,7 @@ class FormUpdateStudentHobby extends Component {
         
         this.state = {
             listHobby: [],
+            hobby_id : 1,
             error:''
         }
     }
@@ -41,8 +42,6 @@ class FormUpdateStudentHobby extends Component {
 
     onChangeHobby = (e) => {
         let { listHobby } = this.state;
-        console.log("e target")
-        console.log(e.target)
         let value = e.target.value;
         this.setState({
             name_hobby: listHobby[value].name,
@@ -61,16 +60,15 @@ class FormUpdateStudentHobby extends Component {
 
     onEditStudentHobby = (e) => {
         e.preventDefault();
-        //alert('Edit successfully');
+
         let { hobby_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
 
         API.addStudentHobby(account,{hobby_id})
             .then(res => {
-                if(res.status == 200 && res.statusText == "OK"){
+                if(res.status == 200 && res.data.success){
                     alert('Edit successfully');
-                    console.log("DJFKLSDKLFSJKDLF")
-                    console.log(res)
+                    // console.log(res)
                     regetData()
                     toggleEditForm()
 
@@ -88,7 +86,7 @@ class FormUpdateStudentHobby extends Component {
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
                     <div className="overview-edit">
-                        <h3>Edit hobbies</h3>
+                        <h3>Add hobby</h3>
                         <form>
                             <h4>Hobby:</h4>
                             <select onChange={this.onChangeHobby} style={{ paddingLeft: 15 + 'px' }}>

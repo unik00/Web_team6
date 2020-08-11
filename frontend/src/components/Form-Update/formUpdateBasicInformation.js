@@ -33,35 +33,9 @@ class FormUpdateBasicInformation extends Component {
             listSchool: [],
             school_id: school_id ? school_id : '',
             name_school: name_school ? name_school : '',
-            listHobby: [],
             error:''
         }
     }
-
-    componentDidMount(){
-        console.log("component did mount is called.")
-        this.getListHobby();
-    }
-
-    getListHobby = () => {
-        console.log("CALEED");
-        let { account } = this.props;
-        API.getListHobby(account).then(
-            res => { if (res.status == 200){
-                    console.log("called getlisthobby");
-                    this.setState({
-                        listHobby : res.data.hobbies
-                    })
-                }
-                console.log("?????");
-                console.log(res);
-            }
-        ).catch(err => {
-            console.log("getlisthobby error");
-            console.log(err);
-        })
-    }
-
 
     renderSelectSchool = () => {
         let { listSchool } = this.state;
@@ -77,22 +51,6 @@ class FormUpdateBasicInformation extends Component {
         this.setState({
             name_school: listSchool[value].name,
             school_id: listSchool[value].id
-        })
-    }
-
-    renderSelectHobby = () => {
-        let { listHobby } = this.state;
-        return listHobby.map((hobby, index) => {
-            return <option key={hobby.id} value={index}>{hobby.name}</option>
-        });
-    }
-
-    onChangeHobby = (e) => {
-        let { listHobby } = this.state;
-        let value = e.target.value;
-        this.setState({
-            name_hobby: listHobby[value].name,
-            hobby_id: listHobby[value].id
         })
     }
 
@@ -177,10 +135,7 @@ class FormUpdateBasicInformation extends Component {
                             <select onChange={this.onChangeSchool} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderSelectSchool()}
                             </select>
-                            <h4>Hobby:</h4>
-                            <select onChange={this.onChangeHobby} style={{ paddingLeft: 15 + 'px' }}>
-                                {this.renderSelectHobby()}
-                            </select>
+
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditBasicInformation} className="save">Save</button>
                             <button onClick={toggleEditForm} className="cancel">Cancel</button>

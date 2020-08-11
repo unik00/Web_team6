@@ -47,7 +47,9 @@ class StudentHobby extends Component {
         let listItems = listStudentHobby.map((d, index) => 
            <div className="list-student-hobbies" key={index}>
                 <h4>{d.name}</h4>
-                <i style={{ fontStyle: 'italic' }}>{d.description}</i>
+                <p>
+                    <i style={{ fontStyle: 'italic' }}>{d.description}</i>
+                </p>
             </div>
         )
         return (
@@ -60,9 +62,6 @@ class StudentHobby extends Component {
                     </div> : ''}
                 </h3>
                 <div>
-                    {/*
-                    <p>{userInformation.class ? userInformation.class : <i style={{ fontStyle: 'italic' }}>-  Add your class</i>}</p>
-                    */}
                     <div>
                     {listItems }
                     </div>
@@ -76,32 +75,5 @@ class StudentHobby extends Component {
     }
 }
 
-{/*
-    You can do it in two ways:
 
-First:
-
-render() {
-    const data =[{"name":"test1"},{"name":"test2"}];
-    const listItems = data.map((d) => <li key={d.name}>{d.name}</li>);
-
-    return (
-      <div>
-      {listItems }
-      </div>
-    );
-  }
-Second: Directly write the map function in the return
-
-render() {
-    const data =[{"name":"test1"},{"name":"test2"}];
-    return (
-      <div>
-      {data.map(function(d, idx){
-         return (<li key={idx}>{d.name}</li>)
-       })}
-      </div>
-    );
-  }
-*/}
 export default StudentHobby

@@ -7,6 +7,7 @@ class StudentHobby extends Component {
     constructor(props) {
         super(props);
         this.state={
+            userInformation : props.userInformation,
             listStudentHobby : [],
             openEditForm : false
         }
@@ -15,15 +16,17 @@ class StudentHobby extends Component {
         this.getListStudentHobby();
     }
     
-    getListStudentHobby(){
-        let {userInformation} = this.props;
+    getListStudentHobby = () => {
+        let {userInformation} = this.state;
         API.getStudentHobby(userInformation.user_id).then(
-            res => { if (res.status == 200){
+            res => { if (res.status == 200 && res.statusText == "OK"){
                     this.setState({
                         listStudentHobby : res.data.Hobbies
                     })
                     console.log(listStudentHobby)
                 }
+                console.log("res for getStudentHobby")
+                console.log(res)
             }
         ).catch(err => {
             console.log(err);
@@ -38,7 +41,7 @@ class StudentHobby extends Component {
     }
     
     render() {
-        let { userInformation, regetData } = this.props
+        let { userInformation } = this.props
         let {openEditForm, listStudentHobby} = this.state
 
         let listItems = listStudentHobby.map((d, index) => 
@@ -66,7 +69,7 @@ class StudentHobby extends Component {
                     </div>
                 {openEditForm?
                     <FormUpdateStudentHobby toggleEditForm={this.toggleEditForm}
-                                                regetData={regetData}/>
+                                                regetData={this.getListStudentHobby}/>
                 :''}
             </div>
         )

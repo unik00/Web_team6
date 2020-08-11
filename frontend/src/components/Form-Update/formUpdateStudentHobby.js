@@ -64,16 +64,16 @@ class FormUpdateStudentHobby extends Component {
         //alert('Edit successfully');
         let { hobby_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
-        regetData(account);
-        toggleEditForm();
 
         API.addStudentHobby(account,{hobby_id})
             .then(res => {
-                if(res.status == 200 && res.success){
+                if(res.status == 200 && res.statusText == "OK"){
                     alert('Edit successfully');
-                    regetData(account);
-                    toggleEditForm();
+                    console.log("DJFKLSDKLFSJKDLF")
                     console.log(res)
+                    regetData()
+                    toggleEditForm()
+
                 }
             })
             .catch(err => {

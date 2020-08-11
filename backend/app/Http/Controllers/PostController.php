@@ -61,8 +61,11 @@ class PostController extends Controller
         }
     }
 
-    function getNormalPost(){
-        $list = Normal_Post::all();
+    function getNormalPost(Request $request){
+        $id = null;
+        $id = $request->id;
+        if(!$id) $list = Normal_Post::all();
+        else $list = Normal_Post::where('user_id', $id)->get();
         foreach($list as $normalPost){
             $user_id = $normalPost->user_id;
             $user = User::find($user_id);
@@ -84,8 +87,11 @@ class PostController extends Controller
         ]);
     }
 
-    function getJobPost(){
-        $list = Job_Post::all();
+    function getJobPost(Request $request){
+        $id = null;
+        $id = $request->id;
+        if(!$id) $list = Job_Post::all();
+        else $list = Job_Post::where('user_id', $id)->get();
         foreach($list as $jobPost){
             $user_id = $jobPost->user_id;
             $user = User::find($user_id);

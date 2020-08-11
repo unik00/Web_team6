@@ -10,6 +10,7 @@ use App\Job;
 use App\Job_Availabilty;
 use App\Job_Experience;
 use App\Job_Type;
+use App\Program_Language_Job;
 use App\School;
 
 class JobController extends Controller
@@ -25,7 +26,8 @@ class JobController extends Controller
                 'message' => 'Bạn không có quyền ở đây'
             ]);
         }
-        $job_id = $request->job_id;
+        if($request->job_id) $job_id = $request->job_id;
+        else $job_id = null;
         $job = null;
         if($job_id){
             $job = Job::find($job_id);
@@ -82,14 +84,17 @@ class JobController extends Controller
             return response()->json(['success' => false, 'message' => 'Không tìm thấy job nào']);
         }
         else {
-            $job->type_name = Job_Type::find($job->type_id)->name;
-            $job->experience_name = Job_Experience::find($job->experience_id)->name;
-            $job->country_name = Country::find($job->country_id)->name;
-            $job->availabilty_name = Job_Availabilty::find($job->availabilty_id)->name;
             $user = Company::where('user_id', $job->user_id)->first();
             if(!$user) School::where('user_id', $job->user_id)->first();
             if(!$user) return response()->json(['success' => false, 'message' => 'Người tạo job không tồn tại']);
             $job->user_name = $user->name;
+            $job->type_name = Job_Type::find($job->type_id)->name;
+            $job->experience_name = Job_Experience::find($job->experience_id)->name;
+            $job->country_name = Country::find($job->country_id)->name;
+            $job->availabilty_name = Job_Availabilty::find($job->availabilty_id)->name;
+            $language = array();
+            $language = Program_Language_Job::where('job_id', $id)->get();
+            $job->program_language = $language;  
             return response()->json(['success' => true, 'data' => $job]);
         }
     }

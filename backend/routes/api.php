@@ -149,3 +149,11 @@ Route::group(['prefix' => 'post'], function () {
 Route::group(['prefix' => 'program-language'], function () {
     Route::get('list', 'Program_LanguageController@list');
 });
+
+Route::group(['prefix' => 'like-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'LikeController@addLike');
+        Route::get('remove', 'LikeController@removeLike');
+        Route::get('get', 'LikeController@getLike');
+    });
+});

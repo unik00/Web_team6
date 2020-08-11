@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Comment_Post;
 use App\Company;
+use App\Job_Post;
+use App\Normal_Post;
+use App\Post;
 use App\School;
 use App\Student;
 use App\User;
@@ -24,6 +27,14 @@ class CommentController extends Controller
             $comment->post_id = $post_id;
             $comment->content = $content;
             $comment->save();
+            
+            $post = Post::find($post_id);
+            $posts = null;
+            if($post->type == "Normal") $posts = Normal_Post::where('post_id', $post_id)->first();
+            else if($post->type == "Job") $posts = Job_Post::where('post_id', $post_id)->first();
+            $user_post = $posts->user_id;
+            $notice = new NoticeController();
+            $notice->addNotice($user_post, $user_id, ' đã bình luận trong bài viết của bạn');
             DB::commit();
             return response()->json([
                 'success' => true,

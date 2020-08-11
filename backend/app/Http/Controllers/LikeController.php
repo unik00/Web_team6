@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use App\School;
 use App\Company;
+use App\Job_Post;
 use App\Like_Post;
+use App\Normal_Post;
+use App\Post;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +26,15 @@ class LikeController extends Controller
                 $like->user_id = $user_id;
                 $like->post_id = $post_id;
                 $like->save();
+
+                //add notice 
+                $post = Post::find($post_id);
+                $posts = null;
+                if($post->type == "Normal") $posts = Normal_Post::where('post_id', $post_id)->first();
+                else if($post->type == "Job") $posts = Job_Post::where('post_id', $post_id)->first();
+                $user_post = $posts->user_id;
+                $notice = new NoticeController();
+                $notice->addNotice($user_post, $user_id, ' đã thích bài viết của bạn');
                 DB::commit();
                 return response()->json(['success' => true, 'message' => 'Thích bài viết thành công']);
             } catch(\Exception $e){

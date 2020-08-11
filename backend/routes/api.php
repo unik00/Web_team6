@@ -164,3 +164,9 @@ Route::group(['prefix' => 'comment-post'], function () {
         Route::get('get', 'CommentController@getComment');
     });
 });
+Route::group(['prefix' => 'notice'], function () {
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::get('remove', 'NoticeController@removeNotice');
+        Route::get('get', 'NoticeController@getNotice');
+    });
+});

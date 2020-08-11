@@ -27,6 +27,10 @@ class FollowController extends Controller
                 $follow->user_id = $myid;
                 $follow->user_id_followed = $id_follow;
                 $follow->touch();
+
+                //add notice
+                $notice = new NoticeController();
+                $notice->addNotice($id_follow, $myid, ' đã theo dõi bạn');
             }
             DB::commit();
             return response()->json([

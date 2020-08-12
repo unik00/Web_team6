@@ -50,7 +50,9 @@ class CommentController extends Controller
     }
     function getComment(Request $request){
         $post_id = $request->post_id;
-        $comment = Comment_Post::where('post_id', $post_id)->get();
+        $limit = $request->limit ?? 5;
+        $offset = $request->offset ?? 0;
+        $comment = Comment_Post::where('post_id', $post_id)->offset($offset)->limit($limit)->get();
         $cnt = 0;
         foreach($comment as $cmt){
             $id = $cmt->user_id;

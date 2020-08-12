@@ -182,6 +182,14 @@ export const getJobPost = () => {
   return api.get('/post/job');
 }
 
+export const getMyNormalPost = (id) => {
+  return api.get(`post/normal?id=${id}`);
+}
+
+export const getMyJobPost = (id) => {
+  return api.get(`/post/job?id=${id}`);
+}
+
 export const getJob = (account,job_id) => {
   return api.get(`job/info?id=${job_id}`,{headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
@@ -220,4 +228,8 @@ export const getLike = (account,post_id) => {
 
 export const getProgramLanguage = () => {
   return api.get('program-language/list');
+}
+
+export const getTopViewer = () => {
+  return api.get('viewer/profile');
 }

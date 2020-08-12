@@ -91,7 +91,7 @@ class Comment extends Component {
         let { cmtContent } = this.state;
         // let timeAgo = Date.now() - new Date(postData.updated_at);
         return (
-            <div className="comment-section">
+            <div className="comment-section" style={{borderBottom:'20px solid #e5e5e5'}}>
                 <div className="plus-ic">
                     <i className="la la-plus"></i>
                 </div>

@@ -49,7 +49,6 @@ class UserProfile extends Component {
         if (other_id) {
             return API.ViewOtherProfile(account, other_id)
                 .then(res => {
-                    console.log(res);
                     if (res.status == 200) {
                         this.setState({
                             ...res.data
@@ -102,7 +101,7 @@ class UserProfile extends Component {
                             <div className="main-section-data">
                                 <div className="row">
                                     <MainLeftSidebar userInformation={this.state} regetData={this.getData}/>
-                                    <MainWsSec userInformation={this.state} regetData={this.getData} />
+                                    <MainWsSec userInformation={this.state} regetData={this.getData}/>
                                     <MainRightSidebar userInformation={this.state} regetData={this.getData} />
                                 </div>
                             </div>

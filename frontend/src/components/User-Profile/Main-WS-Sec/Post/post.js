@@ -6,30 +6,24 @@ import Comment from './comment';
 
 
 class Post extends Component {
-    componentDidMount(){
+    componentDidMount() {
+        if (this.props.postData.job_id) {
+            this.getData();
+        }
         this.getCountLike();
     }
     componentDidUpdate(preprops) {
         let { postData } = this.props;
-        if (preprops.postData != postData)
+        if (preprops.postData != postData) {
             if (this.props.postData.job_id) {
-                return API.getJob(this.props.account, this.props.postData.job_id)
-                    .then(res => {
-                        if (res.status == 200 && res.data.success == true) {
-                            this.setState({
-                                job: res.data.data
-                            })
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+                this.getData();
             }
             else {
                 this.setState({
                     job: null
                 })
             }
+        }
     }
 
     constructor(props) {
@@ -37,8 +31,22 @@ class Post extends Component {
         this.state = {
             job: null,
             countCmt: 0,
-            likeData:null
+            likeData: null
         }
+    }
+
+    getData = () => {
+        return API.getJob(this.props.account, this.props.postData.job_id)
+            .then(res => {
+                if (res.status == 200 && res.data.success == true) {
+                    this.setState({
+                        job: res.data.data
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     getCountCmt = (count) => {
@@ -48,59 +56,59 @@ class Post extends Component {
     }
 
     getCountLike = () => {
-        let {postData, account} = this.props;
-        return API.getLike(account,postData.post_id)
-        .then(res=>{
-            if(res.status == 200 && res.data.success){
-                this.setState({
-                    likeData: res.data
-                })
-            }
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+        let { postData, account } = this.props;
+        return API.getLike(account, postData.post_id)
+            .then(res => {
+                if (res.status == 200 && res.data.success) {
+                    this.setState({
+                        likeData: res.data
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     onLike = () => {
-        let {postData, account} = this.props;
-        let {likeData} = this.state;
+        let { postData, account } = this.props;
+        let { likeData } = this.state;
 
-        if(likeData.is_liked){
-            return API.unlike(account,{
+        if (likeData.is_liked) {
+            return API.unlike(account, {
                 post_id: postData.post_id
             })
-            .then(res=>{
-                if(res.status == 200){
+                .then(res => {
+                    if (res.status == 200) {
+                        this.getCountLike();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+
+        return API.like(account, {
+            post_id: postData.post_id
+        })
+            .then(res => {
+                if (res.status == 200) {
                     this.getCountLike();
                 }
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err);
             })
-        }
-
-        return API.like(account,{
-            post_id: postData.post_id
-        })
-        .then(res=>{
-            if(res.status == 200){
-                this.getCountLike();
-            }
-        })
-        .catch(err=>{
-            console.log(err);
-        })
     }
 
 
     render() {
         let { postData, history, userInformation } = this.props;
-        let { job,countCmt,likeData } = this.state;
+        let { job, countCmt, likeData } = this.state;
         let timeAgo = Date.now() - new Date(postData.updated_at);
         return (
             <div>
-                <div className="post-bar" style={{marginBottom:0}}>
+                <div className="post-bar" style={{ marginBottom: 0 }}>
                     <div className="post_topbar" style={{ width: 80 + '%' }}>
                         <div className="usy-dt">
                             <img src={postData && postData.avatar ? `http://localhost:8000/images/avatar/${postData.avatar}`
@@ -141,18 +149,30 @@ class Post extends Component {
                     <div className="job_descp">
                         <br />{postData.content}<br />
                     </div>
+
+                    {/* experience , pr_lg*/}
                     {job ?
                         <div className="job_descp">
                             <br />
                             <ul className="skill-tags">
                                 <li><a href="#" title="">{job.experience_name}</a></li>
+                                {/* program language */}
+                                {job.program_language ? 
+                                    job.program_language.map((pr_lg, index) => {
+                                        return(
+                                            <li key={index}><a href="#" title="">{pr_lg.program_language_name}</a></li>
+                                        )
+                                    })
+                                    :''
+                                }
                             </ul>
                         </div>
                         : ''}
+
                     <div className="job-status-bar">
                         <ul className="like-com">
                             <li>
-                                <a onClick={this.onLike} style={{color: likeData && likeData.is_liked ? 'red' : '#b2b2b2'}}><i className="la la-heart"></i> Like</a>
+                                <a onClick={this.onLike} style={{ color: likeData && likeData.is_liked ? 'red' : '#b2b2b2' }}><i className="la la-heart"></i> Like</a>
                                 <img src={require("../../../../assets/images/liked-img.png")} />
                                 <span>{likeData ? likeData.count : 0}</span>
                             </li>
@@ -160,7 +180,7 @@ class Post extends Component {
                         </ul>
                     </div>
                 </div>
-                <Comment userInformation={userInformation} post_id={postData.id} getCountCmt={this.getCountCmt}/>
+                <Comment userInformation={userInformation} post_id={postData.id} getCountCmt={this.getCountCmt} />
             </div>
         )
     }

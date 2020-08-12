@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 
 import SocialLink from './socialLink';
+import TopViewer from './topViewer';
 
 class MainRightSidebar extends Component {
     render() {
@@ -20,6 +21,7 @@ class MainRightSidebar extends Component {
                         </Link>
                     </div>
                     <SocialLink userInformation={userInformation} regetData={regetData}/>
+                    <TopViewer/>
                 </div>
             </div>
         )

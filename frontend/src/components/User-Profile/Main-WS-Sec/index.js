@@ -14,7 +14,7 @@ class MainWsSec extends Component {
                     <UserTabSec name={userInformation.name}/>
                     <div className="product-feed-tab current" id="feed-dd">
                         <div className="posts-section">
-                            <PostBar userInformation={userInformation}/>
+                            <PostBar userInformation={userInformation} isInProfile={true}/>
                             <div className="process-comm">
                                 <div className="spinner">
                                     <div className="bounce1"></div>

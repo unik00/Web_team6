@@ -85,7 +85,7 @@ class JobController extends Controller
         }
         else {
             $user = Company::where('user_id', $job->user_id)->first();
-            if(!$user) School::where('user_id', $job->user_id)->first();
+            if(!$user) $user = School::where('user_id', $job->user_id)->first();
             if(!$user) return response()->json(['success' => false, 'message' => 'Người tạo job không tồn tại']);
             $job->user_name = $user->name;
             $job->type_name = Job_Type::find($job->type_id)->name;

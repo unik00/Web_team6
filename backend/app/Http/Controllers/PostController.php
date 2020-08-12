@@ -64,8 +64,10 @@ class PostController extends Controller
     function getNormalPost(Request $request){
         $id = null;
         $id = $request->id;
+        $limit = $request->limit ?? 5;
+        $offset = $request->offset ?? 0;
         if(!$id) $list = Normal_Post::all();
-        else $list = Normal_Post::where('user_id', $id)->get();
+        else $list = Normal_Post::where('user_id', $id)->offset($offset)->limit($limit)->get();
         foreach($list as $normalPost){
             $user_id = $normalPost->user_id;
             $user = User::find($user_id);
@@ -90,8 +92,10 @@ class PostController extends Controller
     function getJobPost(Request $request){
         $id = null;
         $id = $request->id;
+        $limit = $request->limit ?? 5;
+        $offset = $request->offset ?? 0;
         if(!$id) $list = Job_Post::all();
-        else $list = Job_Post::where('user_id', $id)->get();
+        else $list = Job_Post::where('user_id', $id)->offset($offset)->limit($limit)->get();
         foreach($list as $jobPost){
             $user_id = $jobPost->user_id;
             $user = User::find($user_id);

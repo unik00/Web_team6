@@ -170,3 +170,11 @@ Route::group(['prefix' => 'notice'], function () {
         Route::get('get', 'NoticeController@getNotice');
     });
 });
+Route::group(['prefix' => 'exp'], function () {
+    Route::post('list', 'ExperienceController@getExperience');
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'ExperienceController@addExperience');
+        Route::post('remove', 'ExperienceController@removeExperience');
+    });
+});
+

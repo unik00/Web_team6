@@ -74,7 +74,7 @@ class Student_Program_LanguageController extends Controller
         foreach($list as $ls){
             $program_language_id = $ls->program_language_id;
             $language = Program_Language::find($program_language_id);
-            $ls->language_name = $language->name;
+            $ls->program_language_name = $language->name;
         }
         return response()->json([
             'success' => true,

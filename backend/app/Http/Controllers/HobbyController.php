@@ -73,14 +73,23 @@ class HobbyController extends Controller
         $id = $request->User()->id;
         $hobby_id = $request->hobby_id;
         $hobbyStudent = Student_Hobby::where('user_id', $id)->where('hobby_id', $hobby_id)->first();
-        if(!$hobbyStudent){
+        //if(!$hobbyStudent){
+        if (true){
             DB::beginTransaction();
+            
             try {
                 $hobbyStudent = new Student_Hobby;
                 $hobbyStudent->user_id = $id;
                 $hobbyStudent->hobby_id = $hobby_id;
-                $hobbyStudent->save();
+
+                try{
+                    $hobbyStudent->save();
+                }catch (\Exception $e){
+                    return response()->json(['message' => $e->getMessage()]);
+                }
+                
                 DB::commit();
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Thêm sở thích thành công'

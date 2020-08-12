@@ -171,10 +171,25 @@ Route::group(['prefix' => 'notice'], function () {
     });
 });
 Route::group(['prefix' => 'exp'], function () {
-    Route::post('list', 'ExperienceController@getExperience');
+    Route::get('list', 'ExperienceController@getExperience');
     Route::group(['middleware' => ['auth:api']], function () { 
         Route::post('add', 'ExperienceController@addExperience');
         Route::post('remove', 'ExperienceController@removeExperience');
     });
 });
 
+Route::group(['prefix' => 'student-language'], function () {
+    Route::get('list', 'Student_LanguageController@getLanguage');
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'Student_LanguageController@addOrUpdateLanguage');
+        Route::post('remove', 'Student_LanguageController@removeLanguage');
+    });
+});
+
+Route::group(['prefix' => 'student-programlanguage'], function () {
+    Route::get('list', 'Student_Program_LanguageController@getLanguage');
+    Route::group(['middleware' => ['auth:api']], function () { 
+        Route::post('add', 'Student_Program_LanguageController@addOrUpdateLanguage');
+        Route::post('remove', 'Student_Program_LanguageController@removeLanguage');
+    });
+});

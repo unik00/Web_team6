@@ -20,7 +20,10 @@ class FormUpdateBasicInformation extends Component {
     }
     constructor(props) {
         super(props);
-        let { name, birthday, gender, mssv, school_id, name_school } = this.props
+        let { account, name, birthday, gender, mssv, school_id, name_school } = this.props
+        
+        //console.log(API.getListHobby(account));
+
         this.state = {
             name: name ? name : '',
             birthday: birthday ? birthday : '',
@@ -68,6 +71,7 @@ class FormUpdateBasicInformation extends Component {
         e.preventDefault();
         let { name, birthday, gender, mssv, classes, school_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
+
         console.log(school_id);
         API.UpdateProfile(account,{
             name,
@@ -100,7 +104,8 @@ class FormUpdateBasicInformation extends Component {
 
     render() {
         let { toggleEditForm } = this.props
-        let { name, birthday, gender, mssv, classes, error } = this.state;
+        let { name, birthday, gender, mssv, classes, listHobby, error} = this.state;
+        console.log(listHobby);
         return (
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
@@ -130,6 +135,7 @@ class FormUpdateBasicInformation extends Component {
                             <select onChange={this.onChangeSchool} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderSelectSchool()}
                             </select>
+
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditBasicInformation} className="save">Save</button>
                             <button onClick={toggleEditForm} className="cancel">Cancel</button>

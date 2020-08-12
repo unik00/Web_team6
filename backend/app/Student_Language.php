@@ -7,5 +7,5 @@ use EloquentFilter\Filterable;
 class Student_Language extends Model
 {
     use Filterable;
-    protected $fillable = ['user_id', 'language_id'];
+    protected $fillable = ['user_id', 'language_id', 'level'];
 }

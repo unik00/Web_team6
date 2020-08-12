@@ -47,6 +47,20 @@ class JobController extends Controller
             $job->country_id = $request->country_id;
             $job->availabilty_id = $request->availabilty_id;
             $job->save();
+
+            //add language
+            $program_language_id = $request->program_language;
+            foreach($program_language_id as $programlanguage_id){
+                $pgl_j = null;
+                Program_Language_Job::where('job_id', $job->id)->delete();
+
+                $pgl_j = new Program_Language_Job;
+                $pgl_j->job_id = $job->id;
+                $pgl_j->program_language_id = $programlanguage_id;
+                $pgl_j->save();
+                
+            }
+
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Bạn đã cập nhật job thành công']);
         } catch(\Exception $e){

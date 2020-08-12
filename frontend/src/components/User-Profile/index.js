@@ -21,6 +21,7 @@ class UserProfile extends Component {
             this.getData(account);
         }
     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -42,7 +43,7 @@ class UserProfile extends Component {
             avatar:''
         }
     }
-
+    
     getData = (account) => {
         let other_id = (new URLSearchParams(this.props.location.search)).get('other_id');
         if (other_id) {

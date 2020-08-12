@@ -9,14 +9,14 @@ class HobbySeeder extends Seeder{
      */
     public function run(){     
         DB::table('hobbies')->insert([
-            ["name"=>"sports",
-            "description"=>"healthy and balance."
+            ["name"=>"Sports",
+            "description"=>"Healthy and balance."
             ],
-            ["name"=>"coding",
-            "description"=>"thich code la do roi"
+            ["name"=>"Coding",
+            "description"=>"Thích học code."
             ],
-            ["name"=>"girls",
-            "description"=>"chasing women"]
+            ["name"=>"Girls",
+            "description"=>"Chasing women."]
         ]);
     }
 }

@@ -14,7 +14,13 @@ class CreateStudentProgramLanguagesTable extends Migration
     public function up()
     {
         Schema::create('student__program__languages', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+
+            $table->integer('program_language_id')->unsigned();
+            $table->foreign('program_language_id')->references('id')->on('program__languages')->onUpdate('cascade');
+            $table->integer('level')->default(0);
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ import FormUpdateBasicInformation from '../../../Form-Update/formUpdateBasicInfo
     - Date of birth
     - School
     - Class
+    - List of hobbies
 */}
 
 

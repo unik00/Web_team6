@@ -27,7 +27,7 @@ class LikeController extends Controller
                 $like->post_id = $post_id;
                 $like->save();
 
-                //add notice 
+                //add notice
                 $post = Post::find($post_id);
                 $posts = null;
                 if($post->type == "Normal") $posts = Normal_Post::where('post_id', $post_id)->first();
@@ -57,7 +57,7 @@ class LikeController extends Controller
             } catch (\Exception $e){
                 DB::rollback();
                 return response()->json(['success' => false, 'message' => 'Lỗi hệ thống. Vui lòng thử lại']);
-            }            
+            }
         }
         else {
             return response()->json(['success' => false, 'message' => 'Bạn chưa thích bài viết này']);

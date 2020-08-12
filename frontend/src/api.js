@@ -169,3 +169,37 @@ export const getJob = (account,job_id) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+
+export const comment = (account, comment) => {
+  return api.post('comment-post/add',comment,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const getComment = (account,post_id) => {
+  return api.get(`comment-post/get?post_id=${post_id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const like = (account,post_id) => {
+  return api.post('like-post/add',post_id,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const unlike = (account,post_id) => {
+  return api.post('like-post/remove',post_id,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const getLike = (account,post_id) => {
+  return api.get(`like-post/get?post_id=${post_id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const getProgramLanguage = () => {
+  return api.get('program-language/list');
+}

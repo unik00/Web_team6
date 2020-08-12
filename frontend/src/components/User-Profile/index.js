@@ -39,6 +39,7 @@ class UserProfile extends Component {
             school_id: null,
             status: null,
             type: "",
+            avatar:''
         }
     }
 
@@ -62,11 +63,32 @@ class UserProfile extends Component {
                     this.setState({
                         ...res.data
                     })
+                    this.getAvatar({...res.data});
                 }
             })
             .catch(err => {
                 console.log(err)
             })
+    } 
+
+    getAvatar = (userInformation) => {
+        return API.getAvatar(userInformation.user_id)
+        .then(res=>{
+            if(res.data.success == true && res.data.path !== "http://backend_upstream/images/avatar"){
+                return this.setState({
+                    avatar:res.data.path
+                })
+            }
+            this.setState({
+                avatar:''
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                avatar:''
+            })
+            console.log(err);
+        })
     }
 
     render() {

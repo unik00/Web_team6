@@ -85,7 +85,7 @@ class JobController extends Controller
         }
         else {
             $user = Company::where('user_id', $job->user_id)->first();
-            if(!$user) School::where('user_id', $job->user_id)->first();
+            if(!$user) $user = School::where('user_id', $job->user_id)->first();
             if(!$user) return response()->json(['success' => false, 'message' => 'Người tạo job không tồn tại']);
             $job->user_name = $user->name;
             $job->type_name = Job_Type::find($job->type_id)->name;
@@ -94,7 +94,7 @@ class JobController extends Controller
             $job->availabilty_name = Job_Availabilty::find($job->availabilty_id)->name;
             $language = array();
             $language = Program_Language_Job::where('job_id', $id)->get();
-            $job->program_language = $language;  
+            $job->program_language = $language;
             return response()->json(['success' => true, 'data' => $job]);
         }
     }

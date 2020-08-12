@@ -47,8 +47,9 @@ class PostBar extends Component {
 
     renderPost = () => {
         let { listPost } = this.state;
+        let {userInformation} = this.props;
         return listPost.map((post, index) => {
-            return <Post key={index} postData={post} />
+            return <Post userInformation={userInformation} key={index} postData={post} />
         })
     }
     render() {

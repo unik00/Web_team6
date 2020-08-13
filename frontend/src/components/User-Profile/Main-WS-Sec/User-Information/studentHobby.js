@@ -23,10 +23,7 @@ class StudentHobby extends Component {
                     this.setState({
                         listStudentHobby : res.data.Hobbies
                     })
-                    console.log(listStudentHobby)
                 }
-                console.log("res for getStudentHobby")
-                console.log(res)
             }
         ).catch(err => {
             console.log(err);

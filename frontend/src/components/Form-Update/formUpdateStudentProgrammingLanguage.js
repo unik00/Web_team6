@@ -8,25 +8,25 @@ class FormUpdateStudentProgrammingLanguage extends Component {
         let { account } = this.props
         
         this.state = {
-            listStudentProgrammingLanguage: [],
-            studentProgrammingLanguageId : 1,
+            listProgrammingLanguage: [],
+            program_language_id : 1,
+            level : 1,
             error:''
         }
     }
 
     componentDidMount(){
-        this.getlistProgrammingLanguage();
+        this.getListProgrammingLanguage();
     }
 
-    getListStudentProgrammingLanguage = () => {
+    getListProgrammingLanguage(){
         let { account } = this.props;
-        API.getListStudentProgrammingLanguage(account).then(
+        API.getListProgrammingLanguage().then(
             res => { if (res.status == 200){
                     this.setState({
-                        listStudentProgrammingLanguage : res.data.languages
+                        listProgrammingLanguage : res.data.program_languages
                     })
                 }
-                console.log(res);
             }
         ).catch(err => {
             console.log(err);
@@ -45,7 +45,7 @@ class FormUpdateStudentProgrammingLanguage extends Component {
         let value = e.target.value;
         this.setState({
             name_programminglanguage: listProgrammingLanguage[value].name,
-            programminglanguage_id: listProgrammingLanguage[value].id
+            program_language_id: listProgrammingLanguage[value].id
         })
         console.log(this.state.programminglanguage_id)
     }
@@ -60,17 +60,17 @@ class FormUpdateStudentProgrammingLanguage extends Component {
     onEditProgrammingLanguage = (e) => {
         e.preventDefault();
 
-        let { programminglanguage_id } = this.state;
+        let { program_language_id, level} = this.state;
         let { account,toggleEditForm, regetData } = this.props
 
-        API.addProgrammingLanguage(account,{programminglanguage_id})
+        API.addStudentProgrammingLanguage(account,{program_language_id,level})
             .then(res => {
+                console.log(res)
                 if(res.status == 200 && res.data.success){
                     alert('Edit successfully');
                     // console.log(res)
                     regetData()
                     toggleEditForm()
-
                 }
             })
             .catch(err => {
@@ -79,8 +79,8 @@ class FormUpdateStudentProgrammingLanguage extends Component {
     }
     render() {
         let { toggleEditForm } = this.props
-        let { listProgrammingLanguage, error} = this.state;
-        console.log(listProgrammingLanguage);
+        let { listProgrammingLanguage, level, error} = this.state;
+       // console.log(listProgrammingLanguage);
         return (
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
@@ -91,6 +91,9 @@ class FormUpdateStudentProgrammingLanguage extends Component {
                             <select onChange={this.onChangeProgrammingLanguage} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderSelectProgrammingLanguage()}
                             </select>
+                            <h4>Number of years' experience:</h4>
+                            <input type="number" name="level" placeholder="1" value={level} onChange={this.inputOnchange} />
+
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditProgrammingLanguage} className="save">Save</button>
                             <button onClick={toggleEditForm} className="cancel">Cancel</button>

@@ -154,9 +154,17 @@ export const addExperience = (account, exp_request) => {
 /* end of experience */
 
 /* programming language */
-//export const getStudentProgrammingLanguage = (id) => {
-//  return api.get(`student-programlanguage/list?id=${id}`);
-//}
+export const getStudentProgrammingLanguage = (id) => {
+ return api.get(`student-programlanguage/list?id=${id}`);
+}
+export const getListProgrammingLanguage = () => {
+  return api.get(`program-language/list`);
+}
+export const addStudentProgrammingLanguage = (account, data) => {
+  return api.post(`student-programlanguage/add`, data, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
 /*end of programming language*/ 
 
 export const addJob = (account, data) => {

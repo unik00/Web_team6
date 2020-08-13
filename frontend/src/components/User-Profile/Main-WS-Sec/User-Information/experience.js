@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import FormUpdateStudentHobby from '../../../Form-Update/formUpdateStudentHobby'
+import FormUpdateExperience from '../../../Form-Update/formUpdateExperience'
 import * as API from '../../../../api';
 
-class StudentHobby extends Component {
+class Experience extends Component {
     constructor(props) {
         super(props);
         this.state={
@@ -13,16 +13,17 @@ class StudentHobby extends Component {
         }
     }
     componentDidMount(){
-        this.getListStudentHobby();
+        this.getListExperience();
     }
     
-    getListStudentHobby = () => {
+    getListExperience = () => {
         let {userInformation} = this.state;
         API.getStudentHobby(userInformation.user_id).then(
             res => { if (res.status == 200 && res.statusText == "OK"){
                     this.setState({
                         listStudentHobby : res.data.Hobbies
                     })
+                    console.log(listStudentHobby)
                 }
             }
         ).catch(err => {
@@ -52,7 +53,7 @@ class StudentHobby extends Component {
         return (
             <div className="user-profile-ov st2">
                 <h3>
-                    <div style={{ display: 'inline-block', cursor: 'pointer' }} className="exp-bx-open">Hobbies</div>
+                    <div style={{ display: 'inline-block', cursor: 'pointer' }} className="exp-bx-open">Experience</div>
                     {userInformation.my_profile ? <div style={{ display: 'inline-block', cursor: 'pointer' }}
                          onClick={this.toggleEditForm}>
                              <i className="fa fa-pencil"></i>
@@ -64,7 +65,7 @@ class StudentHobby extends Component {
                     </div>
                     </div>
                 {openEditForm?
-                    <FormUpdateStudentHobby toggleEditForm={this.toggleEditForm}
+                    <FormUpdateExperience toggleEditForm={this.toggleEditForm}
                                                 regetData={this.getListStudentHobby}/>
                 :''}
             </div>
@@ -73,4 +74,4 @@ class StudentHobby extends Component {
 }
 
 
-export default StudentHobby
+export default Experience

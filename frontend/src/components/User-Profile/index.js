@@ -40,6 +40,7 @@ class UserProfile extends Component {
             school_id: null,
             status: null,
             type: "",
+            avatar:''
         }
     }
     
@@ -48,7 +49,6 @@ class UserProfile extends Component {
         if (other_id) {
             return API.ViewOtherProfile(account, other_id)
                 .then(res => {
-                    console.log(res);
                     if (res.status == 200) {
                         this.setState({
                             ...res.data
@@ -63,11 +63,32 @@ class UserProfile extends Component {
                     this.setState({
                         ...res.data
                     })
+                    this.getAvatar({...res.data});
                 }
             })
             .catch(err => {
                 console.log(err)
             })
+    } 
+
+    getAvatar = (userInformation) => {
+        return API.getAvatar(userInformation.user_id)
+        .then(res=>{
+            if(res.data.success == true && res.data.path !== "http://backend_upstream/images/avatar"){
+                return this.setState({
+                    avatar:res.data.path
+                })
+            }
+            this.setState({
+                avatar:''
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                avatar:''
+            })
+            console.log(err);
+        })
     }
 
     render() {
@@ -80,7 +101,7 @@ class UserProfile extends Component {
                             <div className="main-section-data">
                                 <div className="row">
                                     <MainLeftSidebar userInformation={this.state} regetData={this.getData}/>
-                                    <MainWsSec userInformation={this.state} regetData={this.getData} />
+                                    <MainWsSec userInformation={this.state} regetData={this.getData}/>
                                     <MainRightSidebar userInformation={this.state} regetData={this.getData} />
                                 </div>
                             </div>

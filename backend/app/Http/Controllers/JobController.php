@@ -12,6 +12,8 @@ use App\Job_Experience;
 use App\Job_Type;
 use App\Program_Language_Job;
 use App\School;
+use App\Program_Language;
+use App\User;
 
 class JobController extends Controller
 {
@@ -58,7 +60,7 @@ class JobController extends Controller
                 $pgl_j->job_id = $job->id;
                 $pgl_j->program_language_id = $programlanguage_id;
                 $pgl_j->save();
-                
+
             }
 
             DB::commit();
@@ -108,7 +110,12 @@ class JobController extends Controller
             $job->availabilty_name = Job_Availabilty::find($job->availabilty_id)->name;
             $language = array();
             $language = Program_Language_Job::where('job_id', $id)->get();
-            $job->program_language = $language;  
+            foreach($language as $lg){
+                $id_lg = $lg->program_language_id;
+                $lg_data = Program_Language::find($id_lg);
+                $lg->program_language_name = $lg_data->name;
+            }
+            $job->program_language = $language;
             return response()->json(['success' => true, 'data' => $job]);
         }
     }
@@ -124,7 +131,32 @@ class JobController extends Controller
             if($list->count() < $limit) $limit = $list->count();
             $list->random($limit);
         }
-        return response()->json(['jobs' => $list]);
+
+        $arrRes = [];
+        foreach($list as $ls) {
+            $job = Job::find($ls->id);
+            $user = Company::where('user_id', $job->user_id)->first();
+            if(!$user) $user = School::where('user_id', $job->user_id)->first();
+            $job->user_name = $user->name;
+            $job->type_name = Job_Type::find($job->type_id)->name;
+            $job->experience_name = Job_Experience::find($job->experience_id)->name;
+            $job->country_name = Country::find($job->country_id)->name;
+            $job->availabilty_name = Job_Availabilty::find($job->availabilty_id)->name;
+            $language = array();
+            $language = Program_Language_Job::where('job_id', $ls->id)->get();
+            foreach($language as $lg){
+                $id_lg = $lg->program_language_id;
+                $lg_data = Program_Language::find($id_lg);
+                $lg->program_language_name = $lg_data->name;
+            }
+            $job->program_language = $language;
+
+            $user = User::find($ls->user_id);
+            $job->avatar = $user->avatar;
+            $arrRes[] = $job;
+        }
+
+        return response()->json(['jobs' => $arrRes]);
     }
 
     function getType(){

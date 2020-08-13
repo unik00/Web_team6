@@ -198,6 +198,7 @@ nav ul li:hover > ul,
 .user-profy ul li a,
 .posty,
 .comment_box form button,
+.comment_box button,
 .post-project-fields form input,
 .post-project-fields form textarea,
 .post-project-fields form select,
@@ -1680,6 +1681,20 @@ main {
 	resize: none;
 }
 .comment_box form button {
+	float: right;
+	color: #fff;
+	background-color: #e44d3a;
+	height: 40px;
+	padding: 0 10px;
+	text-align: center;
+	font-size: 14px;
+	border: 0;
+	margin-left: 10px;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.comment_box button {
 	float: right;
 	color: #fff;
 	background-color: #e44d3a;

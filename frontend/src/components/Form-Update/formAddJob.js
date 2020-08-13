@@ -1,68 +1,80 @@
 import React, { Component } from 'react'
 import * as API from '../../api';
 import { connect } from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class FormAddJob extends Component {
 
-    componentDidMount(){
-        API.getCountry().then(res=>{
-            if(res.data && res.data.countries){
+    componentDidMount() {
+        API.getCountry().then(res => {
+            if (res.data && res.data.countries) {
                 this.setState({
                     countries: res.data.countries,
                     country_id: res.data.countries[0].id
                 })
-            }else this.renderErr('server error');
+            } else this.renderErr('server error');
         })
-        .catch(err=> {
-            console.log(err);
-            this.renderErr('server error');
-        })
+            .catch(err => {
+                console.log(err);
+                this.renderErr('server error');
+            })
 
-        API.getJobType().then(res=>{
-            if(res.data && res.data.types){
+        API.getJobType().then(res => {
+            if (res.data && res.data.types) {
                 this.setState({
                     jobType: res.data.types,
                     type_id: res.data.types[0].id
                 })
-            }else this.renderErr('server error');
+            } else this.renderErr('server error');
         })
-        .catch(err=> {
-            console.log(err);
-            this.renderErr('server error');
-        })
+            .catch(err => {
+                console.log(err);
+                this.renderErr('server error');
+            })
 
-        API.getAvailabilties().then(res=>{
-            if(res.data && res.data.availabilties){
+        API.getAvailabilties().then(res => {
+            if (res.data && res.data.availabilties) {
                 this.setState({
                     availabilties: res.data.availabilties,
                     availabilty_id: res.data.availabilties[0].id
                 })
-            }else this.renderErr('server error');
+            } else this.renderErr('server error');
         })
-        .catch(err=> {
-            console.log(err);
-            this.renderErr('server error');
-        })
+            .catch(err => {
+                console.log(err);
+                this.renderErr('server error');
+            })
 
-        API.getJobExperience().then(res=>{
-            if(res.data && res.data.experiences){
+        API.getJobExperience().then(res => {
+            if (res.data && res.data.experiences) {
                 this.setState({
                     experiences: res.data.experiences,
                     experience_id: res.data.experiences[0].id
                 })
-            }else this.renderErr('server error');
+            } else this.renderErr('server error');
         })
-        .catch(err=> {
-            console.log(err);
-            this.renderErr('server error');
+            .catch(err => {
+                console.log(err);
+                this.renderErr('server error');
+            })
+
+        API.getProgramLanguage().then(res => {
+            if (res.data && res.data.program_languages) {
+                this.setState({
+                    programLanguages: res.data.program_languages
+                })
+            } else this.renderErr('server error');
         })
-        
+            .catch(err => {
+                console.log(err);
+                this.renderErr('server error');
+            })
+
     }
 
     constructor(props) {
         super(props);
-        let { job_id,name, description, pay_rate, type_id,job_type_name, experience_id,experience_name, country_id, country_name,
+        let { job_id, name, description, pay_rate, type_id, job_type_name, experience_id, experience_name, country_id, country_name,
             availabilty_id, availabilty_name } = this.props
         this.state = {
             job_id: job_id ? job_id : '',
@@ -86,7 +98,11 @@ class FormAddJob extends Component {
             availabilty_id: availabilty_id ? availabilty_id : '',
             availabilty_name: availabilty_name ? availabilty_name : '',
 
-            error:''
+            programLanguages: [],
+            programLanguage_names: [],
+            programLanguage_ids: [],
+
+            error: ''
         }
     }
 
@@ -154,6 +170,30 @@ class FormAddJob extends Component {
         })
     }
 
+    renderProgramLanguages = () => {
+        let {programLanguages} = this.state;
+        return programLanguages.map((language,index) => {
+            return(
+                <div style={{ width: '25%', margin: '0 3%', display: 'inline-block'}} key={index}>
+                    <input type="checkbox" value={index} style={{width: '45%'}} onChange={this.onChangeCheckbox}/>
+                    <h3 style={{width:'45%', marginTop: '10px'}}>{language.name}</h3>
+                </div>
+            )
+        })
+    }
+
+    onChangeCheckbox = (e) => {
+        let {programLanguage_ids,programLanguages, programLanguage_names} = this.state;
+        let value = e.target.value;
+        if(!programLanguage_ids[value]){
+            programLanguage_ids[value] = programLanguages[value].id;
+            programLanguage_names[value] = programLanguages[value].name;
+        }else{
+            programLanguage_ids = programLanguage_ids.splice(value,1);
+            programLanguage_names = programLanguage_names.splice(value,1);
+        }
+    }
+
     inputOnchange = (e) => {
         let target = e.target;
         this.setState({
@@ -163,8 +203,8 @@ class FormAddJob extends Component {
 
     onEditJob = (e) => {
         e.preventDefault();
-        let { job_id,name, description, pay_rate, type_id, experience_id, country_id, availabilty_id } = this.state
-        let { account,toggleAddJobForm } = this.props;
+        let { job_id, name, description, pay_rate, type_id, experience_id, country_id, availabilty_id, programLanguage_ids } = this.state
+        let { account, toggleAddJobForm } = this.props;
         let data = {
             job_id,
             name,
@@ -173,19 +213,19 @@ class FormAddJob extends Component {
             type_id,
             experience_id,
             country_id,
-            availabilty_id
+            availabilty_id,
+            program_language: programLanguage_ids
         }
 
-        console.log(data);
-        API.addJob(account,data)
+        API.addJob(account, data)
             .then(res => {
-                if(res.status == 200 && res.data.success == true){
+                if (res.status == 200 && res.data.success == true) {
                     alert('successfully');
                     toggleAddJobForm();
                     history.push('/user-profile');
                     history.go();
                 }
-                else{
+                else {
                     this.setState({
                         error: res.data.message
                     })
@@ -205,12 +245,12 @@ class FormAddJob extends Component {
             })
     }
     renderErr = (err) => {
-        this.setState({error: err});
-    } 
+        this.setState({ error: err });
+    }
 
     render() {
         let { toggleAddJobForm } = this.props
-        let { name, description, pay_rate, error} = this.state
+        let { name, description, pay_rate, error } = this.state
         return (
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
@@ -220,28 +260,38 @@ class FormAddJob extends Component {
                             <h4>Job Name:</h4>
                             <input type="text" name="name" placeholder="Job name" value={name} onChange={this.inputOnchange} />
 
-                            <h4>Type:</h4>
-                            <select onChange={this.onChangeJobType} style={{ paddingLeft: 15 + 'px' }}>
-                                {this.renderJobType()}
-                            </select>
+                            <div style={{ width: 50 + '%', display: 'inline-block' }}>
+                                <h4>Job Type:</h4>
+                                <select onChange={this.onChangeJobType} style={{ paddingLeft: 15 + 'px' }}>
+                                    {this.renderJobType()}
+                                </select>
+                            </div>
 
-                            <h4>Type:</h4>
-                            <select onChange={this.onChangeCountryType} style={{ paddingLeft: 15 + 'px' }}>
-                                {this.renderCountries()}
-                            </select>
+                            <div style={{ width: 50 + '%', display: 'inline-block' }}>
+                                <h4>Country:</h4>
+                                <select onChange={this.onChangeCountryType} style={{ paddingLeft: 15 + 'px' }}>
+                                    {this.renderCountries()}
+                                </select>
+                            </div>
 
-                            <h4>Experience:</h4>
-                            <select onChange={this.onChangeExpType} style={{ paddingLeft: 15 + 'px' }}>
-                                {this.renderExpType()}
-                            </select>
+                            <div style={{ width: 50 + '%', display: 'inline-block' }}>
+                                <h4>Experience:</h4>
+                                <select onChange={this.onChangeExpType} style={{ paddingLeft: 15 + 'px' }}>
+                                    {this.renderExpType()}
+                                </select>
+                            </div>
 
-                            <h4>Salary:</h4>
-                            <input type="number" name="pay_rate" placeholder="Salary" value={pay_rate} onChange={this.inputOnchange} />
+                            <div style={{ width: 50 + '%', display: 'inline-block' }}>
+                                <h4>Salary:</h4>
+                                <input type="number" name="pay_rate" placeholder="Salary" value={pay_rate} onChange={this.inputOnchange} />
+                            </div>
 
                             <h4>Availability:</h4>
                             <select onChange={this.onChangeAvailabilityType} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderAvailabilities()}
                             </select>
+
+                            {this.renderProgramLanguages()}
 
                             <h4>Description:</h4>
                             <input type="text" name="description" placeholder="Description" value={description} onChange={this.inputOnchange} />
@@ -260,8 +310,8 @@ class FormAddJob extends Component {
 }
 
 const mapStateToProps = state => {
-    return{
+    return {
         account: state.account
     }
 }
-export default withRouter(connect(mapStateToProps,null)(FormAddJob))
+export default withRouter(connect(mapStateToProps, null)(FormAddJob))

@@ -53,7 +53,7 @@ class MainSwSecHome extends Component {
                     </div>
                     <div className="posts-section">
                        
-                                <PostBar/>
+                                <PostBar userInformation={userInformation}/>
                             <div className="process-comm">
                                 <div className="spinner">
                                     <div className="bounce1"></div>

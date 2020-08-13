@@ -5,7 +5,14 @@ import * as API from '../../../../api';
 
 class PostBar extends Component {
     componentDidMount() {
-        this.getdata();
+        this.getdata('Normal');
+    }
+
+    componentDidUpdate(preprops){
+        let {userInformation} = this.props;
+        if(preprops.userInformation != userInformation){
+            this.getdata('Normal', userInformation);
+        }
     }
 
     constructor(props) {
@@ -17,38 +24,64 @@ class PostBar extends Component {
     }
 
 
-    getdata(type) {
-        if (type == 'Job') {
-            return API.getJobPost().then(res => {
-                if (res.data && res.data.posts) {
-                    this, this.setState({
-                        listPost: res.data.posts
+    getdata(type='Normal', userInformation=null) {
+        if(this.props.isInProfile) {
+            if(userInformation && userInformation.user_id){
+                if (type == 'Job') {
+                    return API.getMyJobPost(userInformation.user_id).then(res => {
+                        if (res.data && res.data.posts) {
+                            this, this.setState({
+                                listPost: res.data.posts
+                            })
+                        }
                     })
                 }
-            })
+                else{
+                    return API.getMyNormalPost(userInformation.user_id).then(res => {
+                        if (res.data && res.data.posts) {
+                            this, this.setState({
+                                listPost: res.data.posts
+                            })
+                        }
+                    })
+                }
+            }
         }
         else{
-            return API.getNormalPost().then(res => {
-                if (res.data && res.data.posts) {
-                    this, this.setState({
-                        listPost: res.data.posts
-                    })
-                }
-            })
+            if (type == 'Job') {
+                return API.getJobPost().then(res => {
+                    if (res.data && res.data.posts) {
+                        this, this.setState({
+                            listPost: res.data.posts
+                        })
+                    }
+                })
+            }
+            else{
+                return API.getNormalPost().then(res => {
+                    if (res.data && res.data.posts) {
+                        this, this.setState({
+                            listPost: res.data.posts
+                        })
+                    }
+                })
+            }
         }
     }
 
     changeType = (type) => {
+        let {userInformation} = this.props;
         this.setState({
             postType: type
         })
-        return this.getdata(type);
+        return this.getdata(type,userInformation);
     }
 
     renderPost = () => {
         let { listPost } = this.state;
+        let {userInformation} = this.props;
         return listPost.map((post, index) => {
-            return <Post key={index} postData={post} />
+            return <Post userInformation={userInformation} key={index} postData={post} />
         })
     }
     render() {

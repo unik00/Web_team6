@@ -10,7 +10,7 @@ class MainLeftSidebar extends Component {
             <div className="col-lg-3">
                 <div className="main-left-sidebar">
                     <UserSocialProfile userInformation={userInformation} regetData={regetData}/>
-                    <SuggesstionUser/>
+                    <SuggesstionUser regetData={regetData}/>
                 </div>
             </div>
         )

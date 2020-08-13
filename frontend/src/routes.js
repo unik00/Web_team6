@@ -5,6 +5,7 @@ import UserProfile from './components/User-Profile/index';
 import Message from './components/Message/Message-Page/index';
 import AllUser from './components/All-User/index';
 import Home from './components/Home/index';
+import ViewJob from './components/Job-View/index';
 const routes = [
     {
         path:'/signin',
@@ -30,6 +31,11 @@ const routes = [
         path:"/",
         exact: true,
         main: () => <Home/>
+    },
+    {
+        path:"/jobs",
+        exact: true,
+        main: () => <ViewJob/>
     }
 ]
 

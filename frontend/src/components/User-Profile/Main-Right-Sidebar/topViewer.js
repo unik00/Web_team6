@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 
-class SuggesstionUser extends Component {
-    componentDidUpdate(prevProps) {
-        let { account } = this.props;
-
-        if (prevProps.account !== account) {
-            this.getListUser();
-        }
+class TopViewer extends Component {
+    componentDidMount() {
+        this.getListUser();
     }
     constructor(props) {
         super(props);
@@ -20,8 +16,7 @@ class SuggesstionUser extends Component {
     }
 
     getListUser = () => {
-        let { account } = this.props;
-        API.getListUser(account).then(res => {
+        API.getTopViewer().then(res => {
             this.setState({
                 listUser: res.data.Users
             })
@@ -89,7 +84,7 @@ class SuggesstionUser extends Component {
         return (
             <div className="suggestions full-width">
                 <div className="sd-title">
-                    <h3>Suggess People Profile</h3>
+                    <h3>Top Viewer Profile</h3>
                 </div>
                 <div className="suggestions-list">
                     {this.renderSuggestionUser()}
@@ -108,4 +103,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, null)(SuggesstionUser));
+export default withRouter(connect(mapStateToProps, null)(TopViewer));

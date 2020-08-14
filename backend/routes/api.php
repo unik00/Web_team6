@@ -48,7 +48,7 @@ Route::group(['prefix' => 'search'], function () {
     Route::get('hobby', 'SearchController@hobby');
     Route::get('job', 'SearchController@job');
     Route::get('language', 'SearchController@language');
-
+    Route::get('program-language-job', 'SearchController@programlanguagejob');
 });
 
 Route::group(['prefix' => 'message'], function () {
@@ -193,3 +193,5 @@ Route::group(['prefix' => 'student-programlanguage'], function () {
         Route::post('remove', 'Student_Program_LanguageController@removeLanguage');
     });
 });
+
+Route::put('vote', 'VoteController@addVote');

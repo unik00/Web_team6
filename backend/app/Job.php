@@ -9,4 +9,8 @@ class Job extends Model
 {
     use Filterable;
     protected $fillable = ['name', 'description'];
+    public function programlanguagejob()
+    {
+        return $this->hasMany(Program_Language_Job::class);
+    }
 }

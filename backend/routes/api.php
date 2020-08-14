@@ -193,3 +193,5 @@ Route::group(['prefix' => 'student-programlanguage'], function () {
         Route::post('remove', 'Student_Program_LanguageController@removeLanguage');
     });
 });
+
+Route::put('vote', 'VoteController@addVote');

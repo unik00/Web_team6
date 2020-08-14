@@ -47,6 +47,9 @@ class UserController extends Controller
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
 
+            $vote = new VoteController();
+            $user->vote_score = $vote->getVote($user->id);
+            
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -92,6 +95,8 @@ class UserController extends Controller
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
 
+            $vote = new VoteController();
+            $user->vote_score = $vote->getVote($user->id);
             $myid = $request->User()->id;
             if($myid){
                 $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();

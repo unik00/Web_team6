@@ -33,6 +33,12 @@ class Job extends Component {
             })
     }
 
+    filterData = (listJobFilter) => {
+        this.setState({
+            listJob: listJobFilter
+        })
+    }
+
     renderListJob = () => {
         let { listJob } = this.state;
         let { history } = this.props;
@@ -123,7 +129,7 @@ class Job extends Component {
                                     {this.renderListJob()}
                                 </div>
                             </div>
-                            <Filter/>
+                            <Filter filterData={this.filterData}/>
                         </div>
                     </div>
                 </div>

@@ -285,7 +285,7 @@ class FormAddJob extends Component {
                             </div>
 
                             <div style={{ width: 50 + '%', display: 'inline-block' }}>
-                                <h4>Salary:</h4>
+                                <h4>Salary($/hr):</h4>
                                 <input type="number" name="pay_rate" placeholder="Salary" value={pay_rate} onChange={this.inputOnchange} />
                             </div>
 

@@ -276,3 +276,7 @@ export const removeNotice = (account) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+
+export const filterJob = (data) => {
+  return api.post('search/job', data)
+}

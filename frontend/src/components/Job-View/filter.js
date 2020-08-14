@@ -213,7 +213,26 @@ class Filter extends Component {
     }
 
     onFilter = () => {
-        console.log(this.state)
+        let {filterData} = this.props
+        return API.filterJob({
+            type: this.state.type_id,
+            experience: this.state.experience_id,
+            country: this.state.country_id,
+            availabilty: this.state.availabilty_id,
+            pay_min: this.state.pay_from,
+            pay_max: this.state.pay_to,
+            name: this.state.name,
+            program_language_id: this.state.programLanguage_ids.length > 0 ? this.state.programLanguage_ids : null
+        })
+        .then(res=>{
+            if(res.data.data && res.data.data.length > 0) {
+                let listJob = res.data.data;
+                filterData(listJob)
+            }
+        })
+        .catch(err=>[
+            console.log(err)
+        ])
     }
 
     render(){

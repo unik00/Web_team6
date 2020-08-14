@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import UserTabSec from './userTabSec';
 import PostBar from './Post/index';
 import UserInfo from './User-Information/index';
-import Image from './images';
+// import Image from './images';
 
 class MainWsSec extends Component {
     render() {
@@ -25,7 +25,7 @@ class MainWsSec extends Component {
                         </div>
                     </div>
                     <UserInfo userInformation={userInformation} regetData={regetData}/>
-                    <Image/>
+                    {/* <Image/> */}
                 </div>
             </div>
         )

@@ -12,7 +12,6 @@ use App\Student;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class CommentController extends Controller
 {
     function addComment(Request $request){
@@ -29,6 +28,7 @@ class CommentController extends Controller
             $comment->save();
             
             $post = Post::find($post_id);
+            
             $posts = null;
             if($post->type == "Normal") $posts = Normal_Post::where('post_id', $post_id)->first();
             else if($post->type == "Job") $posts = Job_Post::where('post_id', $post_id)->first();

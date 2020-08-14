@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FormUpdateStudentHobby from '../../../Form-Update/formUpdateStudentHobby'
 import * as API from '../../../../api';
+import {connect} from 'react-redux';
 
 class StudentHobby extends Component {
     constructor(props) {
@@ -36,14 +37,33 @@ class StudentHobby extends Component {
             openEditForm : !openEditForm
         })
     }
+
+    removeHobby = (hobby_id) => {
+        let {account} = this.props
+        return API.removeHobby(account, hobby_id)
+        .then(res=>{
+            if(res.data.success)
+                this.getListStudentHobby()
+            return alert(res.data.message)
+        })
+        .catch(err=>{
+            console.log(err)
+            return alert('Something went wrong')
+        })
+    }
     
     render() {
         let { userInformation } = this.props
         let {openEditForm, listStudentHobby} = this.state
-
         let listItems = listStudentHobby.map((d, index) => 
            <div className="list-student-hobbies" key={index}>
-                <h4>{d.name}</h4>
+                <h4>
+                    {d.name}
+                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                         onClick={() => this.removeHobby(d.hobby_id)}>
+                             <i className="fa fa-trash"></i>
+                    </div>
+                </h4>
                 <p>
                     <i style={{ fontStyle: 'italic' }}>{d.description}</i>
                 </p>
@@ -60,9 +80,9 @@ class StudentHobby extends Component {
                 </h3>
                 <div>
                     <div>
-                    {listItems }
+                        {listItems }
                     </div>
-                    </div>
+                </div>
                 {openEditForm?
                     <FormUpdateStudentHobby toggleEditForm={this.toggleEditForm}
                                                 regetData={this.getListStudentHobby}/>
@@ -72,5 +92,10 @@ class StudentHobby extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return{
+        account : state.account
+    }
+}
 
-export default StudentHobby
+export default connect(mapStateToProps,null)(StudentHobby)

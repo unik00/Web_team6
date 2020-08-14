@@ -4,6 +4,7 @@ import * as API from '../../api';
 import { connect } from 'react-redux';
 import SuggestionUser from '../User-Profile/Main-Left-Sidebar/suggestionUser';
 import TopViewer from '../User-Profile/Main-Right-Sidebar/topViewer';
+import Filter from './filter'
 
 
 class Job extends Component {
@@ -30,6 +31,12 @@ class Job extends Component {
             .catch(err => {
                 console.log(err);
             })
+    }
+
+    filterData = (listJobFilter) => {
+        this.setState({
+            listJob: listJobFilter
+        })
     }
 
     renderListJob = () => {
@@ -112,6 +119,8 @@ class Job extends Component {
                                 <div className="main-left-sidebar">
                                     <br/><br/><br/>
                                     <SuggestionUser/>
+                                    <br/><br/>
+                                    <TopViewer />
                                 </div>
                             </div>
                             <div className="col-lg-6 container">
@@ -120,12 +129,7 @@ class Job extends Component {
                                     {this.renderListJob()}
                                 </div>
                             </div>
-                            <div className="col-lg-3" style={{ position: 'relative', zIndex: 0 }}>
-                                <div className="right-sidebar">
-                                <br/><br/>
-                                    <TopViewer />
-                                </div>
-                            </div>
+                            <Filter filterData={this.filterData}/>
                         </div>
                     </div>
                 </div>

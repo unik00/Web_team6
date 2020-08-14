@@ -45,7 +45,9 @@ class MainSwSecHome extends Component {
                         </div>
                         <div className="post-st-khanh">
                             <ul>
-                                <li><button onClick={this.toggleAddJobForm}>Add a Job</button></li>
+                                {userInformation.type != 'Student' ?
+                                    <li><button onClick={this.toggleAddJobForm}>Add a Job</button></li>
+                                :''}
                                 <li><button onClick={() => this.toggleAddPostForm('Normal')}>Post a post</button></li>
                                 <li><button onClick={() => this.toggleAddPostForm('Job')}>Post a job</button></li>
                             </ul>

@@ -42,13 +42,13 @@ Route::group(['prefix' => 'profile'], function () {
 });
 
 Route::group(['prefix' => 'search'], function () {
-    Route::get('student', 'SearchController@student');
-    Route::get('school', 'SearchController@school');
-    Route::get('company', 'SearchController@company');
-    Route::get('hobby', 'SearchController@hobby');
-    Route::get('job', 'SearchController@job');
-    Route::get('language', 'SearchController@language');
-    Route::get('program-language-job', 'SearchController@programlanguagejob');
+    Route::post('student', 'SearchController@student');
+    Route::post('school', 'SearchController@school');
+    Route::post('company', 'SearchController@company');
+    Route::post('hobby', 'SearchController@hobby');
+    Route::post('job', 'SearchController@job');
+    Route::post('language', 'SearchController@language');
+    Route::post('program-language-job', 'SearchController@programlanguagejob');
 });
 
 Route::group(['prefix' => 'message'], function () {
@@ -172,7 +172,7 @@ Route::group(['prefix' => 'notice'], function () {
 });
 Route::group(['prefix' => 'exp'], function () {
     Route::get('list', 'ExperienceController@getExperience');
-    Route::group(['middleware' => ['auth:api']], function () { 
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::post('add', 'ExperienceController@addExperience');
         Route::post('remove', 'ExperienceController@removeExperience');
     });
@@ -180,7 +180,7 @@ Route::group(['prefix' => 'exp'], function () {
 
 Route::group(['prefix' => 'student-language'], function () {
     Route::get('list', 'Student_LanguageController@getLanguage');
-    Route::group(['middleware' => ['auth:api']], function () { 
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::post('add', 'Student_LanguageController@addOrUpdateLanguage');
         Route::post('remove', 'Student_LanguageController@removeLanguage');
     });
@@ -188,7 +188,7 @@ Route::group(['prefix' => 'student-language'], function () {
 
 Route::group(['prefix' => 'student-programlanguage'], function () {
     Route::get('list', 'Student_Program_LanguageController@getLanguage');
-    Route::group(['middleware' => ['auth:api']], function () { 
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::post('add', 'Student_Program_LanguageController@addOrUpdateLanguage');
         Route::post('remove', 'Student_Program_LanguageController@removeLanguage');
     });

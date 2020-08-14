@@ -123,7 +123,7 @@ class JobController extends Controller
         $offset = $request->offset ?? 0;
         $limit = $request->limit ?? 10;
         $list = array();
-        if(!$random) $list = Job::limit($limit)->offset($offset)->get();
+        if(!$random) $list = Job::limit($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
         else {
             $list = Job::all();
             if($list->count() < $limit) $limit = $list->count();

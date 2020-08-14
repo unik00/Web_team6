@@ -52,11 +52,25 @@ class SearchController extends Controller
             $experience = Job_Experience::find($experience_id);
             $country = Country::find($country_id);
             $availabilty = Job_Availabilty::find($availabilty_id);
+            $user = User::find($ls->user_id);
 
+            $userData = null;
+            if($user->type == "Student"){
+                $userData = Student::where('user_id', $user->id)->first();
+            }
+            else if($user->type == "School"){
+                $userData = School::where('user_id', $user->id)->first();
+            }
+            else if($user->type == "Company"){
+                $userData = Company::where('user_id', $user->id)->first();
+            }
+
+            $ls->user_name = $userData->name;
             $ls->type_name = $type->name;
             $ls->experience_name = $experience->name;
             $ls->country_name = $country->name;
             $ls->availabilty_name = $availabilty->name;
+            $ls->avatar = $user->avatar;
 
             $programlg = Program_Language_Job::where('job_id', $ls->id)->get();
 

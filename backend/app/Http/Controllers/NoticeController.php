@@ -25,7 +25,7 @@ class NoticeController extends Controller
         $user_id = $request->User()->id;
         $delete = Notice::where('user_id', $user_id)->delete();
         return response()->json([
-            'success' => true, 
+            'success' => true,
             'message' => 'Xoá thông báo thành công'
         ]);
     }
@@ -56,11 +56,12 @@ class NoticeController extends Controller
             $ls->name = $users->name;
         }
         foreach($listNew as $ls){
-            $ls->is_read = true;
-            $ls->save();
+            $lsNew = Notice::find($ls->id);
+            $lsNew->is_read = true;
+            $lsNew->save();
         }
         return response()->json([
-            'success' => true, 
+            'success' => true,
             'notices' => $list
         ]);
     }

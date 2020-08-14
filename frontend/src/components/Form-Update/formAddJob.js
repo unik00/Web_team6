@@ -204,7 +204,7 @@ class FormAddJob extends Component {
     onEditJob = (e) => {
         e.preventDefault();
         let { job_id, name, description, pay_rate, type_id, experience_id, country_id, availabilty_id, programLanguage_ids } = this.state
-        let { account, toggleAddJobForm } = this.props;
+        let { account, toggleAddJobForm, history } = this.props;
         let data = {
             job_id,
             name,

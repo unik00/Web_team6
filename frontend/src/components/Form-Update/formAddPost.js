@@ -65,7 +65,7 @@ class FormAddPost extends Component {
     onAddPost = (e) => {
         e.preventDefault();
         let { type, job_id, content } = this.state
-        let { account,toggleAddPostForm } = this.props;
+        let { account,toggleAddPostForm, history } = this.props;
         let data = {
             type,
             job_id,

@@ -34,6 +34,7 @@ class Job extends Component {
 
     renderListJob = () => {
         let { listJob } = this.state;
+        let { history } = this.props;
         return listJob.map((job, index) => {
             let timeAgo = Date.now() - new Date(job.updated_at);
             return (

@@ -22,15 +22,18 @@ class MessageDetails extends Component {
     renderCurrentConversation = () => {
         let { currentConversation } = this.props;
         return currentConversation.map((content, index) => {
+            let timeAgo = Date.now() - new Date(content.created_at);
             return (
                 <div className={content.is_sender ? "main-message-box st3" : "main-message-box ta-right"} key={index}>
-                    <div className={content.is_sender ? "message-dt st3":"message-dt"} style={{float:content.is_sender ? "left": "right"}}>
+                    <div className={content.is_sender ? "message-dt":"message-dt st3"} style={{float:content.is_sender ? "left": "right"}}>
                         <div className="message-inner-dt" 
                             style={{overflow:'auto'}}
                         >
                                 <p>{content.content}</p>
                         </div>
-                        <span>{content.updated_at}</span>
+                        <span>{timeAgo / 3600000 >= 1 ? parseInt(timeAgo / 3600000) + ' hour ago' :
+                                            timeAgo / 60000 >= 1 ? parseInt(timeAgo / 60000) + ' minutes ago' :
+                                                parseInt(timeAgo / 1000) + 's ago'}</span>
                     </div>
                     <div className="messg-usr-img">
                         <img src="http://via.placeholder.com/50x50" alt="" />
@@ -68,6 +71,7 @@ class MessageDetails extends Component {
     render() {
         let { currentMessage, newMessage, history } = this.props;
         let { sendMessageContent} = this.state;
+        let time_last_onlien = currentMessage ? (Date.now() - new Date(currentMessage.last_online_at)) : 0;
         return (
             <div className="main-conversation-box">
                 <div className="message-bar-head">
@@ -83,7 +87,7 @@ class MessageDetails extends Component {
                                     {currentMessage ? currentMessage.name : newMessage ? newMessage.name : ''}
                                 </h3>
                             </Link>
-                            <p>Online</p>
+                            <p>{time_last_onlien && time_last_onlien > 120000 ? 'Offline' : 'Online'}</p>
                         </div>
                     </div>
                     <a href="#" title=""><i className="fa fa-ellipsis-v"></i></a>

@@ -23,6 +23,7 @@ class MessageList extends Component {
         let { listMessage } = this.props;
         let { currentBox } = this.state;
         return listMessage.map((message, index) => {
+            let timeAgo = Date.now() - new Date(message.updated_at);
             return (
                 <li className={currentBox == index ? "active" : ''} key={index} onClick={() => this.readMessage(message.id, index)}>
                     <div className="usr-msg-details">
@@ -34,7 +35,9 @@ class MessageList extends Component {
                             <br />
                             <h3>{message.name}</h3>
                         </div>
-                        <span className="posted_time">{message.updated_at}</span>
+                        <span className="posted_time">{timeAgo / 3600000 >= 1 ? parseInt(timeAgo / 3600000) + ' hour ago' :
+                                            timeAgo / 60000 >= 1 ? parseInt(timeAgo / 60000) + ' minutes ago' :
+                                                parseInt(timeAgo / 1000) + 's ago'}</span>
                         {message.unread != 0 ? <span className="msg-notifc">{message.unread}</span> : ''}
                     </div>
                 </li>

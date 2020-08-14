@@ -132,6 +132,12 @@ export const getListHobby = (account,offset = 0, limit = 10, random = 0) => {
                 }})
 }
 
+export const removeHobby = (account,hobby_id) => {
+  return api.get(`hobby/remove?hobby_id=${hobby_id}`, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
 export const getStudentHobby = (id) => {
   return api.get(`hobby/user?id=${id}`);
 }
@@ -232,4 +238,16 @@ export const getProgramLanguage = () => {
 
 export const getTopViewer = () => {
   return api.get('viewer/profile');
+}
+
+export const getNotice = (account, limit=5) => {
+  return api.get(`notice/get?limit=${limit}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+
+export const removeNotice = (account) => {
+  return api.get(`notice/remove`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
 }

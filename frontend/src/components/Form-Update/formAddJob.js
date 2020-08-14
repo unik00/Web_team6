@@ -185,12 +185,15 @@ class FormAddJob extends Component {
     onChangeCheckbox = (e) => {
         let {programLanguage_ids,programLanguages, programLanguage_names} = this.state;
         let value = e.target.value;
-        if(!programLanguage_ids[value]){
-            programLanguage_ids[value] = programLanguages[value].id;
-            programLanguage_names[value] = programLanguages[value].name;
-        }else{
-            programLanguage_ids = programLanguage_ids.splice(value,1);
-            programLanguage_names = programLanguage_names.splice(value,1);
+
+        if(programLanguage_ids.indexOf(programLanguages[value].id) >= 0)
+        {
+            programLanguage_ids.splice(programLanguage_ids.indexOf(programLanguages[value].id),1)
+            programLanguage_names.splice(programLanguage_names.indexOf(programLanguages[value].name,1))
+        }
+        else{
+            programLanguage_ids.push(programLanguages[value].id);
+            programLanguage_names.push(programLanguages[value].name);
         }
     }
 
@@ -222,7 +225,7 @@ class FormAddJob extends Component {
                 if (res.status == 200 && res.data.success == true) {
                     alert('successfully');
                     toggleAddJobForm();
-                    history.push('/user-profile');
+                    history.push('/jobs');
                     history.go();
                 }
                 else {

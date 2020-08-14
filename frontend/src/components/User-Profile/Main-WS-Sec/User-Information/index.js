@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import BasicInformation from './basicInformation';
 import Contact from './contact';
 import Description from './description';
-import Experiant from './experiant';
+import Experience from './experience';
 import StudentHobby from './studentHobby';
+import StudentProgrammingLanguage from './studentProgrammingLanguage'
 
 class UserInfo extends Component {
     render() {
@@ -14,7 +15,9 @@ class UserInfo extends Component {
                 <Contact userInformation={userInformation} regetData={regetData}/>
                 {userInformation.type != 'Student' ? <Description my_profile={userInformation.my_profile} description={userInformation.description} regetData={regetData}/> : ''}
                 {userInformation.type == 'Student' ? <StudentHobby userInformation={userInformation}  regetData={regetData}/>: ''}
-                {/*{userInformation.type == 'Student' ? <Experiant/> : ''}*/}
+                {userInformation.type == 'Student' ? <StudentProgrammingLanguage userInformation={userInformation}  regetData={regetData}/>: ''}
+                
+                {/*userInformation.type == 'Student' ? <Experience userInformation={userInformation}  regetData={regetData}/> : ''*/}
             </div>
         )
     }

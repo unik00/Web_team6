@@ -34,7 +34,6 @@ export const ViewOtherProfile = (account, other_id) => {
   }});
 }
 
-
 export const UpdateProfile = (account, userDataUpdate) => {
   return api.put(`profile/edit`,userDataUpdate, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
@@ -148,6 +147,32 @@ export const addStudentHobby = (account, hobby_id) => {
   }});
 }
 /* end of hobby */
+
+/* experience */
+export const getExperience = (id) => {
+  return api.get(`exp/list?id=${id}`);
+}
+export const addExperience = (account, exp_request) => {
+  return api.post(`exp/add`, exp_request, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+/* end of experience */
+
+/* programming language */
+export const getStudentProgrammingLanguage = (id) => {
+ return api.get(`student-programlanguage/list?id=${id}`);
+}
+export const getListProgrammingLanguage = () => {
+  return api.get(`program-language/list`);
+}
+export const addStudentProgrammingLanguage = (account, data) => {
+  return api.post(`student-programlanguage/add`, data, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+/*end of programming language*/ 
+
 export const addJob = (account, data) => {
   return api.put(`job/add`,data, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''

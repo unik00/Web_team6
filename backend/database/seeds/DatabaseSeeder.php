@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder{
         $this->call('Job_Type');
         $this->call('Job_Experience');
         $this->call('Job_availabilty');
-
+        $this->call('Experience');
     }
 }
 /*

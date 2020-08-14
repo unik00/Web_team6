@@ -28,6 +28,7 @@ class ExperienceController extends Controller
                     $exp->end = $end;
                     $exp->description = $description;
                     $exp->save();
+                    
                     DB::commit();
                     return response()->json([
                         'success' => true,

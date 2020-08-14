@@ -71,7 +71,6 @@ class MessagePage extends Component {
             })
             .catch(err => {
                 console.log(err);
-                this.readMessage(res.data.data[0].id, 0)
             })
     }
 

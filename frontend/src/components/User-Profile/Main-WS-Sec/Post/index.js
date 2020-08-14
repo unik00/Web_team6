@@ -30,7 +30,7 @@ class PostBar extends Component {
                 if (type == 'Job') {
                     return API.getMyJobPost(userInformation.user_id).then(res => {
                         if (res.data && res.data.posts) {
-                            this, this.setState({
+                            this.setState({
                                 listPost: res.data.posts
                             })
                         }
@@ -39,7 +39,7 @@ class PostBar extends Component {
                 else{
                     return API.getMyNormalPost(userInformation.user_id).then(res => {
                         if (res.data && res.data.posts) {
-                            this, this.setState({
+                            this.setState({
                                 listPost: res.data.posts
                             })
                         }
@@ -51,7 +51,7 @@ class PostBar extends Component {
             if (type == 'Job') {
                 return API.getJobPost().then(res => {
                     if (res.data && res.data.posts) {
-                        this, this.setState({
+                        this.setState({
                             listPost: res.data.posts
                         })
                     }
@@ -60,7 +60,7 @@ class PostBar extends Component {
             else{
                 return API.getNormalPost().then(res => {
                     if (res.data && res.data.posts) {
-                        this, this.setState({
+                        this.setState({
                             listPost: res.data.posts
                         })
                     }

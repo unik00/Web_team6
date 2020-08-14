@@ -47,8 +47,6 @@ class FormUpdateStudentHobby extends Component {
             name_hobby: listHobby[value].name,
             hobby_id: listHobby[value].id
         })
-        console.log("on change hobby")
-        console.log(this.state.hobby_id)
     }
 
     inputOnchange = (e) => {

@@ -14,7 +14,7 @@ class Signin extends Component {
                                 <div className="cmp-info">
                                     <div className="cm-logo">
                                         <img src={require('../../assets/images/cm-logo.png')} alt="" />
-                                        <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+                                        <p>A freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
                                     </div>
                                     <img src={require('../../assets/images/cm-main-img.png')} alt="" />
                                 </div>

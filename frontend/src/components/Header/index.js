@@ -67,7 +67,7 @@ class Header extends Component {
                 <div className="container">
                     <div className="header-data">
                         <div className="logo">
-                            <a href="index.html" title=""><img src={require('../../assets/images/logo.png')} alt="" /></a>
+                            <a href="/" title=""><img src={require('../../assets/images/logo.png')} alt="" /></a>
                         </div>
                         <SearchBar/>
                         <nav>

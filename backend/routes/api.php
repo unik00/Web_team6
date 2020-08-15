@@ -196,3 +196,7 @@ Route::group(['prefix' => 'student-programlanguage'], function () {
 });
 
 Route::put('vote', 'VoteController@addVote');
+Route::group(['prefix' => 'stats'], function () {
+    Route::get('school', 'StatsController@school');
+    Route::get('', 'StatsController@index');
+});

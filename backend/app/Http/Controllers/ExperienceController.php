@@ -20,7 +20,7 @@ class ExperienceController extends Controller
                 $end = $request->end;
                 $description = $request->description;
                 $exp = Experience::where('user_id', $id)->where('company_id', $company_id)->first();
-                if(!$exp){
+                if(true){
                     $exp = new Experience;
                     $exp->user_id = $id;
                     $exp->company_id = $company_id;

@@ -8,7 +8,7 @@ class Experience extends Component {
         super(props);
         this.state={
             userInformation : props.userInformation,
-            listStudentHobby : [],
+            listStudentExperience : [],
             openEditForm : false
         }
     }
@@ -18,12 +18,11 @@ class Experience extends Component {
     
     getListExperience = () => {
         let {userInformation} = this.state;
-        API.getStudentHobby(userInformation.user_id).then(
-            res => { if (res.status == 200 && res.statusText == "OK"){
+        API.getExperience(userInformation.user_id).then(
+            res => { if (res.status == 200 && res.data.success){
                     this.setState({
-                        listStudentHobby : res.data.Hobbies
+                        listStudentExperience : res.data.exps
                     })
-                    console.log(listStudentHobby)
                 }
             }
         ).catch(err => {
@@ -40,14 +39,21 @@ class Experience extends Component {
     
     render() {
         let { userInformation } = this.props
-        let {openEditForm, listStudentHobby} = this.state
-
-        let listItems = listStudentHobby.map((d, index) => 
-           <div className="list-student-hobbies" key={index}>
-                <h4>{d.name}</h4>
+        let {openEditForm, listStudentExperience} = this.state
+        
+        let listItems = listStudentExperience.map((d, index) => 
+           <div className="list-student-exps" key={index}>
+                <h4>
+                    {d.company_name} (from {d.start.split(' ')[0]}
+                        <i style={{ fontStyle: 'italic' }}> to  </i> 
+                    { d.end.split(' ')[0] } ) 
+                        
+                </h4>
                 <p>
                     <i style={{ fontStyle: 'italic' }}>{d.description}</i>
                 </p>
+                
+
             </div>
         )
         return (
@@ -66,7 +72,7 @@ class Experience extends Component {
                     </div>
                 {openEditForm?
                     <FormUpdateExperience toggleEditForm={this.toggleEditForm}
-                                                regetData={this.getListStudentHobby}/>
+                                                regetData={this.getListExperience}/>
                 :''}
             </div>
         )

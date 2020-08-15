@@ -294,3 +294,7 @@ export const removeNotice = (account) => {
 export const filterJob = (data) => {
   return api.post('search/job', data)
 }
+
+export const filterUser = (data) => {
+  return api.post('search/user',data)
+}

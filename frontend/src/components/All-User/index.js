@@ -58,6 +58,14 @@ class AllUser extends Component {
 		}
 	}
 
+	onFilterUser = (type, listUser) => {
+		console.log(listUser)
+		this.setState({
+			listUser,
+			type: type
+		})
+	}
+
 	onFollow = (other_id) => {
 		let { account } = this.props;
 
@@ -160,7 +168,7 @@ class AllUser extends Component {
 								</div>
 							</div>
 						</div>
-						<Filter/>
+						<Filter onFilterUser={this.onFilterUser}/>
 					</div>
 				</div>
 			</section>

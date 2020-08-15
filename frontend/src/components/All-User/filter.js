@@ -47,9 +47,10 @@ class Filter extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            type:'Student',
             name: '',
             phone:'',
-            gender: 'None',
+            gender: '',
             classes:'',
             mssv:'',
 
@@ -137,6 +138,28 @@ class Filter extends Component {
         })
     }
 
+    clearName = () => {
+        this.setState({
+            name:''
+        })
+    }
+
+    clearPhone = () => {
+        this.setState({
+            phone:''
+        })
+    }
+    clearClass = () => {
+        this.setState({
+            classes:''
+        })
+    }
+    clearMssv = () => {
+        this.setState({
+            mssv:''
+        })
+    }
+
     inputOnchange = (e) => {
         let target = e.target;
         this.setState({
@@ -145,32 +168,38 @@ class Filter extends Component {
     }
 
     onFilter = () => {
-        return console.log(this.state);
-        let {filterData} = this.props
-        return API.filterJob({
-            type: this.state.type_id,
-            experience: this.state.experience_id,
-            country: this.state.country_id,
-            availabilty: this.state.availabilty_id,
-            pay_min: this.state.pay_from,
-            pay_max: this.state.pay_to,
+        // return console.log(this.state);
+        let {onFilterUser} = this.props
+        let {type} = this.state
+        return API.filterUser({
+            type: this.state.type,
             name: this.state.name,
-            program_language_id: this.state.programLanguage_ids.length > 0 ? this.state.programLanguage_ids : null
+            phone: this.state.phone,
+            school: type == 'School' ?  this.state.school_id : '',
+            mssv: type == 'School' ?  this.state.mssv : '',
+            class: type == 'School' ?  this.state.class : '',
+            gender: type == 'School' ?  this.state.gender : '',
+            hobby: type == 'School' ?  this.state.hobby_id : '',
+            programlanguage: type == 'School' && this.state.programLanguage_ids.length > 0 ? this.state.programLanguage_ids : null
         })
         .then(res=>{
-            if(res.data.data && res.data.data.length > 0) {
-                let listJob = res.data.data;
-                filterData(listJob)
+            if(res.data && res.data.length > 0) {
+                let listUser = res.data;
+                onFilterUser(type=='Company'?1:type=='School'?2:3,listUser)
+            }
+            else {
+                onFilterUser(type=='Company'?1:type=='School'?2:3,[])
             }
         })
-        .catch(err=>[
+        .catch(err=>{
             console.log(err)
-        ])
+            onFilterUser(type=='Company'?1:type=='School'?2:3,[])
+        })
     }
 
     render(){
         //console.log(this.state);
-        let {name, phone, gender, classes, mssv} = this.state
+        let {name, phone, gender, classes, mssv, type} = this.state
         return(
             <div className="col-lg-3">
                 <br/><br/>
@@ -180,6 +209,20 @@ class Filter extends Component {
                         <button onClick={this.onFilter} style={{float: 'right'}}>Start Filter</button>
                     </div>
                     <div className="paddy">
+                        <div className="filter-dd">
+                            <div className="filter-ttl">
+                                <h3>Type</h3>
+                            </div>
+                            <form className="job-tp">
+                                <select name="type" value={type} onChange={this.inputOnchange}>
+                                    <option value="Student">Student</option>
+                                    <option value="School">School</option>
+                                    <option value="Company">Company</option>
+                                </select>
+                                <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </form>
+                        </div>
+
                         {/* ===============================================================================NAME====================== */}
                         <div className="filter-dd">
                             <div className="filter-ttl">
@@ -191,11 +234,24 @@ class Filter extends Component {
                             </form>
                         </div>
 
+                        {type == 'Student' ? <div className="filter-dd">
+                            <div className="filter-ttl">
+                                <h3>Gender</h3>
+                            </div>
+                            <form className="job-tp">
+                                <select name="gender" value={gender} onChange={this.inputOnchange}>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                                <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </form>
+                        </div> : ''}
+
                         {/* ===============================================================================phone====================== */}
                         <div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>Phone</h3>
-                                <a onClick={this.clearName}>Clear</a>
+                                <a onClick={this.clearPhone}>Clear</a>
                             </div>
                             <form>
                                 <input type="text" name="phone" value={phone} onChange={this.inputOnchange}/>
@@ -203,39 +259,39 @@ class Filter extends Component {
                         </div>
 
                         {/* ===============================================================================class====================== */}
-                        <div className="filter-dd">
+                        {type == 'Student' ? <div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>class</h3>
-                                <a onClick={this.clearName}>Clear</a>
+                                <a onClick={this.clearClass}>Clear</a>
                             </div>
                             <form>
                                 <input type="text" name="classes" value={classes} onChange={this.inputOnchange}/>
                             </form>
-                        </div>
+                        </div>:''}
 
                         {/* ===============================================================================MSSV====================== */}
-                        <div className="filter-dd">
+                        {type == 'Student' ? <div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>MSSV</h3>
-                                <a onClick={this.clearName}>Clear</a>
+                                <a onClick={this.clearMssv}>Clear</a>
                             </div>
                             <form>
                                 <input type="text" name="mssv" value={mssv} onChange={this.inputOnchange}/>
                             </form>
-                        </div>
+                        </div>:''}
 
                         {/* ===============================================================================LANGUAGE====================== */}
-                        <div className="filter-dd">
+                        {type == 'Student' ?<div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>Language</h3>
                             </div>
                             <form>
                                 {this.renderProgramLanguages()}
                             </form>
-                        </div>
+                        </div>:''}
 
                         {/* ===============================================================================Hobby====================== */}
-                        <div className="filter-dd">
+                        {type == 'Student' ?<div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>Hobby</h3>
                             </div>
@@ -246,10 +302,10 @@ class Filter extends Component {
                                 </select>
                                 <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </form>
-                        </div>
+                        </div>:''}
 
                         {/* ===============================================================================School====================== */}
-                        <div className="filter-dd">
+                        {type == 'Student' ?<div className="filter-dd">
                             <div className="filter-ttl">
                                 <h3>School</h3>
                             </div>
@@ -260,7 +316,7 @@ class Filter extends Component {
                                 </select>
                                 <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                             </form>
-                        </div>
+                        </div>:''}
                     </div>
                 </div>
             </div>

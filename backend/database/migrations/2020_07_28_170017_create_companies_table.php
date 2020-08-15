@@ -19,8 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
             $table->unique('user_id');
             $table->string('name');
-            $table->string('address')->nullable();;
-            $table->integer('rate')->default(0);
+            $table->string('address')->nullable();
             $table->string('phone')->nullable();;
             $table->text('description')->nullable();;
             $table->timestamps();

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import UserTabSec from './userTabSec';
-import PostBar from '../../PostBar/index';
+import PostBar from './Post/index';
 import UserInfo from './User-Information/index';
-import Image from './images';
+// import Image from './images';
 
 class MainWsSec extends Component {
     render() {
@@ -14,7 +14,7 @@ class MainWsSec extends Component {
                     <UserTabSec name={userInformation.name}/>
                     <div className="product-feed-tab current" id="feed-dd">
                         <div className="posts-section">
-                            <PostBar />
+                            <PostBar userInformation={userInformation} isInProfile={true}/>
                             <div className="process-comm">
                                 <div className="spinner">
                                     <div className="bounce1"></div>
@@ -25,7 +25,7 @@ class MainWsSec extends Component {
                         </div>
                     </div>
                     <UserInfo userInformation={userInformation} regetData={regetData}/>
-                    <Image/>
+                    {/* <Image/> */}
                 </div>
             </div>
         )

@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import * as API from '../../../../api'
+import * as API from '../../../../api';
+import {withRouter} from 'react-router-dom';
 
 class FollowStatus extends Component {
 
     onFollow = () => {
-        let {account, userInformation, regetData} = this.props;
+        let {account, userInformation, regetData, history} = this.props;
         
-        return API.followUser(account,userInformation.id)
+        return API.followUser(account,userInformation.user_id)
         .then(res=>{
             alert(res.data.message);
+            history.go();
             regetData(account);
         })
         .catch(err=>{
@@ -21,9 +23,10 @@ class FollowStatus extends Component {
     unFollow = () => {
         let {account, userInformation, regetData} = this.props;
         
-        return API.unfollowUser(account,userInformation.id)
+        return API.unfollowUser(account,userInformation.user_id)
         .then(res=>{
             alert(res.data.message);
+            history.go();
             regetData(account);
         })
         .catch(err=>{
@@ -42,7 +45,6 @@ class FollowStatus extends Component {
         }
 
         let {userInformation } = this.props
-        console.log(userInformation);
         return (
             <div className="user_pro_status">
                 {!userInformation.my_profile ?
@@ -82,4 +84,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,null)(FollowStatus)
+export default withRouter(connect(mapStateToProps,null)(FollowStatus))

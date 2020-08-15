@@ -42,7 +42,8 @@ class SignupController extends Controller
             $user = new User([
                 'username' => $request->username,
                 'email' => $request->email,
-                'password' => bcrypt($request->password)
+                'password' => bcrypt($request->password),
+                'type' => $request->type
             ]);
             $user->save();
 

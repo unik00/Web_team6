@@ -42,13 +42,13 @@ Route::group(['prefix' => 'profile'], function () {
 });
 
 Route::group(['prefix' => 'search'], function () {
-    Route::get('student', 'SearchController@student');
-    Route::get('school', 'SearchController@school');
-    Route::get('company', 'SearchController@company');
-    Route::get('hobby', 'SearchController@hobby');
-    Route::get('job', 'SearchController@job');
-    Route::get('language', 'SearchController@language');
-    
+    Route::post('student', 'SearchController@student');
+    Route::post('school', 'SearchController@school');
+    Route::post('company', 'SearchController@company');
+    Route::post('hobby', 'SearchController@hobby');
+    Route::post('job', 'SearchController@job');
+    Route::post('language', 'SearchController@language');
+    Route::post('program-language-job', 'SearchController@programlanguagejob');
 });
 
 Route::group(['prefix' => 'message'], function () {
@@ -90,23 +90,33 @@ Route::group(['prefix' => 'company'], function () {
 });
 
 Route::group(['prefix' => 'hobby'], function () {
-    Route::group(['middleware' => ['auth:api']], function () { 
-        Route::put('add', 'HobbyController@addOrUpdate');
-        Route::get('remove', 'HobbyController@remove');
-        Route::get('list', 'HobbyController@list');
+    Route::get('list', 'HobbyController@list');
+    Route::get('user', 'HobbyController@getHobbyStudent');
+    Route::group(['middleware' => ['auth:api']], function () {
+       // Route::put('add', 'HobbyController@addOrUpdate');
+       // Route::get('remove', 'HobbyController@remove');
+        Route::post('add', 'HobbyController@addHobbyStudent');
+        Route::get('remove', 'HobbyController@removeHobbyStudent');
     });
 });
-
+Route::get('country', 'CountryController@list');
 Route::group(['prefix' => 'job'], function () {
-    Route::group(['middleware' => ['auth:api']], function () { 
+
+    Route::get('list', 'JobController@list');
+    Route::get('get-type', 'JobController@getType');
+    Route::get('get-availabilty', 'JobController@getAvailabilty');
+    Route::get('get-experience', 'JobController@getExperience');
+
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::put('add', 'JobController@addOrUpdate');
         Route::get('remove', 'JobController@remove');
-        Route::get('list', 'JobController@list');
+        Route::get('info', 'JobController@getJob');
+        Route::put('add-language', 'Program_LanguageController@addToJob');
     });
 });
 
 Route::group(['prefix' => 'language'], function () {
-    Route::group(['middleware' => ['auth:api']], function () { 
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::put('add', 'LanguageController@addOrUpdate');
         Route::get('remove', 'LanguageController@remove');
         Route::get('list', 'LanguageController@list');
@@ -116,8 +126,72 @@ Route::group(['prefix' => 'language'], function () {
 Route::group(['prefix' => 'file'], function () {
     Route::get('avatar', 'FileController@getAvatar');
     Route::get('cover', 'FileController@getCover');
-    Route::group(['middleware' => ['auth:api']], function () { 
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::post('avatar', 'FileController@addAvatar');
         Route::post('cover', 'FileController@addCover');
     });
 });
+Route::group(['prefix' => 'viewer'], function () {
+    Route::get('profile', 'ViewController@getTopViewProfile');
+    Route::group(['middleware' => ['auth:api']], function () {
+
+    });
+});
+
+Route::group(['prefix' => 'post'], function () {
+    Route::get('normal', 'PostController@getNormalPost');
+    Route::get('job', 'PostController@getJobPost');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'PostController@addPost');
+    });
+});
+
+Route::group(['prefix' => 'program-language'], function () {
+    Route::get('list', 'Program_LanguageController@list');
+});
+
+Route::group(['prefix' => 'like-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'LikeController@addLike');
+        Route::post('remove', 'LikeController@removeLike');
+        Route::get('get', 'LikeController@getLike');
+    });
+});
+
+Route::group(['prefix' => 'comment-post'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'CommentController@addComment');
+        Route::get('get', 'CommentController@getComment');
+    });
+});
+Route::group(['prefix' => 'notice'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('remove', 'NoticeController@removeNotice');
+        Route::get('get', 'NoticeController@getNotice');
+    });
+});
+Route::group(['prefix' => 'exp'], function () {
+    Route::get('list', 'ExperienceController@getExperience');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'ExperienceController@addExperience');
+        Route::post('remove', 'ExperienceController@removeExperience');
+    });
+});
+
+Route::group(['prefix' => 'student-language'], function () {
+    Route::get('list', 'Student_LanguageController@getLanguage');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'Student_LanguageController@addOrUpdateLanguage');
+        Route::post('remove', 'Student_LanguageController@removeLanguage');
+    });
+});
+
+Route::group(['prefix' => 'student-programlanguage'], function () {
+    Route::get('list', 'Student_Program_LanguageController@getLanguage');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('add', 'Student_Program_LanguageController@addOrUpdateLanguage');
+        Route::post('remove', 'Student_Program_LanguageController@removeLanguage');
+    });
+});
+
+Route::put('vote', 'VoteController@addVote');

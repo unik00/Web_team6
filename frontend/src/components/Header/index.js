@@ -5,55 +5,96 @@ import Messages from './messages';
 import Notification from './notification';
 import UserAccount from './userAccount';
 
+import {Link } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import * as API from '../../api';
+
 class Header extends Component {
+    componentDidUpdate(prevProps) {
+        let { account } = this.props;
+
+        if (prevProps.account !== account) {
+            return API.ViewMyProfile(account)
+            .then(res => {
+                if (res.status == 200) {
+                    console.log(res);
+                    this.setState({
+                        userInformation :res.data
+                    })
+                    this.getAvatar({...res.data});
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    }
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            userInformation: null,
+            avatar:''
+        }
+    }
+
+    getAvatar = (userInformation) => {
+        return API.getAvatar(userInformation.user_id)
+        .then(res=>{
+            if(res.data.success == true && res.data.path !== "http://backend_upstream/images/avatar"){
+                return this.setState({
+                    avatar:res.data.path
+                })
+            }
+            this.setState({
+                avatar:''
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                avatar:''
+            })
+            console.log(err);
+        })
+    }
+    
     render() {
+        let {history} = this.props
+        let {avatar, userInformation} = this.state
         return (
             <header>
                 <div className="container">
                     <div className="header-data">
                         <div className="logo">
-                            <a href="index.html" title=""><img src={require('../../assets/images/logo.png')} alt="" /></a>
+                            <a href="/" title=""><img src={require('../../assets/images/logo.png')} alt="" /></a>
                         </div>
                         <SearchBar/>
                         <nav>
                             <ul>
                                 <li>
-                                    <a href="index.html" title="">
+                                    <Link to={'/'} onClick={()=>{history.push('/'); history.go()}}>
                                         <span><img src={require("../../assets/images/icon1.png")} alt="" /></span>
 									Home
-								</a>
+								</Link>
                                 </li>
                                 <li>
-                                    <a href="companies.html" title="">
+                                    <Link to={'/all-user'} onClick={()=>{history.push('/all-user'); history.go()}}>
                                         <span><img src={require("../../assets/images/icon2.png")} alt="" /></span>
 									Companies
-								</a>
-                                    <ul>
-                                        <li><a href="companies.html" title="">Companies</a></li>
-                                        <li><a href="company-profile.html" title="">Company Profile</a></li>
-                                    </ul>
+								</Link>
                                 </li>
                                 <li>
-                                    <a href="projects.html" title="">
-                                        <span><img src={require("../../assets/images/icon3.png")} alt="" /></span>
-									Projects
-								</a>
-                                </li>
-                                <li>
-                                    <a href="profiles.html" title="">
+                                    <Link to={'/user-profile'} onClick={()=>{history.push('/user-profile'); history.go()}}>
                                         <span><img src={require("../../assets/images/icon4.png")} alt="" /></span>
 									Profiles
-								</a>
-                                    <ul>
-                                        <li><a href="user-profile.html" title="">User Profile</a></li>
-                                        <li><a href="my-profile-feed.html" title="">my-profile-feed</a></li>
-                                    </ul>
+								</Link>
                                 </li>
                                 <li>
-                                    <a href="jobs.html" title="">
+                                    <Link to={'/jobs'} onClick={()=>{history.push('/jobs'); history.go()}}>
                                         <span><img src={require("../../assets/images/icon5.png")} alt="" /></span>
 									Jobs
-								</a>
+								</Link>
                                 </li>
                                 <Messages/>
                                 <Notification/>
@@ -63,7 +104,7 @@ class Header extends Component {
                             <a href="#" title=""><i className="fa fa-bars"></i></a>
                         </div>
                         
-                        <UserAccount/>
+                        <UserAccount avatar={avatar} userInformation={userInformation}/>
                     </div>
                 </div>
             </header >
@@ -71,4 +112,10 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = state => {
+    return{
+        account: state.account
+    }
+}
+
+export default withRouter(connect(mapStateToProps,null)(Header));

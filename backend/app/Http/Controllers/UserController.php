@@ -9,6 +9,7 @@ use App\Student;
 use App\School;
 use App\Company;
 use App\Follower;
+use App\Http\Controllers\ViewController;
 class UserController extends Controller
 {
 
@@ -19,34 +20,36 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $id = $request->User()->id;
-
-        $user = Student::where('user_id', $id)->first();
-        if($user) {
+        $thisUser = $request->User();
+        $id = $thisUser->id;
+        $user = null;
+        if($thisUser->type == "Student"){
+            $user = Student::where('user_id', $id)->first();
             $user->type = 'Student';
-
             $school = null;
             if($user->school_id)
                 $school = School::where('id', $user->school_id)->first();
 
             $user->name_school = $school ? $school->name : null;
         }
-        if(!$user) {
+        else if($thisUser->type == "School"){
             $user = School::where('user_id', $id)->first();
             if($user) $user->type = 'School';
         }
-        if(!$user) {
+        else if($thisUser->type == "Company"){
             $user = Company::where('user_id', $id)->first();
             if($user) $user->type = 'Company';
         }
-
         if($user){
             $user->my_profile = true;
-            $user->email = $request->User()->email;
-            $user->last_online_at = $request->User()->last_online_at;
+            $user->email = $thisUser->email;
+            $user->last_online_at = $thisUser->last_online_at;
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
-           
+
+            $vote = new VoteController();
+            $user->vote_score = $vote->getVote($user->id);
+            
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -60,33 +63,45 @@ class UserController extends Controller
      */
     public function view(Request $request, $id)
     {
-        $user = Student::where('user_id', $id)->first();
-        if($user) {
+        $user = null;
+        $thisUser = User::find($id);
+        if($thisUser->type == "Student"){
+            $user = Student::where('user_id', $id)->first();
             $user->type = 'Student';
-
             $school = null;
             if($user->school_id)
                 $school = School::where('id', $user->school_id)->first();
 
             $user->name_school = $school ? $school->name : null;
         }
-        if(!$user) {
+        else if($thisUser->type == "School"){
             $user = School::where('user_id', $id)->first();
             if($user) $user->type = 'School';
         }
-        if(!$user) {
+        else if($thisUser->type == "Company"){
             $user = Company::where('user_id', $id)->first();
             if($user) $user->type = 'Company';
         }
 
         if($user){
-            $user->email = User::find($id)->email;
-            $user->last_online_at = User::find($id)->last_online_at;
+            $user->email = $thisUser->email;
+            $user->last_online_at = $thisUser->last_online_at;
             if($user->user_id == $request->User()->id) $user->my_profile = true;
-            else $user->my_profile = false;
+            else {
+                $user->my_profile = false;
+                $viewCtl = new ViewController();
+                $viewCtl->addViewProfile($user->user_id, $request->User()->id);
+            }
             $user->following = Follower::where('user_id', $user->user_id)->count();
             $user->followed = Follower::where('user_id_followed', $user->user_id)->count();
-            
+
+            $vote = new VoteController();
+            $user->vote_score = $vote->getVote($user->id);
+            $myid = $request->User()->id;
+            if($myid){
+                $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();
+                $user->is_follow = ($is_follow) ? true : false;
+            }
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -116,11 +131,11 @@ class UserController extends Controller
             'linkGit' => 'url|nullable',
             'description' => 'string|nullable'
         ]);
-
-        $id = $request->User()->id;
-        $user = Student::where('user_id', $id)->first();
-        if(!$user) $user = School::where('user_id', $id)->first();
-        if(!$user) $user = Company::where('user_id', $id)->first();
+        $thisUser = $request->User();
+        $id = $thisUser->id;
+        if($thisUser->type == "Student") $user = Student::where('user_id', $id)->first();
+        else if($thisUser->type == "School") $user = School::where('user_id', $id)->first();
+        else if($thisUser->type == "Company") $user = Company::where('user_id', $id)->first();
         if(!$user) {
             return response()->json([
                 'message' => 'Người dùng không tồn tại !'
@@ -156,9 +171,10 @@ class UserController extends Controller
         }
         foreach($list as $ls){
             $id = $ls->id;
-            $user = Student::where('user_id', $id)->first();
-            if(!$user) $user = School::where('user_id', $id)->first();
-            if(!$user) $user = Company::where('user_id', $id)->first();
+            $type = $ls->type;
+            if($type == "Student") $user = Student::where('user_id', $id)->first();
+            else if($type == "School") $user = School::where('user_id', $id)->first();
+            else if($type == "Company") $user = Company::where('user_id', $id)->first();
             if($user) $ls->name = $user->name;
             if($myid){
                 $is_follow = Follower::where('user_id', $myid)->where('user_id_followed', $id)->first();

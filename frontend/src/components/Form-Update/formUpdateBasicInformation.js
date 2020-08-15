@@ -3,16 +3,34 @@ import * as API from '../../api';
 import { connect } from 'react-redux';
 
 class FormUpdateBasicInformation extends Component {
+    componentDidMount(){
+        API.getListSchool()
+        .then(res=>{
+            this.setState({
+                listSchool: res.data.Schools,
+                school_id: res.data.Schools[0].id
+            })
+        })
+        .catch(err=>{
+            console.log(err);
+            return this.setState({
+                error: "server error"
+            })
+        })
+    }
     constructor(props) {
         super(props);
-        let { name, birthday, gender, mssv, school_id, name_school } = this.props
+        let { account, name, birthday, gender, mssv, school_id, name_school } = this.props
+        
+        //console.log(API.getListHobby(account));
+
         this.state = {
             name: name ? name : '',
             birthday: birthday ? birthday : '',
             gender: gender ? gender : '',
             mssv: mssv ? mssv : '',
             classes: this.props.class ? this.props.class : '',
-            listSchool: [{ id: 1, name: 'uet' }, { id: 2, name: 'ueb' }, { id: 3, name: 'uec' }],
+            listSchool: [],
             school_id: school_id ? school_id : '',
             name_school: name_school ? name_school : '',
             error:''
@@ -21,6 +39,7 @@ class FormUpdateBasicInformation extends Component {
 
     renderSelectSchool = () => {
         let { listSchool } = this.state;
+        console.log(listSchool);
         return listSchool.map((school, index) => {
             return <option key={school.id} value={index}>{school.name}</option>
         });
@@ -52,6 +71,8 @@ class FormUpdateBasicInformation extends Component {
         e.preventDefault();
         let { name, birthday, gender, mssv, classes, school_id } = this.state;
         let { account,toggleEditForm, regetData } = this.props
+
+        console.log(school_id);
         API.UpdateProfile(account,{
             name,
             birthday,
@@ -83,7 +104,8 @@ class FormUpdateBasicInformation extends Component {
 
     render() {
         let { toggleEditForm } = this.props
-        let { name, birthday, gender, mssv, classes, error } = this.state;
+        let { name, birthday, gender, mssv, classes, listHobby, error} = this.state;
+        console.log(listHobby);
         return (
             <div>
                 <div className="overview-box open" style={{ backgroundColor: '#00000000' }} id="bs-info-bx-form">
@@ -94,7 +116,7 @@ class FormUpdateBasicInformation extends Component {
                             <input type="text" name="name" placeholder="Fullname" value={name} onChange={this.inputOnchange} />
 
                             <h4>Date of Birth:</h4>
-                            <input type="date" name="birthday" placeholder="Fullname" value={birthday} onChange={this.inputOnchange} />
+                            <input type="date" name="birthday" placeholder="Birthday" value={birthday} onChange={this.inputOnchange} />
 
                             <h4>Gender:</h4>
                             <select value={gender} onChange={this.onChangeGender} style={{ paddingLeft: 15 + 'px' }}>
@@ -113,6 +135,7 @@ class FormUpdateBasicInformation extends Component {
                             <select onChange={this.onChangeSchool} style={{ paddingLeft: 15 + 'px' }}>
                                 {this.renderSelectSchool()}
                             </select>
+
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditBasicInformation} className="save">Save</button>
                             <button onClick={toggleEditForm} className="cancel">Cancel</button>

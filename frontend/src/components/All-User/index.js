@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import * as API from '../../api';
-import {withRouter} from 'react-router-dom';
-import {Link } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class AllUser extends Component {
 	componentDidMount() {
@@ -17,14 +17,14 @@ class AllUser extends Component {
 	}
 
 	onChangeType = (type) => {
-		let {account} = this.props
+		let { account } = this.props
 		switch (type) {
 			case 1:
 				API.getListCompany(account)
 					.then(res => {
 						if (res.status == 200) {
 							this.setState({
-								listUser: res.data.Students,
+								listUser: res.data.Companies,
 								type: type
 							})
 						}
@@ -36,7 +36,7 @@ class AllUser extends Component {
 					.then(res => {
 						if (res.status == 200) {
 							this.setState({
-								listUser: res.data.Students,
+								listUser: res.data.Schools,
 								type: type
 							})
 						}
@@ -58,32 +58,32 @@ class AllUser extends Component {
 	}
 
 	onFollow = (other_id) => {
-        let {account} = this.props;
-        
-        return API.followUser(account,other_id)
-        .then(res=>{
-            alert(res.data.message);
-            this.onChangeType(this.state.type);
-        })
-        .catch(err=>{
-            console.log(err);
-            alert('Something went wrong')
-        })
-    }
+		let { account } = this.props;
 
-    unFollow = (other_id) => {
-        let {account} = this.props;
-        
-        return API.unfollowUser(account,other_id)
-        .then(res=>{
-            alert(res.data.message);
-            this.onChangeType(this.state.type);
-        })
-        .catch(err=>{
-            console.log(err);
-            alert('Something went wrong')
-        })
-    }
+		return API.followUser(account, other_id)
+			.then(res => {
+				alert(res.data.message);
+				this.onChangeType(this.state.type);
+			})
+			.catch(err => {
+				console.log(err);
+				alert('Something went wrong')
+			})
+	}
+
+	unFollow = (other_id) => {
+		let { account } = this.props;
+
+		return API.unfollowUser(account, other_id)
+			.then(res => {
+				alert(res.data.message);
+				this.onChangeType(this.state.type);
+			})
+			.catch(err => {
+				console.log(err);
+				alert('Something went wrong')
+			})
+	}
 
 	renderListUser = () => {
 		let { listUser } = this.state;
@@ -93,34 +93,36 @@ class AllUser extends Component {
 				<div className="col-lg-3 col-md-4 col-sm-6 col-12" key={index}>
 					<div className="company_profile_info">
 						<div className="company-up-info">
-							<img src="http://via.placeholder.com/91x91" alt="" />
+							<img src={user && user.avatar ? `http://localhost:8000/images/avatar/${user.avatar}`
+								: "http://via.placeholder.com/91x91"} alt=""
+								style={{ width: 91 + 'px', height: 91 + 'px' }} />
 							<h3>{user.name}</h3>
 							<ul>
 								<li>{!user.is_follow ?
-									<a href="#" title="" 
-										className="follow" 
+									<a href="#" title=""
+										className="follow"
 										onClick={() => this.onFollow(user.id)}>
-											Follow
+										Follow
 									</a>
-									:<a href="#" title="" 
-										className="follow" 
-										onClick={() => this.unFollow(user.id)} 
-										style={{backgroundColor:'red'}}>
-											Unfollow
+									: <a href="#" title=""
+										className="follow"
+										onClick={() => this.unFollow(user.id)}
+										style={{ backgroundColor: 'red' }}>
+										Unfollow
 									</a>
 								}</li>
-								<li><Link to={`messages?other_id=${user.id}`}  
-									onClick={() => {history.push(`/messages?other_id=${user.id}`); history.go() }} 
+								<li><Link to={`messages?other_id=${user.id}`}
+									onClick={() => { history.push(`/messages?other_id=${user.id}`); history.go() }}
 									className="message-us">
-										<i className="fa fa-envelope"></i>
+									<i className="fa fa-envelope"></i>
 								</Link></li>
 								{/* <li><a href="#" title="" className="hire-us">Hire</a></li> */}
 							</ul>
 						</div>
-						<Link to={`user-profile?other_id=${user.id}`} 
-								onClick={()=>{history.push(`user-profile?other_id=${user.id}`);history.go()}}  
-								className="view-more-pro">
-									View Profile
+						<Link to={`user-profile?other_id=${user.user_id}`}
+							onClick={() => { history.push(`user-profile?other_id=${user.user_id}`); history.go() }}
+							className="view-more-pro">
+							View Profile
 						</Link>
 					</div>
 				</div>
@@ -160,7 +162,7 @@ class AllUser extends Component {
 	}
 }
 const mapStateToProps = state => {
-	return{
+	return {
 		account: state.account
 	}
 }

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('cover')->nullable();
             $table->timestamp("last_online_at")->useCurrent();
+            $table->string('type');
             $table->timestamps();
         });
     }

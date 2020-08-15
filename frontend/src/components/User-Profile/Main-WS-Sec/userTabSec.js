@@ -7,13 +7,13 @@ class UserTabSec extends Component {
             <div className="user-tab-sec">
                 <h3>{name}</h3>
                 <div className="star-descp">
-                    {/* <ul>
+                    <ul>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star"></i></li>
                         <li><i className="fa fa-star-half-o"></i></li>
-                    </ul> */}
+                    </ul>
                 </div>
                 <div className="tab-feed st2">
                     <ul>
@@ -41,12 +41,12 @@ class UserTabSec extends Component {
                                 <span>My Bids</span>
                             </a>
                         </li> */}
-                        <li data-tab="portfolio-dd">
+                        {/* <li data-tab="portfolio-dd">
                             <a href="#" title="">
                                 <img src={require('../../../assets/images/ic3.png')} alt="" />
                                 <span>Portfolio</span>
                             </a>
-                        </li>
+                        </li> */}
                         {/* <li data-tab="payment-dd">
                             <a href="#" title="">
                                 <img src="images/ic6.png" alt="" />

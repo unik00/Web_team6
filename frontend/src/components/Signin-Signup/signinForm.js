@@ -48,7 +48,7 @@ class SigninForm extends React.Component {
                         return alert('Account is not active by admin')
                     }
                     this.props.signin(res.data);
-                    history.push('/user-profile');
+                    history.push('/');
                     return history.go();
                 }
                 return alert(`login with status ${res.status}`)

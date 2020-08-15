@@ -89,7 +89,7 @@ class SuggesstionUser extends Component {
         return (
             <div className="suggestions full-width">
                 <div className="sd-title">
-                    <h3>Suggess People Profile</h3>
+                    <h3>You may know...</h3>
                 </div>
                 <div className="suggestions-list">
                     {this.renderSuggestionUser()}

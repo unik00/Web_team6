@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
-import * as API from '../../api';
 import { connect } from 'react-redux';
+
+{/*import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+*/}
+
+import * as API from '../../api';
+
 
 class FormUpdateStudentProgrammingLanguage extends Component {
     constructor(props) {

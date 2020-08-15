@@ -60,13 +60,13 @@ class FormUpdateSocialLink extends Component {
                     <div className="overview-edit">
                         <h3>Social:</h3>
                         <form>
-                            <h4>FaceBook:</h4>
-                            <input type="text" name="linkFB"  value={linkFB} onChange={this.inputOnchange} />
-
                             <h4>CV:</h4>
                             <input type="text" name="linkCV"  value={linkCV} onChange={this.inputOnchange} />
 
-                            <h4>Git:</h4>
+                            <h4>Facebook:</h4>
+                            <input type="text" name="linkFB"  value={linkFB} onChange={this.inputOnchange} />
+
+                            <h4>Github:</h4>
                             <input type="text" name="linkGit" value={linkGit} onChange={this.inputOnchange} />
 
                             <div style={{ color: 'red' }}>{error}</div>

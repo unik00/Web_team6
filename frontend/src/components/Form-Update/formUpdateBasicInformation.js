@@ -116,7 +116,7 @@ class FormUpdateBasicInformation extends Component {
                             <input type="text" name="name" placeholder="Fullname" value={name} onChange={this.inputOnchange} />
 
                             <h4>Date of Birth:</h4>
-                            <input type="date" name="birthday" placeholder="Fullname" value={birthday} onChange={this.inputOnchange} />
+                            <input type="date" name="birthday" placeholder="Birthday" value={birthday} onChange={this.inputOnchange} />
 
                             <h4>Gender:</h4>
                             <select value={gender} onChange={this.onChangeGender} style={{ paddingLeft: 15 + 'px' }}>

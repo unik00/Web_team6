@@ -33,9 +33,9 @@ class NoticeController extends Controller
         $user_id = $request->User()->id;
         $limit=null;
         $limit = $request->limit;
-        $list = $listNew = array();
-        if($limit) $list = Notice::where('user_id', $user_id)->limit($limit)->get();
-        else $list = Notice::where('user_id', $user_id)->get();
+        $list = array();
+        if($limit) $list = Notice::where('user_id', $user_id)->limit($limit)->orderBy('created_at', 'desc')->get();
+        else $list = Notice::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
         $listNew = $list;
         foreach($list as $ls){
             $user_id = $ls->other_id;
@@ -55,7 +55,7 @@ class NoticeController extends Controller
             }
             $ls->name = $users->name;
         }
-        foreach($listNew as $ls){
+       foreach($listNew as $ls){
             $lsNew = Notice::find($ls->id);
             $lsNew->is_read = true;
             $lsNew->save();

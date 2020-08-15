@@ -24,4 +24,24 @@ class StudentFilter extends ModelFilter
     {
         return $this->where('phone', 'LIKE', "%$phone%");
     }
+    public function school($id){
+        return $this->where('school_id', $id);
+    }
+    public function mssv($msv){
+        return $this->where('mssv', 'LIKE', "%$msv%");
+    }
+    public function class($class){
+        return $this->where('class', 'LIKE', "%$class%");
+    }
+    public function gender($gender){
+        return $this->where('gender', $gender);
+    }
+    /*public function programLanguage($id){
+        echo "b";
+        return $this->related('studentprogramlanguage', 'program_language_id' ,'=', $id);
+    }
+    public function hobby($id){
+        echo "a";
+    return $this->related('studenthobby', 'hobby_id' , "=", $id);
+    }*/
 }

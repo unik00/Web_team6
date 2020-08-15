@@ -22,6 +22,6 @@ class SchoolFilter extends ModelFilter
     }
     public function phone($phone)
     {
-        return $this->where('phone', 'LIKE', "$phone%");
+        return $this->where('phone', 'LIKE', "%$phone%");
     }
 }

@@ -42,6 +42,7 @@ Route::group(['prefix' => 'profile'], function () {
 });
 
 Route::group(['prefix' => 'search'], function () {
+    Route::post('user', 'SearchController@user');
     Route::post('student', 'SearchController@student');
     Route::post('school', 'SearchController@school');
     Route::post('company', 'SearchController@company');

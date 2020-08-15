@@ -3,6 +3,7 @@ import * as API from '../../api';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Filter from './filter'
 
 class AllUser extends Component {
 	componentDidMount() {
@@ -135,26 +136,31 @@ class AllUser extends Component {
 		return (
 			<section className="companies-info">
 				<div className="container">
-					<div className="company-title" style={{ backgroundColor: type == 1 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
-						<h3 style={{ backgroundColor: type == 1 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(1)}>All Companies</h3>
-					</div>
-					<div className="company-title" style={{ backgroundColor: type == 2 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
-						<h3 style={{ backgroundColor: type == 2 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(2)}>All School</h3>
-					</div>
-					<div className="company-title" style={{ backgroundColor: type == 3 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
-						<h3 style={{ backgroundColor: type == 3 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(3)}>All Student</h3>
-					</div>
-					<div className="companies-list">
-						<div className="row">
-							{this.renderListUser()}
+					<div className="row">
+						<div className="col-lg-9">
+							<div className="company-title" style={{ backgroundColor: type == 1 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
+								<h3 style={{ backgroundColor: type == 1 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(1)}>All Companies</h3>
+							</div>
+							<div className="company-title" style={{ backgroundColor: type == 2 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
+								<h3 style={{ backgroundColor: type == 2 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(2)}>All School</h3>
+							</div>
+							<div className="company-title" style={{ backgroundColor: type == 3 ? '#b9b5b5' : 'white', cursor: 'pointer' }}>
+								<h3 style={{ backgroundColor: type == 3 ? '#b9b5b5' : 'white' }} onClick={() => this.onChangeType(3)}>All Student</h3>
+							</div>
+							<div className="companies-list">
+								<div className="row">
+									{this.renderListUser()}
+								</div>
+							</div>
+							<div className="process-comm">
+								<div className="spinner">
+									<div className="bounce1"></div>
+									<div className="bounce2"></div>
+									<div className="bounce3"></div>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div className="process-comm">
-						<div className="spinner">
-							<div className="bounce1"></div>
-							<div className="bounce2"></div>
-							<div className="bounce3"></div>
-						</div>
+						<Filter/>
 					</div>
 				</div>
 			</section>

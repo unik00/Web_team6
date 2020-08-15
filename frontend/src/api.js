@@ -131,6 +131,10 @@ export const getListHobby = (account,offset = 0, limit = 10, random = 0) => {
                 }})
 }
 
+export const getHobbies = () => {
+  return api.get('hobby/list')
+}
+
 export const removeHobby = (account,hobby_id) => {
   return api.get(`hobby/remove?hobby_id=${hobby_id}`, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
@@ -157,6 +161,11 @@ export const addExperience = (account, exp_request) => {
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }
+export const removeExperience = (account,exp_id) => {
+  return api.post(`exp/remove`,{exp_id},{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
 /* end of experience */
 
 /* programming language */
@@ -168,6 +177,11 @@ export const getListProgrammingLanguage = () => {
 }
 export const addStudentProgrammingLanguage = (account, data) => {
   return api.post(`student-programlanguage/add`, data, {headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }});
+}
+export const removeProgramLanguage = (account, id) => {
+  return api.post(`student-programlanguage/remove`, {id}, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
   }});
 }

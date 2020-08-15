@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as API from '../../../../api';
 import FormUpdateStudentProgrammingLanguage from '../../../Form-Update/formUpdateStudentProgrammingLanguage';
+import {connect} from 'react-redux';
 
 class StudentProgrammingLanguage extends Component {
     constructor(props) {
@@ -37,6 +38,19 @@ class StudentProgrammingLanguage extends Component {
             openEditForm : !openEditForm
         })
     }
+
+    removeProgramLanguage = (id) => {
+        let {account} = this.props
+        return API.removeProgramLanguage(account,id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListStudentProgrammingLanguage();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('lỗi');
+        })
+    }
     
     render() {
         let { userInformation } = this.props
@@ -44,7 +58,13 @@ class StudentProgrammingLanguage extends Component {
 
         let listItems = listStudentProgrammingLanguage.map((d, index) => 
            <div className="list-student-programming-languages" key={index}>
-                <h4>{d.program_language_name}</h4>
+                <h4>
+                    {d.program_language_name}
+                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                         onClick={() => this.removeProgramLanguage(d.id)}>
+                             <i className="fa fa-trash"></i>
+                    </div>
+                </h4>
                 <p>
                     <i style={{ fontStyle: 'italic' }}>{d.level} years of experience.</i>
                 </p>
@@ -76,4 +96,10 @@ class StudentProgrammingLanguage extends Component {
 }
 
 
-export default StudentProgrammingLanguage
+const mapStateToProps = state => {
+    return {
+        account: state.account
+    }
+}
+
+export default connect(mapStateToProps,null)(StudentProgrammingLanguage)

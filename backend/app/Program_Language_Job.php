@@ -14,7 +14,6 @@ class Program_Language_Job extends Model
     }
     public function scopeProgramLanguage($query, $id)
     {
-        echo "scope";
         return $query->where('program_language_id', '=', $id);
     }
 }

@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
 
-class HobbyFilter extends ModelFilter
+class StudentProgramLanguageFilter extends ModelFilter
 {
     /**
     * Related Models that have ModelFilters as well as the method on the ModelFilter
@@ -13,12 +13,7 @@ class HobbyFilter extends ModelFilter
     * @var array
     */
     public $relations = [];
-    public function name($name)
-    {
-        return $this->where(function($q) use ($name)
-        {
-            return $q->where('name', 'LIKE', "%$name%");
-        });
+    public function programLanguage($id){
+        return $this->where('program_language_id', $id);
     }
-    
 }

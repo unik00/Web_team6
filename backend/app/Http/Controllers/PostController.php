@@ -10,6 +10,7 @@ use App\User;
 use App\Student;
 use App\School;
 use App\Company;
+use App\Follower;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -40,6 +41,14 @@ class PostController extends Controller
                     $normalPost->content = $content;
                     $normalPost->save();
                 }
+                $follow = Follower::where('user_id_followed', $id)->get();
+                foreach($follow as $fl){
+                    $notice = new NoticeController();
+                    $notice->addNotice($fl->user_id, $id, ' đã đăng một bài viết mới');
+                }
+                
+                
+
                 DB::commit();
                 return response()->json([
                     'success' => true,

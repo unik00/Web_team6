@@ -20,9 +20,53 @@ use App\Program_Language_Job;
 
 class SearchController extends Controller
 {
-    public function student(Request $request)
+    public function user(Request $request)
     {
        // return $request->all();
+       $list = array();
+        if($request->type == "Student"){
+            $list = $this->student($request);
+        }
+        else if($request->type == "School"){
+            $list = $this->school($request);
+        }
+        else if($request->type == "Company"){
+            $list = $this->company($request);
+        }
+        $listUser = array();
+        $listUser = User::filter($request->all())->paginateFilter();
+        $user_id_list = array();
+        $user_list = array();
+        foreach($list as $ls){
+            $user_id = $ls->user_id;
+            array_push($user_id_list, $user_id);
+        }
+        foreach($listUser as $ls){
+            $user_id = $ls->id;
+            array_push($user_list, $user_id);
+        }
+        $res_id = array_intersect_key($user_list, $user_id_list);
+        $res = [];
+        foreach($res_id as $id){
+            $user = User::find($id);
+            if($user){
+                $info = null;
+                if($user->type == "Student"){
+                    $info = Student::where('user_id', $id)->first();
+                } else if($user->type == "Company"){
+                    $info = Company::where('user_id', $id)->first();
+                } else if($user->type == "School"){
+                    $info = School::where('user_id', $id)->first();
+                }
+                $user->name = $info->name;
+
+                 $res[] = $user;
+            }
+        }
+        return $res;
+    }
+    public function student(Request $request)
+    {
         return Student::filter($request->all())->paginateFilter();
     }
     public function school(Request $request)

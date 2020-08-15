@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
 
-class HobbyFilter extends ModelFilter
+class StudentHobbyFilter extends ModelFilter
 {
     /**
     * Related Models that have ModelFilters as well as the method on the ModelFilter
@@ -13,12 +13,10 @@ class HobbyFilter extends ModelFilter
     * @var array
     */
     public $relations = [];
-    public function name($name)
-    {
-        return $this->where(function($q) use ($name)
-        {
-            return $q->where('name', 'LIKE', "%$name%");
-        });
+    public function student($id){
+        return $this->where('student_id', $id);
     }
-    
+    public function hobby($id){
+        return $this->where('hobby_id', $id);
+    }
 }

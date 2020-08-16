@@ -12,13 +12,15 @@ import * as API from '../../api';
 
 class Header extends Component {
     componentDidUpdate(prevProps) {
-        let { account } = this.props;
+        let { account, history } = this.props;
 
         if (prevProps.account !== account) {
             return API.ViewMyProfile(account)
             .then(res => {
                 if (res.status == 200) {
-                    console.log(res);
+                    if(res.data.type == "Admin"){
+                        history.push('/admin');
+                    }
                     this.setState({
                         userInformation :res.data
                     })

@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import UserTabSec from './userTabSec';
 import PostBar from './Post/index';
 import UserInfo from './User-Information/index';
-import Stats from './Stats'
+import StatsSchool from './StatsSchool'
+import StatsCompany from './StatsCompany';
 // import Image from './images';
 
 class MainWsSec extends Component {
@@ -26,7 +27,8 @@ class MainWsSec extends Component {
                         </div>
                     </div>
                     <UserInfo userInformation={userInformation} regetData={regetData}/>
-                    <Stats userInformation={userInformation}/>
+                    <StatsSchool userInformation={userInformation}/>
+                    <StatsCompany userInformation={userInformation}/>
                     {/* <Image/> */}
                 </div>
             </div>

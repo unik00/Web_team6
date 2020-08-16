@@ -271,7 +271,7 @@ class JobController extends Controller
             if($id) $type = Job_Experience::find($id);
             if($type) $type->name = $name;
             else {
-                $type = new Job_Availabilty;
+                $type = new Job_Experience;
                 $type->name = $name;
             }
             $type->save();

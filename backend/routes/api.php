@@ -207,12 +207,13 @@ Route::group(['prefix' => 'vote'], function () {
 Route::get('score/{user_id}', 'VoteController@getVote');
 Route::group(['prefix' => 'stats'], function () {
     Route::get('school', 'StatsController@school');
+    Route::get('company', 'StatsController@company');
     Route::get('', 'StatsController@index');
 });
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
-        if(Auth::user()->type == "Admin"){
+        if(auth('api')->user() && auth('api')->user()->type == "Admin"){
             Route::get('user', 'UserController@list');
             Route::get('user/remove', 'UserController@remove');
             Route::get('user/change-active', 'UserController@changeActive');

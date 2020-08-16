@@ -83,7 +83,7 @@ class UserTabSec extends Component {
                             </a>
                         </li>
                         <li data-tab="saved-jobs">
-                            {type== 'School' ?<a href="#" title="">
+                            {type!= 'Student' ?<a href="#" title="">
                                 <img src={require('../../../assets/images/ic4.png')} alt="" />
                                 <span>Stats</span>
                             </a>:''}

@@ -35,27 +35,32 @@ class Experience extends Component {
         this.setState({
             openEditForm : !openEditForm
         })
-    }
-    
+    }    
+
     render() {
         let { userInformation } = this.props
         let {openEditForm, listStudentExperience} = this.state
         
-        let listItems = listStudentExperience.map((d, index) => 
-           <div className="list-student-exps" key={index}>
-                <h4>
-                    {d.company_name} (from {d.start.split(' ')[0]}
-                        <i style={{ fontStyle: 'italic' }}> to  </i> 
-                    { d.end.split(' ')[0] } ) 
-                        
-                </h4>
-                <p>
-                    <i style={{ fontStyle: 'italic' }}>{d.description}</i>
-                </p>
-                
+        let mapExperience = (d, index) => { 
+            let data = d.company_name + " (from " + d.start.split(' ')[0];
+    
+            if (d.end && d.end != '') 
+                // data += <i style={{ fontStyle: 'italic' }}> to  </i> + d.end.split(' ')[0];     
+                data += ' to ' + d.end.split(' ')[0];     
+            
+            data += ')';
 
-            </div>
-        )
+            return <div className="list-student-exps" key={index}>
+                    <h4>
+                        {data}
+                    </h4>
+                    <p>
+                        <i style={{ fontStyle: 'italic' }}>{d.description}</i>
+                    </p>
+                </div>;
+        }
+
+        let listItems = listStudentExperience.map(mapExperience)
         return (
             <div className="user-profile-ov st2">
                 <h3>

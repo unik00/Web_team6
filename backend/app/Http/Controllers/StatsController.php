@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Experience;
 use App\Job;
 use App\Language;
 use App\Program_Language;
@@ -38,6 +39,32 @@ class StatsController extends Controller
             'success' => true,
             'student' => $cntStudent,
             'languages' => $statsLanguage
+        ]);
+    }
+
+    function company(Request $request){
+        $company_id = $request->company_id;
+        $job = Job::where('user_id', $company_id);
+        $cntJob = $job->count();
+        $cntStudent = Experience::where('company_id', $company_id)->groupBy('user_id')->count();
+        $programlanguage = Program_Language::all();
+        $statsLanguage = [];
+        foreach($programlanguage as $lg){
+            $id = $lg->id;
+            $name = $lg->name;
+            $cnt = DB::table('program__language__jobs')->where('program_language_id', $id)->join('jobs', 'program__language__jobs.job_id', '=', 'jobs.id')->where('user_id', $company_id);
+            $info = (object)[];
+            $info->id = $id;
+            $info->name = $name;
+            $info->job = $cnt->count();
+
+            $statsLanguage[] = $info;
+        }
+        return response()->json([
+            'success' => true,
+            'job' => $cntJob,
+            'student' => $cntStudent,
+            'language' => $statsLanguage
         ]);
     }
 

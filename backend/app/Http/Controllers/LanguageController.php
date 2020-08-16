@@ -54,12 +54,11 @@ class LanguageController extends Controller
     }
 
     function list(Request $request){
-        $random = $request->random ?? 0;
-        $offset = $request->offset ?? 0;
-        $limit = $request->limit ?? 10;
-        if(!$random) $list = Language::limit($limit)->offset($offset)->get();
-        else $list = Language::all()->random($limit);
-        return response()->json(['languages' => $list]);
+        $list = Language::all();
+        return response()->json([
+            'success' => true, 
+            'program_languages' => $list
+        ]);
     }
     
 

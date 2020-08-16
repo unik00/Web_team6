@@ -117,10 +117,11 @@ Route::group(['prefix' => 'job'], function () {
 });
 
 Route::group(['prefix' => 'language'], function () {
+
+    Route::get('list', 'LanguageController@list');
     Route::group(['middleware' => ['auth:api']], function () {
         Route::put('add', 'LanguageController@addOrUpdate');
         Route::get('remove', 'LanguageController@remove');
-        Route::get('list', 'LanguageController@list');
     });
 });
 

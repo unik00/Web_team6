@@ -48,6 +48,16 @@ class UserSeeder extends Seeder
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
             "updated_at" => Carbon::now()->format('Y-m-d H:i:s')]
         ]);
-        
+        DB::table('users')->insert([
+            ["username"=>"qtv",
+            'is_active'=>1,
+            "avatar"=>'ghtk.png',
+            // password is admin
+            "password"=>'$2y$10$WVoUWbmeXH7gZJjf6vd5ie4RY13sxL6NA5.klRH8JPjtfN8Rn9Upi',
+            "email"=>'qtv@gmail.com',
+            "type"=>'Admin',
+            "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
+            "updated_at" => Carbon::now()->format('Y-m-d H:i:s')]
+        ]);
     }
 }

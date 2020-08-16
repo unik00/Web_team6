@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-
-{/*import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-*/}
-
 import * as API from '../../api';
 
 
@@ -99,7 +93,7 @@ class FormUpdateStudentProgrammingLanguage extends Component {
                                 {this.renderSelectProgrammingLanguage()}
                             </select>
                             <h4>Number of years' experience:</h4>
-                            <input type="number" name="level" placeholder="1" value={level} onChange={this.inputOnchange} />
+                            <input type="number" name="level" value={level} onChange={this.inputOnchange} />
 
                             <div style={{ color: 'red' }}>{error}</div>
                             <button onClick={this.onEditProgrammingLanguage} className="save">Save</button>

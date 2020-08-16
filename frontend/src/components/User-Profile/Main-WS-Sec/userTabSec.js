@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class UserTabSec extends Component {
     render() {
-        let {name} = this.props
+        let {name, type} = this.props
         return (
             <div className="user-tab-sec">
                 <h3>{name}</h3>
@@ -29,12 +29,12 @@ class UserTabSec extends Component {
                                 <span>Info</span>
                             </a>
                         </li>
-                        {/* <li data-tab="saved-jobs">
-                            <a href="#" title="">
-                                <img src="images/ic4.png" alt="" />
-                                <span>Saved Jobs</span>
-                            </a>
-                        </li> */}
+                        <li data-tab="saved-jobs">
+                            {type== 'School' ?<a href="#" title="">
+                                <img src={require('../../../assets/images/ic4.png')} alt="" />
+                                <span>Stats</span>
+                            </a>:''}
+                        </li>
                         {/* <li data-tab="my-bids">
                             <a href="#" title="">
                                 <img src="images/ic5.png" alt="" />

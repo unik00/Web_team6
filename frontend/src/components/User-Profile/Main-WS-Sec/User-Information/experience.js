@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FormUpdateExperience from '../../../Form-Update/formUpdateExperience'
 import * as API from '../../../../api';
+import {connect} from 'react-redux';
 
 class Experience extends Component {
     constructor(props) {
@@ -36,11 +37,24 @@ class Experience extends Component {
             openEditForm : !openEditForm
         })
     }
+
+    remomveExperience = (exp_id) => {
+        let {account} = this.props
+        return API.removeExperience(account,exp_id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListExperience();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('lỗi');
+        })
+    }
     
     render() {
         let { userInformation } = this.props
         let {openEditForm, listStudentExperience} = this.state
-        
+        console.log(listStudentExperience);
         let listItems = listStudentExperience.map((d, index) => 
            <div className="list-student-exps" key={index}>
                 <h4>
@@ -48,6 +62,10 @@ class Experience extends Component {
                         <i style={{ fontStyle: 'italic' }}> to  </i> 
                     { d.end.split(' ')[0] } ) 
                         
+                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                         onClick={() => this.remomveExperience(d.id)}>
+                             <i className="fa fa-trash"></i>
+                    </div>
                 </h4>
                 <p>
                     <i style={{ fontStyle: 'italic' }}>{d.description}</i>
@@ -79,5 +97,10 @@ class Experience extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        account: state.account
+    }
+}
 
-export default Experience
+export default connect(mapStateToProps,null)(Experience)

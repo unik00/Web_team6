@@ -37,8 +37,8 @@ class Experience extends Component {
             openEditForm : !openEditForm
         })
     }
-
-    remomveExperience = (exp_id) => {
+     
+    removeExperience = (exp_id) => {
         let {account} = this.props
         return API.removeExperience(account,exp_id)
         .then(res=>{
@@ -49,31 +49,36 @@ class Experience extends Component {
             console.log(err);
             alert('lỗi');
         })
-    }
-    
+    }        
+
     render() {
         let { userInformation } = this.props
         let {openEditForm, listStudentExperience} = this.state
-        console.log(listStudentExperience);
-        let listItems = listStudentExperience.map((d, index) => 
-           <div className="list-student-exps" key={index}>
-                <h4>
-                    {d.company_name} (from {d.start.split(' ')[0]}
-                        <i style={{ fontStyle: 'italic' }}> to  </i> 
-                    { d.end.split(' ')[0] } ) 
-                        
-                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
-                         onClick={() => this.remomveExperience(d.id)}>
+        
+        
+        let mapExperience = (d, index) => { 
+            let data = d.company_name + " (from " + d.start.split(' ')[0];
+    
+            if (d.end && d.end != '') 
+                // data += <i style={{ fontStyle: 'italic' }}> to  </i> + d.end.split(' ')[0];     
+                data += ' to ' + d.end.split(' ')[0];     
+            
+            data += ')';
+            
+            return <div className="list-student-exps" key={index}>
+            <h4>
+                {data}
+                <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                         onClick={() => this.removeExperience(d.id)}>
                              <i className="fa fa-trash"></i>
-                    </div>
-                </h4>
-                <p>
-                    <i style={{ fontStyle: 'italic' }}>{d.description}</i>
-                </p>
-                
-
-            </div>
-        )
+                </div>
+            </h4>
+            <p>
+                <i style={{ fontStyle: 'italic' }}>{d.description}</i>
+            </p>
+            </div>;
+        }
+        let listItems = listStudentExperience.map(mapExperience)
         return (
             <div className="user-profile-ov st2">
                 <h3>

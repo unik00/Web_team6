@@ -187,6 +187,25 @@ export const removeProgramLanguage = (account, id) => {
 }
 /*end of programming language*/ 
 
+/* language */
+export const getStudentLanguage = (id) => {
+  return api.get(`student-language/list?id=${id}`);
+ }
+ export const getListLanguage = () => {
+   return api.get(`language/list`);
+ }
+ export const addStudentLanguage = (account, data) => {
+   return api.post(`student-language/add`, data, {headers:{
+     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+   }});
+ }
+ export const removeStudentLanguage = (account, id) => {
+   return api.post(`student-language/remove`, {id}, {headers:{
+     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+   }});
+ }
+ /*end of language*/ 
+
 export const addJob = (account, data) => {
   return api.put(`job/add`,data, {headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''

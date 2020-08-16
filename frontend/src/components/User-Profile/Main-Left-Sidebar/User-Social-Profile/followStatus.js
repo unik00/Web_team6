@@ -21,7 +21,7 @@ class FollowStatus extends Component {
     }
 
     unFollow = () => {
-        let {account, userInformation, regetData} = this.props;
+        let {account, userInformation, regetData, history} = this.props;
         
         return API.unfollowUser(account,userInformation.user_id)
         .then(res=>{

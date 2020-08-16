@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import UserTabSec from './userTabSec';
 import PostBar from './Post/index';
 import UserInfo from './User-Information/index';
+import Stats from './Stats'
 // import Image from './images';
 
 class MainWsSec extends Component {
@@ -11,7 +12,7 @@ class MainWsSec extends Component {
         return (
             <div className="col-lg-6">
                 <div className="main-ws-sec">
-                    <UserTabSec name={userInformation.name}/>
+                    <UserTabSec type={userInformation.type} name={userInformation.name} regetData={regetData} userInformation={userInformation}/>
                     <div className="product-feed-tab current" id="feed-dd">
                         <div className="posts-section">
                             <PostBar userInformation={userInformation} isInProfile={true}/>
@@ -25,6 +26,7 @@ class MainWsSec extends Component {
                         </div>
                     </div>
                     <UserInfo userInformation={userInformation} regetData={regetData}/>
+                    <Stats userInformation={userInformation}/>
                     {/* <Image/> */}
                 </div>
             </div>

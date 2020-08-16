@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import FormUpdateExperience from '../../../Form-Update/formUpdateExperience'
 import * as API from '../../../../api';
+import {connect} from 'react-redux';
 
 class Experience extends Component {
     constructor(props) {
@@ -35,11 +36,25 @@ class Experience extends Component {
         this.setState({
             openEditForm : !openEditForm
         })
-    }    
+    }
+     
+    removeExperience = (exp_id) => {
+        let {account} = this.props
+        return API.removeExperience(account,exp_id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListExperience();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('lỗi');
+        })
+    }        
 
     render() {
         let { userInformation } = this.props
         let {openEditForm, listStudentExperience} = this.state
+        
         
         let mapExperience = (d, index) => { 
             let data = d.company_name + " (from " + d.start.split(' ')[0];
@@ -49,17 +64,20 @@ class Experience extends Component {
                 data += ' to ' + d.end.split(' ')[0];     
             
             data += ')';
-
+            
             return <div className="list-student-exps" key={index}>
-                    <h4>
-                        {data}
-                    </h4>
-                    <p>
-                        <i style={{ fontStyle: 'italic' }}>{d.description}</i>
-                    </p>
-                </div>;
+            <h4>
+                {data}
+                <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                         onClick={() => this.removeExperience(d.id)}>
+                             <i className="fa fa-trash"></i>
+                </div>
+            </h4>
+            <p>
+                <i style={{ fontStyle: 'italic' }}>{d.description}</i>
+            </p>
+            </div>;
         }
-
         let listItems = listStudentExperience.map(mapExperience)
         return (
             <div className="user-profile-ov st2">
@@ -84,5 +102,10 @@ class Experience extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        account: state.account
+    }
+}
 
-export default Experience
+export default connect(mapStateToProps,null)(Experience)

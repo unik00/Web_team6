@@ -36,7 +36,7 @@ class VoteController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Vote thành công'
-            ]); 
+            ]);
         } catch(\Exception $e){
             return response()->json([
                 'success' => false,

@@ -23,7 +23,7 @@ class SearchController extends Controller
     public function user(Request $request)
     {
        // return $request->all();
-       $list = array();
+        $list = array();
         if($request->type == "Student"){
             $list = $this->student($request);
         }
@@ -45,7 +45,7 @@ class SearchController extends Controller
             $user_id = $ls->id;
             array_push($user_list, $user_id);
         }
-        $res_id = array_intersect_key($user_list, $user_id_list);
+        $res_id = array_intersect_key($user_id_list,$user_list);
         $res = [];
         foreach($res_id as $id){
             $user = User::find($id);

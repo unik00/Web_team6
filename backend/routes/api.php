@@ -117,10 +117,11 @@ Route::group(['prefix' => 'job'], function () {
 });
 
 Route::group(['prefix' => 'language'], function () {
+
+    Route::get('list', 'LanguageController@list');
     Route::group(['middleware' => ['auth:api']], function () {
         Route::put('add', 'LanguageController@addOrUpdate');
         Route::get('remove', 'LanguageController@remove');
-        Route::get('list', 'LanguageController@list');
     });
 });
 
@@ -195,7 +196,13 @@ Route::group(['prefix' => 'student-programlanguage'], function () {
     });
 });
 
-Route::put('vote', 'VoteController@addVote');
+Route::group(['prefix' => 'vote'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::put('', 'VoteController@addVote');
+    });
+});
+
+Route::get('score/{user_id}', 'VoteController@getVote');
 Route::group(['prefix' => 'stats'], function () {
     Route::get('school', 'StatsController@school');
     Route::get('', 'StatsController@index');

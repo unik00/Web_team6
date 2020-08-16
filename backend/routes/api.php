@@ -205,5 +205,6 @@ Route::group(['prefix' => 'vote'], function () {
 Route::get('score/{user_id}', 'VoteController@getVote');
 Route::group(['prefix' => 'stats'], function () {
     Route::get('school', 'StatsController@school');
+    Route::get('company', 'StatsController@company');
     Route::get('', 'StatsController@index');
 });

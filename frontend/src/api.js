@@ -307,6 +307,10 @@ export const statsInSchool = (school_id) => {
   return api.get(`stats/school?school_id=${school_id}`)
 }
 
+export const statsInCompany = (company_id) => {
+  return api.get(`stats/company?company_id=${company_id}`)
+}
+
 export const vote = (account,data) => {
   return api.put(`vote`,data,{headers:{
     'Authorization': account ? `${account.token_type} ${account.access_token}` : ''

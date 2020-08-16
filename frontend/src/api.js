@@ -320,3 +320,142 @@ export const vote = (account,data) => {
 export const getScore = (id) => {
   return api.get(`score/${id}`)
 }
+
+export const adminUser = (account) => {
+  return api.get(`admin/user`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminUserChangeActive = (account, id) => {
+  return api.get(`admin/user/change-active?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+
+export const adminCountry = (account) => {
+  return api.get(`admin/country`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminCountryAdd = (account, name) => {
+  return api.post(`admin/country/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminCountryRemove = (account, id) => {
+  return api.get(`admin/country/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminHobby = (account) => {
+  return api.get(`admin/hobby`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminHobbyAdd = (account, name) => {
+  return api.post(`admin/hobby/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminHobbyRemove = (account, id) => {
+  return api.get(`admin/hobby/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminPrLg = (account) => {
+  return api.get(`admin/program-language`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminPrLgAdd = (account, name) => {
+  return api.post(`admin/program-language/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminPrlgRemove = (account, id) => {
+  return api.get(`admin/program-language/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminLanguage = (account) => {
+  return api.get(`admin/language`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminLanguageAdd = (account, name) => {
+  return api.post(`admin/language/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminLanguageRemove = (account, id) => {
+  return api.get(`admin/language/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminJobType = (account) => {
+  return api.get(`admin/job-type`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminJobTypeAdd = (account, name) => {
+  return api.post(`admin/job-type/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminJobTypeRemove = (account, id) => {
+  return api.get(`admin/job-type/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminAvailabilty = (account) => {
+  return api.get(`admin/job-availabilty`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminAvailabiltyAdd = (account, name) => {
+  return api.post(`admin/job-availabilty/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminAvailabiltyRemove = (account, id) => {
+  return api.get(`admin/job-availabilty/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminExp = (account) => {
+  return api.get(`admin/job-experience`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminExpAdd = (account, name) => {
+  return api.post(`admin/job-experience/add`,name,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const adminExpRemove = (account, id) => {
+  return api.get(`admin/job-experience/remove?id=${id}`,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}

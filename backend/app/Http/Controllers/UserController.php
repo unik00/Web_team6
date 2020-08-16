@@ -23,6 +23,9 @@ class UserController extends Controller
         $thisUser = $request->User();
         $id = $thisUser->id;
         $user = null;
+        if($thisUser->type == "Admin"){
+            return response()->json($thisUser);
+        }
         if($thisUser->type == "Student"){
             $user = Student::where('user_id', $id)->first();
             $user->type = 'Student';
@@ -49,7 +52,7 @@ class UserController extends Controller
 
             $vote = new VoteController();
             $user->vote_score = $vote->getVote($user->id);
-            
+
             return response()->json($user);
         } else {
             return response()->json(['message' => 'Lỗi hồ sơ người dùng không tồn tại'], 404);
@@ -184,7 +187,7 @@ class UserController extends Controller
             return response()->json(['success' => false, 'message' => 'Lỗi hệ thống. Vui lòng thử lại.']);
         }
     }
-    
+
     function list(Request $request){
         $random = $request->random ?? 0;
         $offset = $request->offset ?? 0;

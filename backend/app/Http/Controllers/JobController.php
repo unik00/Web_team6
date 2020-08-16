@@ -163,6 +163,40 @@ class JobController extends Controller
             'types' => $list
         ]);
     }
+    function removeType(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try {
+            $type = Job_Type::find($id);
+            $type->delete();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Xoá thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Xoá thất bại']);
+        }
+    }
+    function addOrUpdateType(Request $request){
+        $id = $request->id;
+        $name = $request->name;
+        $type = null;
+
+        DB::beginTransaction();
+        try {
+            if($id) $type = Job_Type::find($id);
+            if($type) $type->name = $name;
+            else {
+                $type = new Job_Type;
+                $type->name = $name;
+            }
+            $type->save();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Cập nhật thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Cập nhật thất bại']);
+        }
+    }
 
     function getAvailabilty(){
         $list = Job_Availabilty::all();
@@ -170,11 +204,84 @@ class JobController extends Controller
             'availabilties' => $list
         ]);
     }
+
+    function removeAvailabilty(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try {
+            $type = Job_Availabilty::find($id);
+            $type->delete();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Xoá thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Xoá thất bại']);
+        }
+    }
+    function addOrUpdateAvailabilty(Request $request){
+        $id = $request->id;
+        $name = $request->name;
+        $type = null;
+
+        DB::beginTransaction();
+        try {
+            if($id) $type = Job_Availabilty::find($id);
+            if($type) $type->name = $name;
+            else {
+                $type = new Job_Availabilty;
+                $type->name = $name;
+            }
+            $type->save();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Cập nhật thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Cập nhật thất bại']);
+        }
+    }
+
+
     function getExperience(){
         $list = Job_Experience::all();
         return response()->json([
             'experiences' => $list
         ]);
     }
+
+    function removeExperience(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try {
+            $type = Job_Experience::find($id);
+            $type->delete();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Xoá thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Xoá thất bại']);
+        }
+    }
+    function addOrUpdateExperience(Request $request){
+        $id = $request->id;
+        $name = $request->name;
+        $type = null;
+
+        DB::beginTransaction();
+        try {
+            if($id) $type = Job_Experience::find($id);
+            if($type) $type->name = $name;
+            else {
+                $type = new Job_Availabilty;
+                $type->name = $name;
+            }
+            $type->save();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Cập nhật thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Cập nhật thất bại']);
+        }
+    }
+
 
 }

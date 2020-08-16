@@ -1,19 +1,72 @@
 import React, { Component } from 'react'
+import FormVote from '../../Form-Update/formVote'
+import * as API from '../../../api'
 
 class UserTabSec extends Component {
+    componentDidUpdate(preprops){
+        let {userInformation} = this.props
+        if(preprops.userInformation != userInformation)
+        {
+            this.getScore();
+        }
+        
+    }
+    constructor(props) {
+        super(props);
+        this.state={
+            openEditForm : false,
+            score: 0
+        }
+    }
+
+    toggleEditForm = () => {
+        let { openEditForm } = this.state;
+        this.getScore();
+        this.setState({
+            openEditForm : !openEditForm
+        })
+    }
+
+    getScore = () => {
+        let {userInformation} = this.props
+        return API.getScore(userInformation.user_id)
+        .then(res=>{
+            console.log(res);
+            this.setState({
+                score: res.data != '' > 0 ? res.data :  10
+            })
+        })
+        .catch(err=>{
+            console.log(err)
+            this.setState({
+                score:null
+            })
+        })
+    }
+
+    renderStar = () => {
+        let {score} = this.state
+        let arr = [1,2,3,4,5,6,7,8,9,10];
+        return score >= 0 ? (
+            <ul>
+                {arr.map((value,index) => {
+                    return value <= score ?
+                        <li key={index}><i className="fa fa-star"></i></li>    
+                    :<li key={index}><i className="fa fa-star-o"></i></li>
+                })}
+            </ul>
+        ):''
+    }
+
     render() {
-        let {name, type} = this.props
+        let {name, type, userInformation} = this.props
+        let {openEditForm} = this.state
         return (
             <div className="user-tab-sec">
                 <h3>{name}</h3>
                 <div className="star-descp">
-                    <ul>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star"></i></li>
-                        <li><i className="fa fa-star-half-o"></i></li>
-                    </ul>
+                    {this.renderStar()}
+                    <button onClick={this.toggleEditForm}>Vote</button>
                 </div>
                 <div className="tab-feed st2">
                     <ul>
@@ -35,26 +88,11 @@ class UserTabSec extends Component {
                                 <span>Stats</span>
                             </a>:''}
                         </li>
-                        {/* <li data-tab="my-bids">
-                            <a href="#" title="">
-                                <img src="images/ic5.png" alt="" />
-                                <span>My Bids</span>
-                            </a>
-                        </li> */}
-                        {/* <li data-tab="portfolio-dd">
-                            <a href="#" title="">
-                                <img src={require('../../../assets/images/ic3.png')} alt="" />
-                                <span>Portfolio</span>
-                            </a>
-                        </li> */}
-                        {/* <li data-tab="payment-dd">
-                            <a href="#" title="">
-                                <img src="images/ic6.png" alt="" />
-                                <span>Payment</span>
-                            </a>
-                        </li> */}
                     </ul>
                 </div>
+                {openEditForm?<FormVote toggleEditForm={this.toggleEditForm}
+                                        userInformation={userInformation}
+                                        />:''}
             </div>
         )
     }

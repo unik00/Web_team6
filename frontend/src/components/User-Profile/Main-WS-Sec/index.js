@@ -12,7 +12,7 @@ class MainWsSec extends Component {
         return (
             <div className="col-lg-6">
                 <div className="main-ws-sec">
-                    <UserTabSec type={userInformation.type} name={userInformation.name}/>
+                    <UserTabSec type={userInformation.type} name={userInformation.name} regetData={regetData} userInformation={userInformation}/>
                     <div className="product-feed-tab current" id="feed-dd">
                         <div className="posts-section">
                             <PostBar userInformation={userInformation} isInProfile={true}/>

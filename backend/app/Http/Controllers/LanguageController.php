@@ -57,7 +57,7 @@ class LanguageController extends Controller
         $list = Language::all();
         return response()->json([
             'success' => true, 
-            'program_languages' => $list
+            'languages' => $list
         ]);
     }
     

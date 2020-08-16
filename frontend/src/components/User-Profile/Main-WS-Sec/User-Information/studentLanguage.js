@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import * as API from '../../../../api';
-import FormUpdateStudentProgrammingLanguage from '../../../Form-Update/formUpdateStudentProgrammingLanguage';
+import FormUpdateStudentLanguage from '../../../Form-Update/formUpdateStudentLanguage';
+import {connect} from 'react-redux';
 
-class StudentProgrammingLanguage extends Component {
+class StudentLanguage extends Component {
     constructor(props) {
         super(props);
         this.state={
             userInformation : props.userInformation,
-            listStudentProgrammingLanguage : [],
+            listStudentLanguage : [],
             level : null,
             openEditForm : false
         }
     }
     componentDidMount(){
-        this.getListStudentProgrammingLanguage();
+        this.getListStudentLanguage();
     }
     
-    getListStudentProgrammingLanguage = () => {
+    getListStudentLanguage = () => {
         let {userInformation} = this.state;
-        API.getStudentProgrammingLanguage(userInformation.user_id).then(
-            res => { if (res.status == 200 && res.statusText == "OK"){
+        API.getStudentLanguage(userInformation.user_id).then(
+            res => { if (res.status == 200){
                     this.setState({
-                        listStudentProgrammingLanguage : res.data.languages,
+                        listStudentLanguage : res.data.languages,
                     })
                 }
             }
@@ -37,24 +37,43 @@ class StudentProgrammingLanguage extends Component {
             openEditForm : !openEditForm
         })
     }
+
+    removeLanguage = (id) => {
+        let {account} = this.props
+        return API.removeStudentLanguage(account, id)
+        .then(res=>{
+            alert(res.data.message);
+            this.getListStudentLanguage();
+        })
+        .catch(err=>{
+            console.log(err);
+            alert('Lỗi');
+        })
+    }  
     
     render() {
         let { userInformation } = this.props
-        let {openEditForm, listStudentProgrammingLanguage} = this.state
+        let {openEditForm, listStudentLanguage} = this.state
 
-        let listItems = listStudentProgrammingLanguage.map((d, index) => 
-           <div className="list-student-programming-languages" key={index}>
-                <h4>{d.program_language_name}</h4>
-                <p>
-                    <i style={{ fontStyle: 'italic' }}>{d.level} years of experience.</i>
-                </p>
+        let listItems = listStudentLanguage.map((d, index) => 
+           <div className="list-student-languages" key={index}>
+                <h4>
+                    {d.language_name}
+                    {/* <p> */}
+                        {/* <i style={{ fontStyle: 'italic' }}>{d.level} years of experience.</i> */}
+                    {/* </p> */}
+                    <div style={{ display: 'inline-block', cursor: 'pointer' }}
+                            onClick={() => this.removeLanguage(d.id)}>
+                                <i className="fa fa-trash"></i>
+                    </div>
+                </h4>
             </div>
         )
         return (
             <div className="user-profile-ov st2">
                 <h3>
                     <div style={{ display: 'inline-block', cursor: 'pointer' }} className="exp-bx-open">
-                        Programming languages
+                        Languages
                     </div>
                     {userInformation.my_profile ? <div style={{ display: 'inline-block', cursor: 'pointer' }}
                          onClick={this.toggleEditForm}>
@@ -67,13 +86,18 @@ class StudentProgrammingLanguage extends Component {
                     </div>
                     </div>
                 {openEditForm?
-                    <FormUpdateStudentProgrammingLanguage toggleEditForm={this.toggleEditForm}
-                                                regetData={this.getListStudentProgrammingLanguage}/>
+                    <FormUpdateStudentLanguage toggleEditForm={this.toggleEditForm}
+                                                regetData={this.getListStudentLanguage}/>
                 :''}
             </div>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        account: state.account
+    }
+}
 
-export default StudentProgrammingLanguage
+export default connect(mapStateToProps,null)(StudentLanguage)

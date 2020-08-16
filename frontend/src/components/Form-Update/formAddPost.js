@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 class FormAddPost extends Component {
     componentDidMount(){
         return API.getJobs().then(res =>{
-            if(res.data && res.data.jobs){
+            if(res.data){
                 this.setState({
                     arrJob: res.data.jobs,
                     job_id: res.data.jobs[0].id

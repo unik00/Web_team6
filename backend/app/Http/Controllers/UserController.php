@@ -156,6 +156,35 @@ class UserController extends Controller
         }
     }
 
+    function remove(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try {
+            $user = User::find($id);
+            $user->delete();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Xoá thành công']);
+        } catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Xoá thất bại']);
+        }
+    }
+
+    function changeActive(Request $request){
+        $id = $request->id;
+        DB::beginTransaction();
+        try {
+            $user = User::find($id);
+            $user->is_active = !$user->is_active;
+            $user->save();
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Thao tác thành công']);
+        } catch(\Exception $e){
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => 'Lỗi hệ thống. Vui lòng thử lại.']);
+        }
+    }
+    
     function list(Request $request){
         $random = $request->random ?? 0;
         $offset = $request->offset ?? 0;

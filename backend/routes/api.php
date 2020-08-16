@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -200,4 +202,43 @@ Route::put('vote', 'VoteController@addVote');
 Route::group(['prefix' => 'stats'], function () {
     Route::get('school', 'StatsController@school');
     Route::get('', 'StatsController@index');
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        if(Auth::user()->type == "Admin"){
+            Route::get('user', 'UserController@list');
+            Route::get('user/remove', 'UserController@remove');
+            Route::get('user/change-active', 'UserController@changeActive');
+
+
+            Route::get('country', 'CountryController@list');
+            Route::get('country/remove', 'CountryController@removeCountry');
+            Route::post('country/add', 'CountryController@addOrUpdateCountry');
+
+            Route::get('hobby', 'HobbyController@list');
+            Route::get('hobby/remove', 'HobbyController@remove');
+            Route::post('hobby/add', 'HobbyController@addOrUpdate');
+
+            Route::get('program-language', 'Program_LanguageController@list');
+            Route::get('program-language/remove', 'Program_LanguageController@remove');
+            Route::post('program-language/add', 'Program_LanguageController@addOrUpdate');
+
+            Route::get('language', 'LanguageController@list');
+            Route::get('language/remove', 'LanguageController@remove');
+            Route::post('language/add', 'LanguageController@addOrUpdate');
+
+            Route::get('job-type', 'JobController@getType');
+            Route::get('job-type/remove', 'JobController@removeType');
+            Route::post('job-type/add', 'JobController@addOrUpdateType');
+
+            Route::get('job-availabilty', 'JobController@getAvailabilty');
+            Route::get('job-availabilty/remove', 'JobController@removeAvailabilty');
+            Route::post('job-availabilty/add', 'JobController@addOrUpdateAvailabilty');
+
+            Route::get('job-experience', 'JobController@getExperience');
+            Route::get('job-experience/remove', 'JobController@removeExperience');
+            Route::post('job-experience/add', 'JobController@addOrUpdateExperience');
+        }
+    });
 });

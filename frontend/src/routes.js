@@ -7,6 +7,7 @@ import AllUser from './components/All-User/index';
 import Home from './components/Home/index';
 import ViewJob from './components/Job-View/index';
 import Search from './components/Search/index';
+import Stats from './components/Stats/index';
 const routes = [
     {
         path:'/signin',
@@ -42,6 +43,11 @@ const routes = [
         path: "/search",
         exact: true,
         main: () => <Search/>
+    },
+    {
+        path: "/stats",
+        exact: true,
+        main: () => <Stats/>
     }
 ]
 

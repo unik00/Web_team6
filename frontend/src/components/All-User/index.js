@@ -59,7 +59,6 @@ class AllUser extends Component {
 	}
 
 	onFilterUser = (type, listUser) => {
-		console.log(listUser)
 		this.setState({
 			listUser,
 			type: type

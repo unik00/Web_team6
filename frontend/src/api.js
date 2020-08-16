@@ -298,3 +298,11 @@ export const filterJob = (data) => {
 export const filterUser = (data) => {
   return api.post('search/user',data)
 }
+
+export const statsIndex = () => {
+  return api.get('stats')
+}
+
+export const statsInSchool = (school_id) => {
+  return api.get(`stats/school?school_id=${school_id}`)
+}

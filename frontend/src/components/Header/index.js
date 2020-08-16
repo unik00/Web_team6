@@ -96,6 +96,12 @@ class Header extends Component {
 									Jobs
 								</Link>
                                 </li>
+                                <li>
+                                    <Link to={'/stats'} onClick={()=>{history.push('/stats'); history.go()}}>
+                                        <span><img src={require("../../assets/images/icon3.png")} alt="" /></span>
+                                        Stats
+                                    </Link>
+                                </li>
                                 <Messages/>
                                 <Notification/>
                             </ul>

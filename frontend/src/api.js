@@ -306,3 +306,13 @@ export const statsIndex = () => {
 export const statsInSchool = (school_id) => {
   return api.get(`stats/school?school_id=${school_id}`)
 }
+
+export const vote = (account,data) => {
+  return api.put(`vote`,data,{headers:{
+    'Authorization': account ? `${account.token_type} ${account.access_token}` : ''
+  }})
+}
+
+export const getScore = (id) => {
+  return api.get(`score/${id}`)
+}

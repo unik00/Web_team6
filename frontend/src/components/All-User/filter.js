@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 // name -- phone -- hobby -- program language -- gender -- class -- school -- masv
 class Filter extends Component {
     componentDidMount() {
+        let {searchName, onFilterUser} = this.props
         API.getHobbies().then(res => {
-            console.log(res)
             if (res.data && res.data.hobbies) {
                 this.setState({
                     listHobby: res.data.hobbies
@@ -42,6 +42,56 @@ class Filter extends Component {
                 this.renderErr('server error');
             })
 
+        if(searchName) {
+            this.setState({
+                name:searchName
+            })
+
+            let listUser = []
+            
+            API.filterUser({
+                type: "School",
+                name: searchName
+            })
+            .then(res=>{
+                if(res.data && res.data.length > 0) {
+                    listUser = res.data;
+                    this.setState({
+                        type: 'School'
+                    })
+                    return onFilterUser(2,listUser)
+                }
+                else{
+                    API.filterUser({
+                        type: "Company",
+                        name: searchName
+                    })
+                    .then(res=>{
+                        if(res.data && res.data.length > 0) {
+                            listUser = res.data;
+                            this.setState({
+                                type: 'Company'
+                            })
+                            return onFilterUser(1,listUser)
+                        }
+                        else {
+                            API.filterUser({
+                                type: "Student",
+                                name: searchName
+                            })
+                            .then(res=>{
+                                if(res.data && res.data.length > 0) {
+                                    listUser = res.data;
+                                    console.log(listUser)
+                                    return onFilterUser(3,listUser)
+                                }
+                                else  return onFilterUser(1,[])
+                            })
+                        }
+                    })
+                }
+            })
+        }
     }
 
     constructor(props) {
@@ -169,7 +219,8 @@ class Filter extends Component {
 
     onFilter = () => {
         // return console.log(this.state);
-        let {onFilterUser} = this.props
+        let {onFilterUser, onRemoveParamsUrl} = this.props
+        onRemoveParamsUrl()
         let {type} = this.state
         return API.filterUser({
             type: this.state.type,

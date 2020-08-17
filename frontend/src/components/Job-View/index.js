@@ -62,7 +62,11 @@ class Job extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="epi-sec" style={{ width: 20 + '%', float: "right", marginTop: 20 + 'px' }}>
+                    <div className="epi-sec" >
+                        <ul class="descp">
+                            <li><img src={require("../../assets/images/icon8.png")} alt=""/><span>{job.type_name}</span></li>
+                            <li><img src={require("../../assets/images/icon9.png")} alt=""/><span>{job.country_name}</span></li>
+                        </ul>
                         <ul className="bk-links">
                             <li><Link to={`/messages?other_id=${job.user_id}`}
                                 onClick={() => {
@@ -93,6 +97,8 @@ class Job extends Component {
                             <br />
                             <ul className="skill-tags">
                                 <li><a href="#" title="">{job.experience_name}</a></li>
+                                <li><a href="#" title="">{job.country_name}</a></li>
+                                <li><a href="#" title="">{job.type_name}</a></li>
                                 {/* program language */}
                                 {job.program_language ?
                                     job.program_language.map((pr_lg, index) => {

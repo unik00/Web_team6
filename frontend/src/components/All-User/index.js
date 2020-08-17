@@ -7,13 +7,19 @@ import Filter from './filter'
 
 class AllUser extends Component {
 	componentDidMount() {
-		this.onChangeType(1);
+		let name = (new URLSearchParams(this.props.location.search)).get('name')
+		
+		if(!name) {
+			console.log(name)
+			this.onChangeType(1);
+		}
 	}
 	constructor(props) {
 		super(props);
 		this.state = {
 			listUser: [],
-			type: 1
+			type: 1,
+			name: (new URLSearchParams(this.props.location.search)).get('name')
 		}
 	}
 
@@ -93,6 +99,17 @@ class AllUser extends Component {
 			})
 	}
 
+	onRemoveParamsUrl = () => {
+		const url = new URL(window.location.href)
+		const params = new URLSearchParams(url.search.slice(1))
+		params.delete('name')
+		window.history.replaceState(
+			{},
+			'',
+			`${window.location.pathname}?${params}${window.location.hash}`,
+		)
+	}
+
 	renderListUser = () => {
 		let { listUser } = this.state;
 		let { history } = this.props;
@@ -139,7 +156,7 @@ class AllUser extends Component {
 	}
 
 	render() {
-		let { type } = this.state
+		let { type, name } = this.state
 		return (
 			<section className="companies-info">
 				<div className="container">
@@ -167,7 +184,7 @@ class AllUser extends Component {
 								</div>
 							</div>
 						</div>
-						<Filter onFilterUser={this.onFilterUser}/>
+						<Filter onFilterUser={this.onFilterUser} searchName={name} onRemoveParamsUrl={this.onRemoveParamsUrl}/>
 					</div>
 				</div>
 			</section>

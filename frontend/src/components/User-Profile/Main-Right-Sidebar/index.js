@@ -20,7 +20,9 @@ class MainRightSidebar extends Component {
                                 <i className="fa fa-envelope"></i> Message
                         </Link>
                     </div>
-                    <SocialLink userInformation={userInformation} regetData={regetData}/>
+                    {userInformation.type == 'Student' ? 
+                        <SocialLink userInformation={userInformation} regetData={regetData}/>
+                    :''}
                     <TopViewer/>
                 </div>
             </div>

@@ -55,13 +55,16 @@ class NoticeController extends Controller
             }
             $ls->name = $users->name;
         }
+        $cnt = 0;
        foreach($listNew as $ls){
             $lsNew = Notice::find($ls->id);
+            if($ls->is_read == false) $cnt++;
             $lsNew->is_read = true;
             $lsNew->save();
         }
         return response()->json([
             'success' => true,
+            'cnt' => $cnt,
             'notices' => $list
         ]);
     }
